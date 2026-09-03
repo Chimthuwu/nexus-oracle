@@ -1,4 +1,4 @@
-# NEXUS — Build Plan & Cross‑Agent Coordination Doc (Refined for Two Agents)
+ok
 
 **Agent assignment** (was three tracks, now two — server and card‑data are merged because the server calls `searchCards` in‑process):
 
