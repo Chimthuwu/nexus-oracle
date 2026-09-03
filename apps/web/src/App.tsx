@@ -1,4 +1,6 @@
+import { useEffect, useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
 import { Oracle } from './scene/Oracle';
 import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';
@@ -11,7 +13,7 @@ import { Spine } from './components/Spine';
 import { useOracleStore } from './store/useOracleStore';
 
 function SceneContent() {
-  const cards = useOracleStore(state => state.cards);
+  const cards = useOracleStore((state) => state.cards);
   return (
     <>
       <SpaceAssets />
@@ -25,27 +27,53 @@ function SceneContent() {
   );
 }
 
+/** Cosmetic intro veil — the procedural starfield renders instantly beneath it. */
+function LoadingVeil() {
+  const [gone, setGone] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setGone(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div className={`loading${gone ? ' hide' : ''}`} id="loading">
+      <div className="glyph" />
+      <span>Waking the Oracle</span>
+    </div>
+  );
+}
+
 function App() {
   return (
     <>
-      <div className="loading" id="loading" style={{ display: 'none' }}><div className="glyph"></div><span>Waking the Oracle</span></div>
-      
       <div id="scene">
         <Canvas
-          camera={{ position: [0, 2, 10], fov: 45 }}
-          gl={{ antialias: false, toneMappingExposure: 1.2 }}
+          dpr={[1, 2]}
+          camera={{ position: [0, 1.6, 9], fov: 50 }}
+          gl={{
+            antialias: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 1.3,
+          }}
         >
-          <color attach="background" args={['#020103']} />
-          
-          <ambientLight intensity={0.2} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
+          <color attach="background" args={['#050308']} />
+          <fogExp2 attach="fog" args={['#070410', 0.02]} />
 
-          <SceneContent />
+          <ambientLight color="#2a2440" intensity={1.1} />
+          <pointLight color="#d6a84f" position={[-6, 3, -3]} intensity={1.1} distance={30} />
+
+          <Suspense fallback={null}>
+            <SceneContent />
+          </Suspense>
         </Canvas>
       </div>
-      
-      <div className="wordmark"><div className="glyph"></div><span>NEXUS</span></div>
-      
+
+      <LoadingVeil />
+
+      <div className="wordmark">
+        <div className="glyph" />
+        <span>NEXUS</span>
+      </div>
+
       <Spine />
       <ResponseCaption />
       <InspectHUD />

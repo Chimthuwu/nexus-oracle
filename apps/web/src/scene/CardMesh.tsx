@@ -46,21 +46,23 @@ export function CardMesh({ card, index, total }: CardMeshProps) {
   
   const isSelected = inspectedCard?.id === card.id;
 
-  // Generate a random spawn position far away
-  const spawnPos = useMemo(() => new THREE.Vector3(
-    (Math.random() - 0.5) * 40,
-    (Math.random() - 0.5) * 40,
-    -30 - Math.random() * 20
-  ), []);
-
-  // Calculate target position in a gentle arc
+  // Fan the summoned cards in a shallow arc facing the camera. Angle spans a
+  // narrow cone so 1–3 cards sit comfortably in frame around the Oracle.
   const targetPos = useMemo(() => {
-    const spread = 2.8;
-    const offset = (index - (total - 1) / 2) * spread;
-    // slight curve (parabola)
-    const yOffset = -Math.pow(offset, 2) * 0.05 + 0.5;
-    return new THREE.Vector3(offset, yOffset, 2);
+    const t = total > 1 ? index / (total - 1) - 0.5 : 0; // -0.5 .. 0.5
+    const angle = t * 1.5; // ~±0.75 rad at the extremes
+    return new THREE.Vector3(
+      Math.sin(angle) * 2.4,
+      0.7 + Math.cos(angle * 0.6) * 0.12,
+      3.6 - Math.abs(angle) * 0.7
+    );
   }, [index, total]);
+
+  // Spawn just out of frame, biased toward the target's side, then ease in.
+  const spawnPos = useMemo(
+    () => new THREE.Vector3(targetPos.x * 0.4, 3.4, -4),
+    [targetPos]
+  );
 
   useFrame((state) => {
     if (group.current) {

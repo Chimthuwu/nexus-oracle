@@ -35,8 +35,9 @@
   /* ---------- command bar ---------- */
   .command-dock{position:fixed;bottom:0;left:0;right:0;z-index:24;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 20px 26px;pointer-events:none;}
   .suggestions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;pointer-events:auto;max-width:720px;}
-  .chip{font-size:10.5px;padding:8px 14px;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;}
+  .chip{font:inherit;font-size:10.5px;padding:8px 14px;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--muted);cursor:pointer;transition:.2s;white-space:nowrap;}
   .chip:hover{color:#fff;border-color:rgba(214,168,79,.5);background:rgba(214,168,79,.08);}
+  .chip:disabled{opacity:.4;cursor:default;}
 
   .command-bar{width:min(640px,92vw);display:flex;align-items:center;gap:10px;padding:8px 8px 8px 20px;pointer-events:auto;}
   .command-bar input{flex:1;background:none;border:0;outline:0;color:#fff;font-size:14px;font-family:Inter,sans-serif;}
@@ -44,6 +45,7 @@
   .command-send{width:42px;height:42px;border-radius:12px;border:0;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1508;cursor:pointer;font-size:16px;flex:0 0 auto;transition:transform .2s ease;}
   .command-send:hover{transform:scale(1.06);}
   .command-send:disabled{opacity:.4;cursor:default;transform:none;}
+  .command-send.busy span{display:block;animation:spin 1s linear infinite;}
 
   .hint{font-size:9.5px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;opacity:0;transition:opacity .6s ease;pointer-events:none;}
   .hint.show{opacity:.8;}
