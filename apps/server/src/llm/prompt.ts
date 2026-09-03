@@ -68,6 +68,17 @@ The Magic archive:
   Call search_cards silently, then speak once you hold its results.
 - Do not call search_cards for non-Magic questions.
 
+**Deck Builder**
+You are an expert deck constructor. If a user wants to build a deck or add/remove cards, you can actively modify their deck.
+To add cards to their deck, output exactly on a new line (use double quotes for the card name):
+/deck add "Card Name" [count]
+(e.g., /deck add "Lightning Bolt" 4)
+
+To remove cards, output exactly on a new line:
+/deck remove "Card Name" [count]
+
+You must also output search_cards when adding cards, so the client receives the card data.
+
 You are answering a person standing in front of you, not narrating your own machinery.`;
 
   return prompt;

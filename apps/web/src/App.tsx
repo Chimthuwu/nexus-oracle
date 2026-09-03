@@ -8,11 +8,13 @@ import { Effects } from './scene/Effects';
 import { CardMesh } from './scene/CardMesh';
 import { CardBrowser } from './scene/CardBrowser';
 import { Duel } from './scene/Duel';
+import { DeckBuilder } from './scene/DeckBuilder';
 import { SpaceAssets } from './scene/SpaceAssets';
 import { MindMapper } from './scene/MindMapper';
 import { CommandBar } from './components/CommandBar';
 import { BrowserBar } from './components/BrowserBar';
 import { DuelHUD } from './components/DuelHUD';
+import { DuelHand } from './components/DuelHand';
 import { ResponseCaption } from './components/ResponseCaption';
 import { Transcript } from './components/Transcript';
 import { InspectHUD } from './components/InspectHUD';
@@ -26,6 +28,7 @@ function SceneContent() {
     <>
       <SpaceAssets />
       {view === 'browser' && <CardBrowser />}
+      {view === 'deckbuilder' && <DeckBuilder />}
       {view === 'duel' && <Duel />}
       {view === 'mindmapper' && <MindMapper />}
       {view === 'oracle' && (
@@ -106,7 +109,7 @@ function App() {
       <Spine />
       <InspectHUD />
 
-      {(view === 'oracle' || view === 'mindmapper') && (
+      {(view === 'oracle' || view === 'mindmapper' || view === 'deckbuilder') && (
         <>
           <ResponseCaption />
           <CommandBar />

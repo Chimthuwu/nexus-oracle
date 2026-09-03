@@ -100,6 +100,12 @@ export function Spine() {
             ⌘ Archive
           </button>
           <button
+            className={view === 'deckbuilder' ? 'on' : ''}
+            onClick={() => setView('deckbuilder')}
+          >
+            ♙ Deck Builder
+          </button>
+          <button
             className={view === 'duel' ? 'on' : ''}
             onClick={() => setView('duel')}
           >
