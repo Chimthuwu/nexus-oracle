@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 /**
  * The canonical Nexus `Card` shape — mirrors @nexus/card-data's frozen `Card`
@@ -25,49 +26,169 @@ export interface CardData {
   keywords: string[];
 }
 
-/** One turn of the conversation. `role` matches the server's §4.2 history shape. */
+/** One turn of a conversation. `role` matches the server's §4.2 history shape. */
 export interface ChatTurn {
   role: 'user' | 'oracle';
   content: string;
+  /** Cards summoned on this turn (oracle turns only) — replayed on thread switch. */
+  cards?: CardData[];
+  at: number;
 }
 
+export interface Conversation {
+  id: string;
+  title: string;
+  createdAt: number;
+  updatedAt: number;
+  turns: ChatTurn[];
+}
+
+/** Turns sent back to the server as `history` (server bounds its own window). */
+const HISTORY_SEND_LIMIT = 16;
+
 interface OracleState {
+  // ── Ephemeral view state (not persisted) ──────────────────────────────
   isThinking: boolean;
   setThinking: (thinking: boolean) => void;
-
   /** The Oracle's current spoken line (drives the typewriter caption). */
   responseText: string;
   setResponseText: (text: string) => void;
-
-  /** Rolling conversation log — sent back to the server as `history`. */
-  history: ChatTurn[];
-  pushTurn: (turn: ChatTurn) => void;
-  clearHistory: () => void;
-
   cards: CardData[];
   setCards: (cards: CardData[]) => void;
-
   inspectedCard: CardData | null;
   setInspectedCard: (card: CardData | null) => void;
+
+  // ── Persisted conversation history ────────────────────────────────────
+  conversations: Conversation[];
+  activeId: string | null;
+
+  /** Turns of the active conversation (empty if none) — for rendering + send. */
+  activeTurns: () => ChatTurn[];
+  /** Prior turns to send as `history` on the next ask. */
+  historyForSend: () => { role: 'user' | 'oracle'; content: string }[];
+
+  newConversation: () => string;
+  selectConversation: (id: string) => void;
+  deleteConversation: (id: string) => void;
+  renameConversation: (id: string, title: string) => void;
+
+  /** Append a turn to the active conversation, creating one if needed. */
+  appendTurn: (turn: Omit<ChatTurn, 'at'>) => void;
 }
 
-const HISTORY_LIMIT = 16;
+const genId = () =>
+  `c_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 
-export const useOracleStore = create<OracleState>((set) => ({
-  isThinking: false,
-  setThinking: (thinking) => set({ isThinking: thinking }),
+/** First user line → a short thread title. */
+function titleFrom(text: string): string {
+  const t = text.trim().replace(/\s+/g, ' ');
+  return t.length > 42 ? `${t.slice(0, 41)}…` : t || 'New conversation';
+}
 
-  responseText: '',
-  setResponseText: (text) => set({ responseText: text }),
+export const useOracleStore = create<OracleState>()(
+  persist(
+    (set, get) => ({
+      isThinking: false,
+      setThinking: (thinking) => set({ isThinking: thinking }),
+      responseText: '',
+      setResponseText: (text) => set({ responseText: text }),
+      cards: [],
+      setCards: (cards) => set({ cards }),
+      inspectedCard: null,
+      setInspectedCard: (card) => set({ inspectedCard: card }),
 
-  history: [],
-  pushTurn: (turn) =>
-    set((state) => ({ history: [...state.history, turn].slice(-HISTORY_LIMIT) })),
-  clearHistory: () => set({ history: [] }),
+      conversations: [],
+      activeId: null,
 
-  cards: [],
-  setCards: (cards) => set({ cards }),
+      activeTurns: () => {
+        const { conversations, activeId } = get();
+        return conversations.find((c) => c.id === activeId)?.turns ?? [];
+      },
 
-  inspectedCard: null,
-  setInspectedCard: (card) => set({ inspectedCard: card }),
-}));
+      historyForSend: () =>
+        get()
+          .activeTurns()
+          .slice(-HISTORY_SEND_LIMIT)
+          .map((t) => ({ role: t.role, content: t.content })),
+
+      newConversation: () => {
+        const id = genId();
+        const now = Date.now();
+        set((s) => ({
+          // Drop other empty threads so "New conversation" doesn't pile up.
+          conversations: [
+            { id, title: 'New conversation', createdAt: now, updatedAt: now, turns: [] },
+            ...s.conversations.filter((c) => c.turns.length > 0),
+          ],
+          activeId: id,
+          responseText: '',
+          cards: [],
+          inspectedCard: null,
+        }));
+        return id;
+      },
+
+      selectConversation: (id) => {
+        const conv = get().conversations.find((c) => c.id === id);
+        if (!conv) return;
+        const lastOracle = [...conv.turns].reverse().find((t) => t.role === 'oracle');
+        set({
+          activeId: id,
+          responseText: lastOracle?.content ?? '',
+          cards: lastOracle?.cards ?? [],
+          inspectedCard: null,
+        });
+      },
+
+      deleteConversation: (id) =>
+        set((s) => {
+          const conversations = s.conversations.filter((c) => c.id !== id);
+          const wasActive = s.activeId === id;
+          return {
+            conversations,
+            activeId: wasActive ? (conversations[0]?.id ?? null) : s.activeId,
+            ...(wasActive ? { responseText: '', cards: [], inspectedCard: null } : {}),
+          };
+        }),
+
+      renameConversation: (id, title) =>
+        set((s) => ({
+          conversations: s.conversations.map((c) =>
+            c.id === id ? { ...c, title: title.trim() || c.title, updatedAt: Date.now() } : c
+          ),
+        })),
+
+      appendTurn: (turn) => {
+        const now = Date.now();
+        let { activeId } = get();
+        const full: ChatTurn = { ...turn, at: now };
+
+        set((s) => {
+          let conversations = s.conversations;
+          if (!activeId || !conversations.some((c) => c.id === activeId)) {
+            activeId = genId();
+            conversations = [
+              { id: activeId, title: 'New conversation', createdAt: now, updatedAt: now, turns: [] },
+              ...conversations,
+            ];
+          }
+          conversations = conversations.map((c) => {
+            if (c.id !== activeId) return c;
+            const isFirstUser = c.turns.length === 0 && turn.role === 'user';
+            return {
+              ...c,
+              title: isFirstUser ? titleFrom(turn.content) : c.title,
+              updatedAt: now,
+              turns: [...c.turns, full],
+            };
+          });
+          return { conversations, activeId };
+        });
+      },
+    }),
+    {
+      name: 'nexus-conversations',
+      partialize: (s) => ({ conversations: s.conversations, activeId: s.activeId }),
+    }
+  )
+);

@@ -64,11 +64,50 @@
   .hud-close{position:absolute;top:-14px;right:-14px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(14,11,20,.9);border:1px solid rgba(255,255,255,.14);color:#dcdfe8;cursor:pointer;font-size:14px;transition:.2s;}
   .hud-close:hover{background:rgba(139,108,255,.25);border-color:rgba(139,108,255,.5);transform:rotate(90deg);}
 
+  /* ---------- the Spine — conversation history rail ---------- */
+  .spine{position:fixed;left:0;top:0;bottom:0;z-index:40;display:flex;transition:opacity .4s ease, transform .4s ease;}
+  .spine.gone{opacity:0;transform:translateX(-12px);pointer-events:none;}
+  .spine-rail{position:relative;width:14px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:opacity .25s ease;}
+  .spine.open .spine-rail{opacity:0;pointer-events:none;}
+  .spine-line{position:absolute;left:50%;transform:translateX(-50%);top:12%;bottom:12%;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.12),transparent);}
+  .spine-dot{width:6px;height:6px;border-radius:50%;opacity:.55;box-shadow:0 0 8px currentColor;}
+
+  .spine-panel{position:absolute;left:0;top:0;bottom:0;width:270px;border-radius:0 18px 18px 0;padding:18px 14px;display:flex;flex-direction:column;gap:12px;transform:translateX(-102%);opacity:0;transition:transform .32s cubic-bezier(.22,1,.36,1), opacity .32s ease;}
+  .spine.open .spine-panel{transform:translateX(0);opacity:1;}
+
+  .spine-head{display:flex;align-items:center;gap:9px;padding:2px 4px 6px;}
+  .spine-glyph{color:var(--gold);font-size:16px;transform:rotate(12deg);filter:drop-shadow(0 0 8px rgba(214,168,79,.5));}
+  .spine-word{font-family:Cinzel,serif;letter-spacing:2.5px;font-size:12px;font-weight:600;flex:1;}
+  .spine-pin{background:none;border:0;cursor:pointer;font-size:12px;opacity:.5;transition:opacity .2s;padding:2px;}
+  .spine-pin:hover,.spine-pin.on{opacity:1;}
+
+  .spine-new{display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;border-radius:10px;border:1px solid rgba(214,168,79,.28);background:rgba(214,168,79,.08);color:var(--gold2);font:inherit;font-size:11.5px;cursor:pointer;transition:.18s;}
+  .spine-new:hover{background:rgba(214,168,79,.16);border-color:rgba(214,168,79,.5);}
+  .spine-new span{font-size:14px;line-height:1;}
+
+  .spine-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px;margin:0 -6px;padding:0 6px;}
+  .spine-list::-webkit-scrollbar{width:5px;}
+  .spine-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px;}
+  .spine-empty{font-size:10.5px;line-height:1.6;color:var(--muted);padding:10px 8px;}
+
+  .spine-item{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:background .16s;border:1px solid transparent;}
+  .spine-item:hover{background:rgba(255,255,255,.04);}
+  .spine-item.active{background:rgba(139,108,255,.14);border-color:rgba(139,108,255,.3);}
+  .spine-item-body{flex:1;min-width:0;}
+  .spine-item-title{font-size:11.5px;color:#e7e5ee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .spine-item-meta{font-size:9px;color:var(--muted);margin-top:2px;}
+  .spine-item-actions{display:flex;gap:2px;opacity:0;transition:opacity .16s;}
+  .spine-item:hover .spine-item-actions{opacity:1;}
+  .spine-item-actions button{background:none;border:0;color:var(--muted);cursor:pointer;font-size:11px;padding:3px 5px;border-radius:6px;transition:.15s;}
+  .spine-item-actions button:hover{color:#fff;background:rgba(255,255,255,.08);}
+  .spine-rename{width:100%;background:rgba(0,0,0,.3);border:1px solid rgba(139,108,255,.4);border-radius:6px;color:#fff;font:inherit;font-size:11.5px;padding:5px 7px;outline:0;}
+
   @media(max-width:760px){
     .response-wrap{top:12%;width:90vw;}
     .inspect-hud{right:16px;left:16px;width:auto;top:auto;bottom:150px;transform:translateY(20px);}
     .inspect-hud.show{transform:translateY(0);}
     .wordmark{top:18px;left:18px;}
     .command-bar{width:92vw;}
+    .spine-panel{width:82vw;}
   }
 

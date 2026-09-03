@@ -23,7 +23,7 @@ export function CommandBar() {
   const setThinking = useOracleStore((s) => s.setThinking);
   const setCards = useOracleStore((s) => s.setCards);
   const setInspectedCard = useOracleStore((s) => s.setInspectedCard);
-  const pushTurn = useOracleStore((s) => s.pushTurn);
+  const appendTurn = useOracleStore((s) => s.appendTurn);
 
   useEffect(() => {
     if (SpeechRecognitionAPI) {
@@ -76,11 +76,8 @@ export function CommandBar() {
 
     // Snapshot history *before* adding this turn, so we don't echo the new
     // message back to the server as prior context.
-    const history = useOracleStore.getState().history.map((t) => ({
-      role: t.role,
-      content: t.content,
-    }));
-    pushTurn({ role: 'user', content: message });
+    const history = useOracleStore.getState().historyForSend();
+    appendTurn({ role: 'user', content: message });
 
     try {
       const res = await fetch(API_URL, {
@@ -93,9 +90,10 @@ export function CommandBar() {
 
       const data = (await res.json()) as AskResponse;
 
+      const summoned = Array.isArray(data.cards) ? data.cards : [];
       setResponseText(data.text);
-      pushTurn({ role: 'oracle', content: data.text });
-      setCards(Array.isArray(data.cards) ? data.cards : []);
+      appendTurn({ role: 'oracle', content: data.text, cards: summoned });
+      setCards(summoned);
     } catch (error) {
       console.error('Oracle query failed:', error);
       setResponseText(
@@ -121,9 +119,9 @@ export function CommandBar() {
       <div className="suggestions" id="suggestions">
         {[
           'Show me red aggro cards',
-          'What deals with fliers?',
-          'Teach me the stack',
-          'Ramp into big green threats',
+          'Explain the stack in Magic',
+          'Help me plan my week',
+          'Give me a metaphor for entropy',
         ].map((s) => (
           <button
             key={s}

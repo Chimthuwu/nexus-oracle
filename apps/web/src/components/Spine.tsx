@@ -1,51 +1,131 @@
+import { useState } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 
+function relTime(ts: number): string {
+  const s = Math.max(1, Math.round((Date.now() - ts) / 1000));
+  if (s < 60) return 'just now';
+  const m = Math.round(s / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.round(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.round(h / 24);
+  return d < 7 ? `${d}d ago` : new Date(ts).toLocaleDateString();
+}
+
 export function Spine() {
-  const isThinking = useOracleStore(state => state.isThinking);
-  const responseText = useOracleStore(state => state.responseText);
-  
-  // Hide spine if Oracle is busy or responding
-  const isHidden = isThinking || !!responseText;
+  const conversations = useOracleStore((s) => s.conversations);
+  const activeId = useOracleStore((s) => s.activeId);
+  const isThinking = useOracleStore((s) => s.isThinking);
+  const inspectedCard = useOracleStore((s) => s.inspectedCard);
+  const newConversation = useOracleStore((s) => s.newConversation);
+  const selectConversation = useOracleStore((s) => s.selectConversation);
+  const deleteConversation = useOracleStore((s) => s.deleteConversation);
+  const renameConversation = useOracleStore((s) => s.renameConversation);
+
+  const [pinned, setPinned] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [editing, setEditing] = useState<string | null>(null);
+  const [draft, setDraft] = useState('');
+
+  // Auto-hide the whole rail during card inspection, or while the Oracle
+  // responds — unless the user has pinned it open.
+  const forceHidden = !pinned && (inspectedCard != null || isThinking);
+  const open = pinned || hovered;
+
+  const beginRename = (id: string, current: string) => {
+    setEditing(id);
+    setDraft(current);
+  };
+  const commitRename = () => {
+    if (editing) renameConversation(editing, draft);
+    setEditing(null);
+  };
 
   return (
-    <div 
-      className={`fixed left-0 top-0 bottom-0 z-50 flex items-center transition-opacity duration-500 ${isHidden ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+    <div
+      className={`spine ${open ? 'open' : ''} ${forceHidden ? 'gone' : ''}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div className="group relative flex flex-col items-center justify-center h-full w-4 hover:w-48 transition-all duration-300 ease-out border-r border-white/5 bg-black/10 hover:bg-black/40 hover:backdrop-blur-xl">
-        
-        {/* Resting Line */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent group-hover:opacity-0 transition-opacity" />
+      {/* Rest state — thin line + sigil dots */}
+      <div className="spine-rail" aria-hidden={open}>
+        <span className="spine-line" />
+        <span className="spine-dot" style={{ background: '#8b6cff' }} />
+        <span className="spine-dot" style={{ background: '#5b8cff' }} />
+        <span className="spine-dot" style={{ background: '#d6a84f' }} />
+      </div>
 
-        {/* Resting Dots */}
-        <div className="absolute flex flex-col gap-12 group-hover:opacity-0 transition-opacity">
-          <div className="w-1.5 h-1.5 rounded-full bg-purple-500/50 shadow-[0_0_8px_theme('colors.purple.500')]" />
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-500/50 shadow-[0_0_8px_theme('colors.blue.500')]" />
-          <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50 shadow-[0_0_8px_theme('colors.amber.500')]" />
-        </div>
-
-        {/* Expanded Content */}
-        <div className="absolute inset-0 flex-col py-12 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto flex gap-6">
-          <div className="flex items-center gap-3 mb-8">
-            <span className="text-amber-500 text-xl rotate-12">✦</span>
-            <span className="font-serif tracking-[0.2em] text-xs font-bold text-white whitespace-nowrap">NEXUS</span>
-          </div>
-
-          <button className="flex items-center gap-4 text-left group/btn w-full hover:bg-white/5 p-2 rounded-xl transition-colors">
-            <div className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_theme('colors.purple.500')]" />
-            <span className="text-xs text-gray-400 group-hover/btn:text-white transition-colors whitespace-nowrap">Card Database</span>
-          </button>
-
-          <button className="flex items-center gap-4 text-left group/btn w-full hover:bg-white/5 p-2 rounded-xl transition-colors">
-            <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_theme('colors.blue.500')]" />
-            <span className="text-xs text-gray-400 group-hover/btn:text-white transition-colors whitespace-nowrap">Duel Arena</span>
-          </button>
-
-          <button className="flex items-center gap-4 text-left group/btn w-full hover:bg-white/5 p-2 rounded-xl transition-colors">
-            <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_10px_theme('colors.amber.500')]" />
-            <span className="text-xs text-gray-400 group-hover/btn:text-white transition-colors whitespace-nowrap">Collection</span>
+      {/* Expanded — conversation history */}
+      <div className="spine-panel glass" role="navigation" aria-label="Conversations">
+        <div className="spine-head">
+          <span className="spine-glyph">✦</span>
+          <span className="spine-word">NEXUS</span>
+          <button
+            className={`spine-pin ${pinned ? 'on' : ''}`}
+            title={pinned ? 'Unpin' : 'Keep open'}
+            onClick={() => setPinned((p) => !p)}
+          >
+            {pinned ? '📌' : '📍'}
           </button>
         </div>
 
+        <button className="spine-new" onClick={() => newConversation()}>
+          <span>＋</span> New conversation
+        </button>
+
+        <div className="spine-list">
+          {conversations.length === 0 && (
+            <div className="spine-empty">Your conversations with the Oracle will gather here.</div>
+          )}
+          {conversations.map((c) => (
+            <div
+              key={c.id}
+              className={`spine-item ${c.id === activeId ? 'active' : ''}`}
+              onClick={() => editing !== c.id && selectConversation(c.id)}
+            >
+              {editing === c.id ? (
+                <input
+                  className="spine-rename"
+                  autoFocus
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  onBlur={commitRename}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') commitRename();
+                    if (e.key === 'Escape') setEditing(null);
+                  }}
+                />
+              ) : (
+                <>
+                  <div className="spine-item-body">
+                    <div className="spine-item-title">{c.title}</div>
+                    <div className="spine-item-meta">{relTime(c.updatedAt)}</div>
+                  </div>
+                  <div className="spine-item-actions">
+                    <button
+                      title="Rename"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        beginRename(c.id, c.title);
+                      }}
+                    >
+                      ✎
+                    </button>
+                    <button
+                      title="Delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteConversation(c.id);
+                      }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
