@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Icosahedron, Line, Points, PointMaterial } from '@react-three/drei';
+import { Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
 import { useOracleStore } from '../store/useOracleStore';
 
@@ -65,7 +65,7 @@ export function Oracle() {
       {/* Orbiting Ring */}
       <points ref={ringRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" count={particlesCount} array={positions} itemSize={3} />
+          <bufferAttribute attach="attributes-position" count={particlesCount} array={positions} itemSize={3} args={[positions, 3]} />
         </bufferGeometry>
         <pointsMaterial size={0.05} color="#f4cf76" transparent opacity={0.6} sizeAttenuation />
       </points>

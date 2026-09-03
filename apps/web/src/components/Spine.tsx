@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 
 export function Spine() {

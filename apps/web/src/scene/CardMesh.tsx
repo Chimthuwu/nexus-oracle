@@ -1,8 +1,9 @@
-import React, { useRef, useMemo, Suspense } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture, Text } from '@react-three/drei';
 import * as THREE from 'three';
-import { CardData, useOracleStore } from '../store/useOracleStore';
+import { useOracleStore } from '../store/useOracleStore';
+import type { CardData } from '../store/useOracleStore';
 
 interface CardMeshProps {
   card: CardData;
@@ -61,7 +62,7 @@ export function CardMesh({ card, index, total }: CardMeshProps) {
     return new THREE.Vector3(offset, yOffset, 2);
   }, [index, total]);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (group.current) {
       if (isSelected) {
         // Fly to center for inspection

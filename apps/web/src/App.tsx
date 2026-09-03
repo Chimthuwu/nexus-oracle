@@ -1,6 +1,5 @@
-import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Environment, Stars, Sparkles } from '@react-three/drei';
+import { Stars, Sparkles } from '@react-three/drei';
 import { Oracle } from './scene/Oracle';
 import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';

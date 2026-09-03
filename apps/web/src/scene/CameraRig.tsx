@@ -6,7 +6,7 @@ export function CameraRig() {
   const { camera, pointer } = useThree();
   const inspectedCard = useOracleStore(state => state.inspectedCard);
 
-  useFrame((state, delta) => {
+  useFrame(() => {
     if (inspectedCard) {
       // In Inspect mode, move camera close to the center
       const targetX = 0;

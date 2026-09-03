@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 
 export function CommandBar() {
@@ -8,7 +9,7 @@ export function CommandBar() {
   const setCards = useOracleStore(state => state.setCards);
   const setInspectedCard = useOracleStore(state => state.setInspectedCard);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
     
