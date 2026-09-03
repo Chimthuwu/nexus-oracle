@@ -70,6 +70,201 @@ const CARD_NAMES = [
   "Field of the Dead",
   "Urborg, Tomb of Yawgmoth",
   "Mana Drain",
+    "Ghalta, Primal Hunger",
+    "Nyxbloom Ancient",
+    "Cultivate",
+    "Kodama's Reach",
+    "Explosive Vegetation",
+    "Rampant Growth",
+    "Farseek",
+    "Nature's Lore",
+    "Three Visits",
+    "Skyshroud Claim",
+    "Avenger of Zendikar",
+    "Bane of Progress",
+    "Beast Within",
+    "Heroic Intervention",
+    "Return of the Wildspeaker",
+    "Rishkar's Expertise",
+    "Blasphemous Act",
+    "Vandalblast",
+    "Chaos Warp",
+    "Jeska's Will",
+    "Purphoros, God of the Forge",
+    "Gamble",
+    "Toxic Deluge",
+    "Damnation",
+    "Exsanguinate",
+    "Torment of Hailfire",
+    "Cabal Coffers",
+    "Necropotence",
+    "Phyrexian Arena",
+    "Swan Song",
+    "Pongify",
+    "Rapid Hybridization",
+    "Blue Sun's Zenith",
+    "Generous Gift",
+    "Austere Command",
+    "Arcane Signet",
+    "Fellwar Stone",
+    "Mind Stone",
+    "Commander's Sphere",
+    "Command Tower",
+    "Solemn Simulacrum",
+    "Lightning Greaves",
+    "Swiftfoot Boots",
+    "Aetherflux Reservoir",
+    "Isochron Scepter",
+    "The Great Henge",
+    "Doubling Season",
+    "Parallel Lives",
+    "Anointed Procession",
+    "Primal Vigor",
+    "Mirari's Wake",
+    "Zendikar Resurgent",
+    "Mana Reflection",
+    "Seedborn Muse",
+    "Wilderness Reclamation",
+    "Kozilek, Butcher of Truth",
+    "Ulamog, the Ceaseless Hunger",
+    "Ulamog, the Infinite Gyre",
+    "Emrakul, the Promised End",
+    "It That Betrays",
+    "Void Winnower",
+    "All Is Dust",
+    "Ugin, the Ineffable",
+    "Yuriko, the Tiger's Shadow",
+    "Kalia of the Vast",
+    "Muldrotha, the Gravetide",
+    "Kenrith, the Returned King",
+    "Lathril, Blade of the Elves",
+    "Oloro, Ageless Ascetic",
+    "Nekusar, the Mindrazer",
+    "Breya, Etherium Shaper",
+    "Meren of Clan Nel Toth",
+    "Animar, Soul of Elements",
+    "Teysa Karlov",
+    "Syr Konrad, the Grim",
+    "Alela, Artful Provocateur",
+    "Marchesa, the Black Rose",
+    "Kykar, Wind's Fury",
+    "Alesha, Who Smiles at Death",
+    "Kess, Dissident Mage",
+    "Queen Marchesa",
+    "Feather, the Redeemed",
+    "Gishath, Sun's Avatar",
+    "Zacama, Primal Calamity",
+    "Ghalta and Mavren",
+    "Yawgmoth, Thran Physician",
+    "K'rrik, Son of Yawgmoth",
+    "Chulane, Teller of Tales",
+    "Prosper, Tome-Bound",
+    "Miirym, Sentinel Wyrm",
+    "Bloodchief Ascension",
+    "Mindcrank",
+    "Sanguine Bond",
+    "Exquisite Blood",
+    "Underworld Breach",
+    "Brain Freeze",
+    "Carpet of Flowers",
+    "Pact of Negation",
+    "Flusterstorm",
+    "Spell Pierce",
+    "Dispel",
+    "Imperial Seal",
+    "Grim Tutor",
+    "Diabolic Tutor",
+    "Basalt Monolith",
+    "Jeweled Lotus",
+    "City of Brass",
+    "Mana Confluence",
+    "Reflecting Pool",
+    "Exotic Orchard",
+    "Forbidden Orchard",
+    "Gemstone Caverns",
+    "Boseiju, Who Endures",
+    "Otawara, Soaring City",
+    "Takenuma, Abandoned Mire",
+    "Sokenzan, Crucible of Defiance",
+    "Eiganjo, Seat of the Empire",
+    "Urza's Tower",
+    "Urza's Power Plant",
+    "Urza's Mine",
+    "Expedition Map",
+    "Sylvan Scrying",
+    "Ancient Stirrings",
+    "Crop Rotation",
+    "Teferi, Hero of Dominaria",
+    "Karn, the Great Creator",
+    "Narset, Parter of Veils",
+    "Ruination",
+    "Armageddon",
+    "Ravages of War",
+    "Static Orb",
+    "Leonin Arbiter",
+    "Aven Mindcensor",
+    "Opposition Agent",
+    "Hullbreacher",
+    "Notion Thief",
+    "Dauthi Voidwalker",
+    "Drannith Magistrate",
+    "Eidolon of the Great Revel",
+    "Lava Spike",
+    "Rift Bolt",
+    "Skewer the Critics",
+    "Sword of Fire and Ice",
+    "Sword of Feast and Famine",
+    "Sword of Light and Shadow",
+    "Valakut, the Molten Pinnacle",
+    "Dryad of the Ilysian Grove",
+    "Azusa, Lost but Seeking",
+    "Amulet of Vigor",
+    "Summoner's Pact",
+    "Scapeshift",
+    "Omniscience",
+    "Cabal Ritual",
+    "Past in Flames",
+    "Ad Nauseam",
+    "Angel's Grace",
+    "Grapeshot",
+    "Empty the Warrens",
+    "Gifts Ungiven",
+    "Desperate Ritual",
+    "Pyretic Ritual",
+    "Manamorphose",
+    "Baral, Chief of Compliance",
+    "Goblin Electromancer",
+    "Engineered Explosives",
+    "Glacial Chasm",
+    "Dark Depths",
+    "Thespian's Stage",
+    "Vampire Hexmage",
+    "Life from the Loam",
+    "Punishing Fire",
+    "Grove of the Burnwillows",
+    "Parasitic Strix",
+    "Cavern Harpy",
+    "Misthollow Griffin",
+    "Eternal Scourge",
+    "Squee, the Immortal",
+    "Painter's Servant",
+    "Grindstone",
+    "Helm of Obedience",
+    "Counterbalance",
+    "Terminus",
+    "Entreat the Angels",
+    "Hymn to Tourach",
+    "Sinkhole",
+    "Smallpox",
+    "Geralf's Messenger",
+    "Young Wolf",
+    "Strangleroot Geist",
+    "Indomitable Creativity",
+    "Dwarven Mine",
+    "Ephemerate",
+    "Malakir Rebirth",
+    "Undying Malice",
+    "Feign Death",
     "Blood Moon",
     "Chalice of the Void",
     "Ensnaring Bridge",
@@ -428,20 +623,30 @@ const CARD_NAMES = [
 
 const RARITY = new Set(["common", "uncommon", "rare", "mythic"]);
 
-async function fetchCard(name) {
-  const url = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`;
+async function fetchCollection(names) {
+  const url = 'https://api.scryfall.com/cards/collection';
+  const identifiers = names.map(name => ({ name }));
+  
   for (let attempt = 0; attempt < 3; attempt++) {
-    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ identifiers })
+    });
+    
     if (res.status === 429 || res.status >= 500) {
-      await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
       continue;
     }
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status} for "${name}"`);
+      throw new Error(`HTTP ${res.status} for collection`);
     }
     return res.json();
   }
-  throw new Error(`rate-limited for "${name}"`);
+  throw new Error('rate-limited for collection');
 }
 
 /** Flatten our source-of-truth fields off a raw Scryfall card JSON. */
@@ -473,22 +678,40 @@ function mapToCard(raw) {
   return card;
 }
 
+const uniqueNames = [...new Set(CARD_NAMES)];
 const ok = [];
 const failed = [];
-for (const name of CARD_NAMES) {
+const notFound = [];
+
+// Scryfall allows up to 75 cards per collection request
+const CHUNK_SIZE = 75;
+for (let i = 0; i < uniqueNames.length; i += CHUNK_SIZE) {
+  const chunk = uniqueNames.slice(i, i + CHUNK_SIZE);
   try {
-    const raw = await fetchCard(name);
-    ok.push(mapToCard(raw));
-    process.stdout.write(`ok   ${name}\n`);
+    const data = await fetchCollection(chunk);
+    for (const raw of data.data) {
+      ok.push(mapToCard(raw));
+      process.stdout.write(`ok   ${raw.name}
+`);
+    }
+    if (data.not_found && data.not_found.length > 0) {
+      for (const nf of data.not_found) {
+        notFound.push(nf.name);
+        process.stdout.write(`FAIL ${nf.name}: Not found
+`);
+      }
+    }
   } catch (err) {
-    failed.push(name);
-    process.stdout.write(`FAIL ${name}: ${err.message}\n`);
+    process.stdout.write(`FAIL chunk ${Math.floor(i/CHUNK_SIZE)}: ${err.message}
+`);
+    failed.push(...chunk);
   }
-  await new Promise((r) => setTimeout(r, 450)); // stay well under Scryfall's ~10 req/s
+  await new Promise((r) => setTimeout(r, 200)); // safe delay between batches
 }
 
 if (ok.length < 30) {
-  console.error(`\nOnly ${ok.length} cards fetched (need >= 30) — aborting write.`);
+  console.error(`
+Only ${ok.length} cards fetched (need >= 30) — aborting write.`);
   process.exit(1);
 }
 
@@ -501,6 +724,7 @@ import type { Card } from "./types";
 export const MOCK_CARDS: Card[] = `;
 
 writeFileSync(OUT, header + JSON.stringify(ok, null, 2) + ";\n");
-console.log(`\nWrote ${ok.length} cards to ${OUT}`);
+console.log(`
+Wrote ${ok.length} cards to ${OUT}`);
 if (failed.length) console.log(`Failed (${failed.length}): ${failed.join(", ")}`);
-
+if (notFound.length) console.log(`Not found (${notFound.length}): ${notFound.join(", ")}`);
