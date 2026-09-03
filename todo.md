@@ -51,3 +51,13 @@
 - Duel: 1-player-vs-Oracle-AI only, or hot-seat too?
 - How much rules depth for a first playable? (suggest: creatures + lands +
   combat + basic targeted removal, no stack interaction yet.)
+
+## Big feature #4 — "Mind Mapper" Mode (General Purpose AI Expansion)
+- **Goal:** The application is no longer strictly MTG; it is a general-purpose AI. "Mind Mapper" is a new core feature reflecting this.
+- **Concept:** A 3D visual representation of the user's brain/memory.
+- **Behavior:** 
+  - Starts as a colorless 3D model of a brain.
+  - As the user converses with the AI (Oracle), the AI extracts facts, memories, and personal information about the user.
+  - Each time a memory/fact is stored, the 3D brain model receives color, lights up, and visually evolves to reflect the AI's growing knowledge of the user.
+- **UI:** A new button in the sidebar (Spine.tsx) to switch to this mode.
+- **Status:** Being worked on by the agents. Needs a 3D brain model asset and a backend mechanism for the AI to extract and save user memories, then sync that state to the frontend to drive the brain's color/illumination.
