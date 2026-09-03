@@ -10,20 +10,7 @@ export function MindMapper() {
   const memories = useOracleStore((s) => s.memories);
   const [hoveredMemory, setHoveredMemory] = useState<string | null>(null);
 
-  // Apply basic material to the imported GLTF so it looks like a wireframe/hologram
-  useMemo(() => {
-    scene.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: '#ffffff',
-          wireframe: true,
-          transparent: true,
-          opacity: 0.1,
-        });
-      }
-    });
-  }, [scene]);
+
 
   useFrame((_, delta) => {
     if (groupRef.current) {
