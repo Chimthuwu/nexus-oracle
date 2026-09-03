@@ -46,6 +46,13 @@ export interface Conversation {
 /** Turns sent back to the server as `history` (server bounds its own window). */
 const HISTORY_SEND_LIMIT = 16;
 
+export interface Memory {
+  id: string;
+  text: string;
+  position: [number, number, number];
+  color: string;
+}
+
 export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper';
 
 const CARDS_API = 'https://nexus-oracle-u6ra.onrender.com/api/cards/search';
@@ -70,6 +77,10 @@ interface OracleState {
   browserQuery: string;
   browserColors: string[];
   loadBrowser: (opts?: { query?: string; colors?: string[] }) => Promise<void>;
+
+  // ── Mind Mapper ──────────────────────────────────────────────────────
+  memories: Memory[];
+  addMemory: (text: string, position: [number, number, number], color: string) => void;
 
   // ── Persisted conversation history ────────────────────────────────────
   conversations: Conversation[];
@@ -134,6 +145,12 @@ export const useOracleStore = create<OracleState>()(
           set({ browserLoading: false });
         }
       },
+
+      memories: [],
+      addMemory: (text, position, color) => 
+        set((s) => ({
+          memories: [...s.memories, { id: genId(), text, position, color }]
+        })),
 
       conversations: [],
       activeId: null,
@@ -226,7 +243,7 @@ export const useOracleStore = create<OracleState>()(
     }),
     {
       name: 'nexus-conversations',
-      partialize: (s) => ({ conversations: s.conversations, activeId: s.activeId }),
+      partialize: (s) => ({ conversations: s.conversations, activeId: s.activeId, memories: s.memories }),
     }
   )
 );

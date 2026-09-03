@@ -68,6 +68,21 @@ export function CommandBar() {
 
     if (isListening) recognitionRef.current?.stop();
 
+    if (message.startsWith('/memory ')) {
+      const text = message.replace('/memory ', '').trim();
+      const randomPos: [number, number, number] = [
+        (Math.random() - 0.5) * 3,
+        (Math.random() - 0.5) * 2 + 1,
+        (Math.random() - 0.5) * 3,
+      ];
+      const colors = ['#8b6cff', '#d6a84f', '#5b8cff', '#ff5b5b', '#5bff8b'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      useOracleStore.getState().addMemory(text, randomPos, randomColor);
+      setQuery('');
+      return;
+    }
+
     setIsSubmitting(true);
     setThinking(true);
     setInspectedCard(null);
