@@ -29,11 +29,12 @@ export function ResponseCaption() {
   if (!responseText) return null;
 
   return (
-    <div className="responseText-wrap" id="responseWrap">
+    <div className="response-wrap show" id="responseWrap">
       <div className="glass">
-        <div className="responseText-eyebrow"><span className="pulse"></span>THE ORACLE</div>
-        <div className="responseText-text" id="responseText">
+        <div className="response-eyebrow"><span className="pulse"></span>THE ORACLE</div>
+        <div className="response-text" id="responseText">
           {displayedText}
+          {displayedText.length < responseText.length && <span className="cursor"></span>}
         </div>
       </div>
     </div>
