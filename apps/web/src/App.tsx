@@ -4,10 +4,26 @@ import { Environment, Stars, Sparkles } from '@react-three/drei';
 import { Oracle } from './scene/Oracle';
 import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';
+import { CardMesh } from './scene/CardMesh';
 import { CommandBar } from './components/CommandBar';
 import { ResponseCaption } from './components/ResponseCaption';
 import { InspectHUD } from './components/InspectHUD';
 import { Spine } from './components/Spine';
+import { useOracleStore } from './store/useOracleStore';
+
+function SceneContent() {
+  const cards = useOracleStore(state => state.cards);
+  return (
+    <>
+      <Oracle />
+      {cards.map((card, idx) => (
+        <CardMesh key={card.id} card={card} index={idx} total={cards.length} />
+      ))}
+      <CameraRig />
+      <Effects />
+    </>
+  );
+}
 
 function App() {
   return (
@@ -26,9 +42,7 @@ function App() {
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <Sparkles count={200} scale={20} size={5} speed={0.4} color="#8b6cff" opacity={0.2} />
 
-        <Oracle />
-        <CameraRig />
-        <Effects />
+        <SceneContent />
       </Canvas>
       
       {/* UI Overlays */}
