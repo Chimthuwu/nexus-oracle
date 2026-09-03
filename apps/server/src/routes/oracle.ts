@@ -3,7 +3,7 @@ import type { Card, SearchFilters } from "@nexus/card-data";
 import { searchCards } from "@nexus/card-data";
 import { chatOnce } from "../llm/client";
 import type { ChatMessage } from "../llm/client";
-import { SYSTEM_PROMPT } from "../llm/prompt";
+import { getSystemPrompt } from "../llm/prompt.js";
 import { ORACLE_TOOLS } from "../llm/tools";
 
 /** Upstream (LLM/search) failure reply — a parseable 200, never a 500. */
@@ -107,7 +107,7 @@ export async function registerOracleRoutes(app: FastifyInstance): Promise<void> 
 
         // ── Tool-use round trip ────────────────────────────────────────────
         const messages: ChatMessage[] = [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: getSystemPrompt() },
           ...historyToMessages(history),
           { role: "user", content: message },
         ];

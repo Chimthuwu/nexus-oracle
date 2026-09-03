@@ -1,0 +1,4002 @@
+[
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "How would you describe yourself to someone who has never met you?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What are three things that feel most important to who you are?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you think makes you different from most people?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What parts of your personality are you most proud of?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What parts of yourself are you still trying to understand?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "How would your closest friend describe you?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "How would your family describe you?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you wish people understood about you immediately?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What is something about yourself that took you a long time to realize?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "Do you feel like you know yourself well?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What kind of person are you trying to become?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What values do you try to live by?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "Which of your values are non-negotiable?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What usually influences your decisions the most?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "Do you usually trust your head or your gut?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What makes you feel most like yourself?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "When do you feel least like yourself?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What is something you will never apologize for being?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What is something about yourself you would like to change?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "If you had to describe your personality using five words, what would they be?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What personal quality do you rely on most?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What personal quality gets you into trouble?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you think people notice about you first?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you think people notice about you only after knowing you?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What part of your identity feels most stable?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "How has your sense of identity changed over time?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What labels do you identify with, if any?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What labels do you dislike being given?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What makes you feel authentic?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What makes you feel like you are performing for others?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "When do you feel most confident?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "When do you doubt yourself most?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you think you are unusually good at understanding?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you think you are unusually bad at understanding?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What misconception do people often have about you?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What is something you know about yourself that others might not notice?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What are you most protective of about yourself?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What aspect of yourself do you want to explore more?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What do you want the AI to understand about you above everything else?"
+  },
+  {
+    "category": "01 Identity & Self-Concept",
+    "text": "What question about your identity have you never been asked?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "Where did you grow up?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your childhood like?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What is one of your earliest memories?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your favourite thing to do as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you want to become when you were young?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your favourite childhood game?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your favourite childhood toy?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What cartoons did you love growing up?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What shows did you love as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What music did you hear growing up?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "Who did you look up to when you were young?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your childhood home like?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "Did you have childhood pets?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your favourite place to go as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What childhood memory still makes you laugh?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What childhood memory still affects you?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you get into trouble for as a kid?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was school like for you?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What was your favourite school subject?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What subject did you dislike most?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What teacher do you remember most?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What school friend do you remember most?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you collect as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What foods remind you of childhood?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What smell reminds you of childhood?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What song reminds you of childhood?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What place reminds you of childhood?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What family activity did you enjoy most?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you do on weekends as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What were you afraid of as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What made you feel safe as a child?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you think adults understood that children did not?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you think adulthood would be like?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What childhood rule seemed ridiculous to you?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What childhood belief did you later outgrow?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What childhood dream stayed with you?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What childhood habit do you still have?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you wish you had more of growing up?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What did you have plenty of growing up?"
+  },
+  {
+    "category": "02 Childhood & Early Life",
+    "text": "What would you tell your younger self?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Who are the most important people in your family?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Who are you closest to in your family?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What traditions does your family have?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What did your family teach you that stayed with you?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family memory means the most to you?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Who in your family do you admire most?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What characteristics seem to run in your family?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What is something funny about your family?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What do you wish your family understood about you?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What role do you usually play in your family?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family stories do you love hearing?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What does your ideal family gathering look like?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family meal is special to you?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family object has sentimental value?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Who in your family influenced your interests?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Who encouraged you most growing up?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Who challenged you most growing up?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family habit do you have now?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family phrase or saying do you remember?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family celebration do you enjoy?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "How has your relationship with your family changed?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family relationship has changed most over time?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family quality are you grateful for?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family pattern would you like to break?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family pattern would you like to preserve?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What does home mean to you?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "Where do you feel most at home?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What makes a place feel like home?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What would your ideal home contain?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What part of your current environment matters most to you?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What household task do you enjoy?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What household task do you hate?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What object in your home would be hardest to replace?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What object has a story behind it?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What place from your past would you revisit?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family memory would you preserve forever?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What do you hope your future family life looks like?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What kind of family traditions would you create?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family lesson do you want to pass on?"
+  },
+  {
+    "category": "03 Family & Home",
+    "text": "What family question would you like to explore further?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes someone a good friend to you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What qualities do you value most in people?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How do you usually make friends?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Do you prefer a few close friends or many friends?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes you trust someone?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes you lose trust in someone?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What is the funniest thing you've experienced with a friend?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Who has had the biggest positive influence on your life?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Is there someone you wish you were still close with?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes you feel appreciated by friends?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How do you show people that you care?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How do you prefer people to support you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What behaviour annoys you most in other people?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes conversation enjoyable for you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Do you prefer deep conversations or casual conversations?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How social do you like to be?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How much alone time do you need?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What kind of people energise you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What kind of people drain you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes you feel included?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes you feel excluded?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes a friendship last?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What causes friendships to fade for you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How do you handle disagreements with friends?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How quickly do you forgive?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "How do you know when you can be vulnerable with someone?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What kind of humour do you enjoy with friends?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What do you like doing with friends?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What is your favourite shared memory with someone?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Who do you turn to when you need advice?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Who do you turn to when you need distraction?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Who knows you best?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Who understands your humour best?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What social situation makes you uncomfortable?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What social situation makes you excited?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "Do you enjoy meeting new people?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes someone memorable to you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What makes someone boring to you?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What friendship lesson did you learn the hard way?"
+  },
+  {
+    "category": "04 Friends & Social World",
+    "text": "What kind of friend do you want to be?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite food?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What food could you eat repeatedly without getting bored?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What food do you absolutely dislike?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite drink?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite colour?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What kind of music do you love?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What song could you listen to forever?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "Who are your favourite musicians?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What are your favourite movies?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What are your favourite TV shows?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What books have had an impact on you?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What video games do you love?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite game of all time?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What kind of art do you like?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What aesthetics appeal to you?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite season?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What weather makes you happiest?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "Are you more of a morning person or night person?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite place you've visited?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What small things make you disproportionately happy?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite smell?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite sound?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What texture do you enjoy?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What clothing do you feel best wearing?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite colour combination?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite animal?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite plant or flower?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite dessert?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite snack?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite cuisine?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite restaurant type?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite way to spend a lazy day?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite way to celebrate?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite holiday?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite time of day?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite kind of landscape?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite kind of architecture?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite fictional character?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What is your favourite quote?"
+  },
+  {
+    "category": "05 Preferences & Everyday Favourites",
+    "text": "What preference of yours would surprise people?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you enjoy doing in your free time?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby could you spend hours doing?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What is something you would love to learn?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What subjects could you talk about for hours?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What are you currently obsessed with?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What niche topic do you know surprisingly much about?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby have you always wanted to try?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What creative activities do you enjoy?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy making things?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What have you created that you're proud of?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What activities make you lose track of time?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you enjoy learning about just for fun?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby would you pursue if money and time didn't matter?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What recently interested you?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Has an interest ever changed your life?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby did you have when you were younger?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby did you abandon and miss?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby would you like to return to?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What hobby would you never understand the appeal of?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you like collecting?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you like researching?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What rabbit holes do you fall into online?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What kind of documentaries interest you?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What kind of podcasts interest you?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What kind of communities do you enjoy joining?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you like discussing with strangers?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you like teaching other people?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What do you enjoy learning from other people?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What project would you start for fun?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What creative medium interests you?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy tinkering with technology?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy building things?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy fixing things?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy exploring new places?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy competition?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy puzzles?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy performing?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "Do you enjoy collecting experiences?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What interest best represents you right now?"
+  },
+  {
+    "category": "06 Hobbies & Interests",
+    "text": "What interest do you think the AI should know more about?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What are you currently working toward?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What is your biggest goal right now?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What do you want to accomplish this year?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "Where do you want to be five years from now?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would your ideal life look like?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What have you always wanted to accomplish?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What dream have you told very few people about?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What motivates you to keep going?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What does success mean to you?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would make you proud of your life?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you attempt if failure were impossible?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you do if money were irrelevant?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What legacy would you like to leave?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What skill would you most like to master?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What is standing between you and a major goal?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What goal have you postponed?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What goal did you recently complete?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What goal are you most excited about?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What goal scares you?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What goal feels unrealistic but exciting?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What small goal matters this week?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What habit would move you toward your goals?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What usually derails your plans?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What helps you stay accountable?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "How do you measure progress?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "Do you prefer ambitious plans or flexible plans?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What does a successful day look like?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What does a successful year look like?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you like to build?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you like to create?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you like to learn?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you like to experience?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you like to change about your environment?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you like to change about your routine?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What future opportunity excites you?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What future possibility worries you?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you do with an extra ten hours every week?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What would you pursue with unlimited resources?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What future version of yourself are you trying to create?"
+  },
+  {
+    "category": "07 Goals & Ambitions",
+    "text": "What goal should the AI remind you about?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What do you currently do for work or study?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What do you enjoy about it?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What do you dislike about it?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What kind of work feels fulfilling?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What kind of work drains you?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What are you particularly good at?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What skills do people come to you for?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What skill do you wish you were better at?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What was your favourite job or project?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What is the most interesting thing you've learned professionally?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What are you currently trying to learn?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "Do you prefer working alone or with others?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What environment helps you work best?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What would your dream job look like?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What would you do professionally if you could start over?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What was your favourite school subject?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What did you learn outside formal education?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "Who taught you an important skill?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What skill did you teach yourself?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What are you proudest of professionally?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What professional mistake taught you the most?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What kind of feedback helps you improve?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What kind of feedback frustrates you?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "How do you approach difficult tasks?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "How do you organise projects?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "Do you prefer structure or freedom?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "How do you handle deadlines?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What work makes you lose track of time?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What work feels meaningless to you?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What would make your current work better?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What career path interests you?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What career path would you never choose?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What would you like to be known for professionally?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What expertise do you want to develop?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What would you teach a beginner?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What would you like the AI to help you learn?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What professional relationship matters most to you?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What project are you most excited about?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What skill is currently underused in your life?"
+  },
+  {
+    "category": "08 Work Education & Skills",
+    "text": "What career question are you still figuring out?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What is one of the happiest memories of your life?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What is one of the funniest moments you've experienced?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What experience changed you the most?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What event made you see the world differently?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What will you never forget?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What is the biggest adventure you've had?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What is the most spontaneous thing you've done?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What did you do that required real courage?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What accomplishment are you most proud of?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What mistake taught you the most?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What do you wish you had done differently?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What difficult thing did you overcome?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What experience made you stronger?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What moment would you love to relive?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "If you could preserve one memory forever, which would it be?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What was your most unexpected life event?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What was your most embarrassing funny moment?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What was your most peaceful memory?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What was your most exciting memory?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What was your strangest experience?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What trip do you remember most?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What celebration do you remember most?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What concert or performance do you remember most?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What meal became a memorable event?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What random day turned out to matter?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What coincidence do you remember?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What decision changed your direction?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What opportunity changed your life?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What person appeared at an important moment?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What place is attached to a powerful memory?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What object reminds you of an important event?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What song is attached to a memory?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What smell triggers a memory?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What photograph tells an important story?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What memory have you recently rediscovered?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What memory do you rarely talk about?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What memory do you tell often?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What memory has changed meaning over time?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What life chapter feels most important?"
+  },
+  {
+    "category": "09 Life Events & Memories",
+    "text": "What memory would you want your AI companion to understand?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What usually makes you happy?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What usually makes you angry?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What tends to stress you out?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What helps you calm down?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel safe?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel understood?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel appreciated?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel motivated?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you lose motivation?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you handle difficult situations?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "Do you keep emotions inside or express them?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What do you do on a bad day?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What encouragement works best for you?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What criticism is useful to you?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What criticism bothers you?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel proud?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel embarrassed?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel excited?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel bored?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel restless?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel peaceful?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel connected?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What makes you feel lonely?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What helps you recover after a difficult experience?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "Who do you talk to when overwhelmed?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What environment helps you regulate your mood?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What activities improve your mood?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What activities worsen your mood?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you celebrate good news?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you respond to disappointment?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you respond to uncertainty?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you respond when plans change?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you respond when someone disagrees with you?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What kind of reassurance helps?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What kind of reassurance feels unhelpful?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "How do you know when you need a break?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What does emotional support look like to you?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What helps you feel grounded?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What emotional pattern have you noticed in yourself?"
+  },
+  {
+    "category": "10 Emotional World & Coping",
+    "text": "What should the AI understand about how you experience emotions?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What makes a good life?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What principle should everyone live by?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What do you strongly believe?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What opinion have you changed your mind about?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What do you wish more people understood?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does happiness mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does freedom mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does friendship mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does love mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does success mean personally?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What do people misunderstand about you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "Do you expect the best or worst?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What gives your life meaning?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What is worth fighting for?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What question about life do you think about most?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What value would you never compromise?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What value have you learned to appreciate?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What makes something morally important to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does fairness mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does loyalty mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does honesty mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does kindness mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does courage mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does responsibility mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does independence mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does community mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What does trust mean to you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What makes someone admirable?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What makes someone respectable?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What makes someone trustworthy?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What belief from childhood stayed with you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What belief from childhood did you reject?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What worldview has influenced you most?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What idea changed how you see the world?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What philosophical question fascinates you?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What contradiction do you notice in your own beliefs?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What value do you wish you practiced more?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What value do you think society underestimates?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What would you want future generations to believe?"
+  },
+  {
+    "category": "11 Beliefs Values & Worldview",
+    "text": "What part of your worldview should the AI never assume?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "If you could live anywhere, where would you live?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "If you could instantly master one skill, what would it be?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "If you could meet anyone from history, who would you meet?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "If you could experience one fictional world, which would you choose?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "If you could redesign your life completely, what would you change?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your perfect day look like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your perfect weekend look like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your dream home be like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "Who would surround you in your ideal life?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you do with unlimited free time?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What adventure would you love to take?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your ideal future self be like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What should never change about you?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What should change dramatically?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What do you hope people remember about you?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you tell your younger self?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What will your future self thank you for?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What extraordinary thing would you add to everyday life?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What question do you wish someone would ask you?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What do you think the AI still doesn't understand about you?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "Where would you travel if time were unlimited?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What world would you build from scratch?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your ideal community look like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your ideal workspace look like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your ideal morning look like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your ideal evening look like?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would your ideal year contain?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What experience would you give everyone at least once?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What technology would you invent?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What problem would you solve?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you learn from an alternate version of yourself?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you change about the future if you could?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you preserve from the past?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What future tradition would you create?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you explore if you could go anywhere?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would you create if you had a lifetime to do it?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What impossible project would you attempt?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What would make the future feel exciting?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What future possibility feels most like you?"
+  },
+  {
+    "category": "12 Future Imagination & Possibilities",
+    "text": "What question should Mind Mapper ask you one year from now?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "Who is a person you think about often?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What role does this person play in your life?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What memory connects you to this person?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What do you admire about this person?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What have you learned from this person?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "How did you meet this person?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What places are associated with this person?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What interests do you share with this person?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "What project or experience connects you?"
+  },
+  {
+    "category": "13 Relationships & People Mapping",
+    "text": "How has this relationship changed?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important people in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which people is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What people has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important places in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which places is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What places has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important projects in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which projects is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What projects has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important memories in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which memories is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What memories has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important interests in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which interests is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What interests has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important goals in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which goals is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What goals has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important preferences in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which preferences is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What preferences has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important skills in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which skills is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What skills has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important media in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which media is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What media has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important routines in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which routines is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What routines has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important habits in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which habits is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What habits has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important objects in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which objects is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What objects has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important events in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which events is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What events has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important ideas in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which ideas is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What ideas has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important achievements in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which achievements is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What achievements has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important challenges in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which challenges is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What challenges has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important communities in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which communities is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What communities has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important creative works in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which creative works is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What creative works has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important travel in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which travel is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What travel has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important learning in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which learning is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What learning has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important work in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which work is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What work has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important technology in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which technology is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What technology has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important food in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which food is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What food has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important music in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which music is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What music has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important games in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which games is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games has influenced another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games is connected to one of your closest relationships?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games is connected to one of your major goals?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games is connected to your happiest memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games is connected to a difficult period?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games represents something important about you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games do you want to explore further?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games would you remove from your life if you could?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games do you think the AI currently knows too little about?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games should the AI never confuse with something else?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What games has an unexpected connection to another part of your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What is an important books in your life?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "Which books is most strongly connected to your identity?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books brings back a strong memory?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books would you like the AI to remember?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books has changed significantly over time?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books currently occupies your attention?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books are you most proud of?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books would you like to experience again?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books would you recommend to someone like you?"
+  },
+  {
+    "category": "13-43 Graph Discovery",
+    "text": "What books has influenced another part of your life?"
+  }
+]

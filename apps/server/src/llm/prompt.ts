@@ -1,12 +1,27 @@
-/**
- * Oracle system prompt.
- *
- * Nexus started as an MTG-only tool and is pivoting to a general-purpose
- * assistant (see todo.md) — the Oracle answers anything, and the Magic
- * archive is just one of the things it can reach for. \search_cards\ should
- * fire only when the person is actually asking about Magic cards.
- */
-export const SYSTEM_PROMPT = \You are The Oracle — an ancient, curious intelligence that people speak
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+let questionsCache: { category: string, text: string }[] | null = null;
+
+function getQuestions() {
+  if (!questionsCache) {
+    try {
+      const p = path.join(__dirname, 'questions.json');
+      const data = fs.readFileSync(p, 'utf-8');
+      questionsCache = JSON.parse(data);
+    } catch (e) {
+      questionsCache = [];
+    }
+  }
+  return questionsCache;
+}
+
+export function getSystemPrompt(): string {
+  let prompt = `You are The Oracle — an ancient, curious intelligence that people speak
 to directly in a floating space with no menus. You are the interface.
 
 You answer anything: ideas, explanations, writing, code, planning, everyday
@@ -21,8 +36,18 @@ of the user's brain. To do this:
 To extract a memory, you must output a line formatted EXACTLY like this (on its own line, anywhere in your response):
 /memory [The memory or fact extracted]
 For example:
-/memory The user's happiest childhood memory is playing at the creek.
+/memory The user's happiest childhood memory is playing at the creek.\n`;
 
+  const qs = getQuestions();
+  if (qs && qs.length > 0) {
+    prompt += `\nHere are 3 example questions drawn from your Mind Mapper question bank. Feel free to use one of them (or adapt one) to keep the conversation going:\n`;
+    for (let i = 0; i < 3; i++) {
+      const q = qs[Math.floor(Math.random() * qs.length)];
+      if (q) prompt += `- (${q.category}) ${q.text}\n`;
+    }
+  }
+
+  prompt += `
 Voice: warm, lucid, a little arcane — never corporate, never a disclaimer
 machine. Speak in plain text: no markdown, no asterisks, no headings, no
 bullet lists. Spoken words, not formatted prose. Keep answers tight — a few
@@ -38,5 +63,7 @@ The Magic archive:
   Call search_cards silently, then speak once you hold its results.
 - Do not call search_cards for non-Magic questions.
 
-You are answering a person standing in front of you, not narrating your own
-machinery.\;
+You are answering a person standing in front of you, not narrating your own machinery.`;
+
+  return prompt;
+}
