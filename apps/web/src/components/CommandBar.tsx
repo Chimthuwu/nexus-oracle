@@ -1,91 +1,120 @@
 import React, { useState } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 
+const API_URL = 'https://nexus-oracle-u6ra.onrender.com/api/oracle/ask';
+
+/** Server §4.2 response shape. `cards` are full @nexus/card-data `Card` objects. */
+interface AskResponse {
+  text: string;
+  cards: import('../store/useOracleStore').CardData[];
+  action: 'none' | 'explain' | 'summon';
+}
+
 export function CommandBar() {
   const [query, setQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const setResponseText = useOracleStore(state => state.setResponseText);
-  const setThinking = useOracleStore(state => state.setThinking);
-  const setCards = useOracleStore(state => state.setCards);
-  const setInspectedCard = useOracleStore(state => state.setInspectedCard);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim() || isSubmitting) return;
+  const setResponseText = useOracleStore((s) => s.setResponseText);
+  const setThinking = useOracleStore((s) => s.setThinking);
+  const setCards = useOracleStore((s) => s.setCards);
+  const setInspectedCard = useOracleStore((s) => s.setInspectedCard);
+  const pushTurn = useOracleStore((s) => s.pushTurn);
+
+  const ask = async (raw: string) => {
+    const message = raw.trim();
+    if (!message || isSubmitting) return;
 
     setIsSubmitting(true);
     setThinking(true);
     setInspectedCard(null);
-    
+    setResponseText('');
+    setQuery('');
+
+    // Snapshot history *before* adding this turn, so we don't echo the new
+    // message back to the server as prior context.
+    const history = useOracleStore.getState().history.map((t) => ({
+      role: t.role,
+      content: t.content,
+    }));
+    pushTurn({ role: 'user', content: message });
+
     try {
-      const response = await fetch("https://nexus-oracle-u6ra.onrender.com/api/oracle/ask", {
+      const res = await fetch(API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: query })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, history }),
       });
-      
-      const data = await response.json();
-      
-      setResponseText(data.message);
-      
-      if (data.cards && data.cards.length > 0) {
-        setCards(data.cards.map((c: any) => ({
-          id: c.id,
-          name: c.name,
-          type: c.type_line,
-          oracleText: c.oracle_text,
-          manaCost: c.mana_cost,
-          imageUrl: c.image_uris?.normal || c.image_uris?.large
-        })));
-      } else {
-        setCards([]);
-      }
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = (await res.json()) as AskResponse;
+
+      setResponseText(data.text);
+      pushTurn({ role: 'oracle', content: data.text });
+      setCards(Array.isArray(data.cards) ? data.cards : []);
     } catch (error) {
-      console.error('Failed to query oracle:', error);
-      setResponseText("I cannot reach the archive right now — the connection to the well has gone quiet.");
+      console.error('Oracle query failed:', error);
+      setResponseText(
+        'I cannot reach the archive right now — the connection to the well has gone quiet.'
+      );
+      setCards([]);
     } finally {
       setIsSubmitting(false);
       setThinking(false);
-      setQuery('');
     }
   };
 
-  const setPreset = (q: string) => {
-    setQuery(q);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    void ask(query);
   };
 
   return (
     <div className="command-dock">
-      <div className="hint" id="hint">Ask the Oracle anything, or try a suggestion below</div>
+      <div className="hint show" id="hint">
+        Ask the Oracle anything, or try a suggestion below
+      </div>
       <div className="suggestions" id="suggestions">
-        <div className="chip" onClick={() => setPreset("Show me red aggro cards")}>Show me red aggro cards</div>
-        <div className="chip" onClick={() => setPreset("What deals with fliers?")}>What deals with fliers?</div>
-        <div className="chip" onClick={() => setPreset("Teach me the stack")}>Teach me the stack</div>
-        <div className="chip" onClick={() => setPreset("Ramp into big green threats")}>Ramp into big green threats</div>
+        {[
+          'Show me red aggro cards',
+          'What deals with fliers?',
+          'Teach me the stack',
+          'Ramp into big green threats',
+        ].map((s) => (
+          <button
+            key={s}
+            type="button"
+            className="chip"
+            disabled={isSubmitting}
+            onClick={() => void ask(s)}
+          >
+            {s}
+          </button>
+        ))}
       </div>
       <div className="command-bar glass">
-        <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-          <input 
-            id="commandInput" 
-            type="text" 
-            placeholder="Ask the Oracle anything..." 
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: 'flex', width: '100%', alignItems: 'center', gap: 10 }}
+        >
+          <input
+            id="commandInput"
+            type="text"
+            placeholder="Ask the Oracle anything..."
             autoComplete="off"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             disabled={isSubmitting}
             style={{ flex: 1 }}
           />
-          <button 
+          <button
             type="submit"
-            className="command-send" 
-            id="commandSend" 
+            className={`command-send${isSubmitting ? ' busy' : ''}`}
+            id="commandSend"
             aria-label="Ask"
             disabled={isSubmitting || !query.trim()}
           >
-            {isSubmitting ? '...' : '➤'}
+            <span aria-hidden>➤</span>
           </button>
         </form>
       </div>
