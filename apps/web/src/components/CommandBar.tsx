@@ -1,23 +1,21 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import React, { useState } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 
 export function CommandBar() {
   const [query, setQuery] = useState('');
-  const setThinking = useOracleStore(state => state.setThinking);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const setResponseText = useOracleStore(state => state.setResponseText);
+  const setThinking = useOracleStore(state => state.setThinking);
   const setCards = useOracleStore(state => state.setCards);
   const setInspectedCard = useOracleStore(state => state.setInspectedCard);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!query.trim()) return;
-    
-    const userQuery = query;
-    setQuery('');
+    if (!query.trim() || isSubmitting) return;
+
+    setIsSubmitting(true);
     setThinking(true);
-    setResponseText('');
-    setCards([]);
     setInspectedCard(null);
     
     try {
@@ -26,48 +24,71 @@ export function CommandBar() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: userQuery })
+        body: JSON.stringify({ query })
       });
       
       const data = await response.json();
       
-      setThinking(false);
-      setResponseText(data.text);
+      setResponseText(data.message);
+      
       if (data.cards && data.cards.length > 0) {
-        setCards(data.cards);
+        setCards(data.cards.map((c: any) => ({
+          id: c.id,
+          name: c.name,
+          type: c.type_line,
+          oracleText: c.oracle_text,
+          manaCost: c.mana_cost,
+          imageUrl: c.image_uris?.normal || c.image_uris?.large
+        })));
+      } else {
+        setCards([]);
       }
-      
-      // Auto clear text after a while for testing
-      setTimeout(() => setResponseText(''), 8000);
-      
     } catch (error) {
-      console.error(error);
+      console.error('Failed to query oracle:', error);
+      setResponseText("I cannot reach the archive right now — the connection to the well has gone quiet.");
+    } finally {
+      setIsSubmitting(false);
       setThinking(false);
-      setResponseText("I can't reach the archive right now — the connection to the well has gone quiet.");
-      setTimeout(() => setResponseText(''), 8000);
+      setQuery('');
     }
   };
 
+  const setPreset = (q: string) => {
+    setQuery(q);
+  };
+
   return (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-50">
-      <form 
-        onSubmit={handleSubmit}
-        className="backdrop-blur-xl bg-black/40 border border-white/10 p-2 rounded-2xl flex items-center gap-4 shadow-2xl shadow-purple-900/20"
-      >
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Ask the Oracle anything..."
-          className="flex-1 bg-transparent border-none outline-none text-white px-4 py-2 placeholder:text-gray-500"
-        />
-        <button 
-          type="submit"
-          className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-2 rounded-xl font-semibold hover:scale-105 transition-transform"
-        >
-          ➤
-        </button>
-      </form>
+    <div className="command-dock">
+      <div className="hint" id="hint">Ask the Oracle anything, or try a suggestion below</div>
+      <div className="suggestions" id="suggestions">
+        <div className="chip" onClick={() => setPreset("Show me red aggro cards")}>Show me red aggro cards</div>
+        <div className="chip" onClick={() => setPreset("What deals with fliers?")}>What deals with fliers?</div>
+        <div className="chip" onClick={() => setPreset("Teach me the stack")}>Teach me the stack</div>
+        <div className="chip" onClick={() => setPreset("Ramp into big green threats")}>Ramp into big green threats</div>
+      </div>
+      <div className="command-bar glass">
+        <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+          <input 
+            id="commandInput" 
+            type="text" 
+            placeholder="Ask the Oracle anything..." 
+            autoComplete="off"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            disabled={isSubmitting}
+            style={{ flex: 1 }}
+          />
+          <button 
+            type="submit"
+            className="command-send" 
+            id="commandSend" 
+            aria-label="Ask"
+            disabled={isSubmitting || !query.trim()}
+          >
+            {isSubmitting ? '...' : '➤'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
