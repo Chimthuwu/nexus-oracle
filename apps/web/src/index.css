@@ -1,3 +1,4 @@
+@import "tailwindcss";
 
   :root{ --gold:#d6a84f; --gold2:#f4cf76; --purple:#8b6cff; --ink:#f4f1ea; --muted:#9297a9; }
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -68,3 +69,4 @@
     .wordmark{top:18px;left:18px;}
     .command-bar{width:92vw;}
   }
+
