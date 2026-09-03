@@ -12,15 +12,11 @@ export function MindMapper() {
 
 
 
-  useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.05;
-    }
-  });
+
 
   return (
     <>
-      <group ref={groupRef} position={[0, 1.5, 0]} scale={[0.5, 0.5, 0.5]}>
+      <group ref={groupRef} position={[0, 1.5, 0]} scale={[5, 5, 5]}>
       {/* 3D Brain Model */}
       <primitive object={scene} />
 
@@ -68,9 +64,12 @@ export function MindMapper() {
         makeDefault
         target={[0, 1.5, 0]}
         enablePan={false}
-        enableZoom={true}
+        enableZoom={false}
         enableDamping
-        dampingFactor={0.05}
+        dampingFactor={0.055}
+        rotateSpeed={0.5}
+        autoRotate
+        autoRotateSpeed={0.22}
       />
     </>
   );
