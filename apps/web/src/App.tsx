@@ -7,6 +7,7 @@ import { SpaceAssets } from './scene/SpaceAssets';
 import { CommandBar } from './components/CommandBar';
 import { ResponseCaption } from './components/ResponseCaption';
 import { InspectHUD } from './components/InspectHUD';
+import { Spine } from './components/Spine';
 import { useOracleStore } from './store/useOracleStore';
 
 function SceneContent() {
@@ -45,6 +46,7 @@ function App() {
       
       <div className="wordmark"><div className="glyph"></div><span>NEXUS</span></div>
       
+      <Spine />
       <ResponseCaption />
       <InspectHUD />
       <CommandBar />
