@@ -6,52 +6,45 @@ export function CommandBar() {
   const setThinking = useOracleStore(state => state.setThinking);
   const setResponseText = useOracleStore(state => state.setResponseText);
   const setCards = useOracleStore(state => state.setCards);
+  const setInspectedCard = useOracleStore(state => state.setInspectedCard);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
     
+    const userQuery = query;
+    setQuery('');
     setThinking(true);
     setResponseText('');
     setCards([]);
+    setInspectedCard(null);
     
-    // TODO: wire up real API call here
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost:8787/api/oracle/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: userQuery })
+      });
+      
+      const data = await response.json();
+      
       setThinking(false);
-      setQuery('');
-      setResponseText('I have searched the archives. Behold these artifacts of power.');
+      setResponseText(data.text);
+      if (data.cards && data.cards.length > 0) {
+        setCards(data.cards);
+      }
       
-      // Mock cards
-      setCards([
-        {
-          id: '1', name: 'Black Lotus', typeLine: 'Artifact', 
-          oracleText: 'Sacrifice Black Lotus: Add three mana of any one color.',
-          manaCost: '{0}', manaValue: 0, colors: [], colorIdentity: [], rarity: 'mythic',
-          set: 'lea', setName: 'Limited Edition Alpha', keywords: [],
-          artCropUrl: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2564&auto=format&fit=crop',
-          imageUrl: ''
-        },
-        {
-          id: '2', name: 'Ancestral Recall', typeLine: 'Instant', 
-          oracleText: 'Target player draws three cards.',
-          manaCost: '{U}', manaValue: 1, colors: ['U'], colorIdentity: ['U'], rarity: 'rare',
-          set: 'lea', setName: 'Limited Edition Alpha', keywords: [],
-          artCropUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2564&auto=format&fit=crop',
-          imageUrl: ''
-        },
-        {
-          id: '3', name: 'Time Walk', typeLine: 'Sorcery', 
-          oracleText: 'Take an extra turn after this one.',
-          manaCost: '{1}{U}', manaValue: 2, colors: ['U'], colorIdentity: ['U'], rarity: 'rare',
-          set: 'lea', setName: 'Limited Edition Alpha', keywords: [],
-          artCropUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2564&auto=format&fit=crop',
-          imageUrl: ''
-        }
-      ]);
-      
-      // Auto clear after 8 seconds for testing
+      // Auto clear text after a while for testing
       setTimeout(() => setResponseText(''), 8000);
-    }, 2000);
+      
+    } catch (error) {
+      console.error(error);
+      setThinking(false);
+      setResponseText("I can't reach the archive right now — the connection to the well has gone quiet.");
+      setTimeout(() => setResponseText(''), 8000);
+    }
   };
 
   return (
