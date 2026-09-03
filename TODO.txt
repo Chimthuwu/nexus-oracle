@@ -1,0 +1,258 @@
+# NEXUS — Build Plan & Cross‑Agent Coordination Doc (Refined for Two Agents)
+
+**Agent assignment** (was three tracks, now two — server and card‑data are merged because the server calls `searchCards` in‑process):
+
+| Agent        | Track | Owns                                   | Needs from the other agent                                                                 |
+|--------------|-------|----------------------------------------|--------------------------------------------------------------------------------------------|
+| **Antigravity** | A     | `apps/web/`                            | Nothing at build time. Works against frozen contracts (§4) with a local mock until Freebuff posts that `/api/oracle/ask` is live. |
+| **Freebuff**    | B     | `packages/card-data/` + `apps/server/` | Nothing. Build the data layer first, then the server that imports it. Fully testable with `curl` — never depends on Track A.         |
+
+**Golden rule**: only edit files inside the paths you own. If you need something from the other agent that doesn’t exist yet, build against the frozen contract with a local mock and post a note in the Status Log. Never silently change a frozen contract — propose the change in the Status Log and wait for an ack.
+
+**COST — non‑negotiable, applies to both**: this project must cost **$0** to build or run. No payment method on any provider account, no paid LLM models, no non‑free‑tier infrastructure. If anything downstream requires payment, it’s **disqualified** — post it in the Status Log and fall back to the free option (mock data is a perfectly valid permanent state if no free API materialises).
+
+---
+
+## 1. What we’re building
+
+**Nexus** is an immersive, fully‑3D Magic: The Gathering companion. **It is not a dashboard with 3D decoration** — no card grid, no app chrome, no traditional nav bar. The entire product is a WebGL scene, and the fixed UI (navigation rail, command bar, HUD) is designed to read as part of that scene.
+
+- The **Oracle** is the only fixed point — a glowing, pulsating presence. You talk to it via a single floating command bar (no search bars, no dropdowns).
+- Cards **do not exist** until the Oracle conjures them — they fly in from the void, arrange in front of the camera, and can be clicked to fly the camera in for a full rotate/zoom inspection.
+- A minimal **navigation rail** (the “Spine”) exists for future spaces (duel arena, collection) but is collapsed, sigil‑styled, and auto‑hides during interactions — **not** a sidebar with labels.
+- Two existing vanilla‑JS prototypes (`/reference/nexus-oracle.html` and `nexus-constellation.html`) define the visual language and feel — treat them as the **spec for “how it should feel”**, not as code to preserve.
+- The prototype’s keyword matcher must be **replaced by the real LLM fallback chain** (§2.1) — this is the single most important functional task.
+
+### 1.1 Navigation — “the Spine” (Track A)
+- **At rest**: a thin translucent vertical line on the left edge with a few faint glowing dots — no icons, no labels, no menu appearance.
+- **Icons**: sigils (✦ wordmark glyph, mana‑coloured glow dots), not generic UI icons.
+- **Expand**: only on hover/focus (tap on mobile), using the same `glass` material as the command bar — never permanently open.
+- **Auto‑hide**: fully fade out during card inspect mode and while the Oracle is responding; reappear (still collapsed) once the interaction settles.
+- **Non‑existent destinations**: graceful “not yet” state, no dead links or console errors.
+
+### 1.2 Space assets & visual impressiveness (Track A)
+The human has a folder of space assets (`apps/web/public/assets/space/` — inventory it before writing loader code). Use them to replace/enhance the procedural background (skybox, nebula planes, star sprites). **Keep the procedural system as a fallback** for anything the asset pack doesn’t cover.
+
+**To make it visually stunning, the final scene must include**:
+- **ACES colour space** / `@react-three/postprocessing` with **bloom** and **lens flare** for the Oracle’s glow and card summoning effects.
+- **Atmospheric fog** and subtle **volumetric light shafts** (using shaders or `drei`’s `SpotLight` shadows).
+- **High‑quality card materials**: reflective, slightly glossy surfaces with subtle environment mapping.
+- **Smooth camera easing** (cubic bezier / `lerp`) for all fly‑to‑card and orbit transitions — no jarring cuts.
+- **Responsive particle systems** that react to the Oracle’s “thinking” state (pulse rate, colour shift, spark trails).
+
+---
+
+## 2. Tech stack (decided — do not relitigate)
+
+- **Frontend**: Vite + React 18 + TypeScript + `@react-three/fiber` + `@react-three/drei` + `@react-three/postprocessing` + Tailwind CSS for DOM overlays. State: Zustand.
+- **Backend**: Node 20 + TypeScript + Fastify.
+- **LLM**: OpenRouter (`https://openrouter.ai/api/v1`) with **tool use** — the Oracle calls a `search_cards` tool. Provider details in §2.1.
+- **Card data**: **No Scryfall.** We use a **local mock dataset** (`packages/card-data/src/mockData.ts`) initially. A free MTG API is pending confirmation — once confirmed *and verified free*, it can replace the mock **without changing the `Card` contract** (§4.1). If the MTG API never materialises or costs anything, the mock dataset remains the permanent source (a curated set of 30+ cards is enough for demo).
+
+### 2.1 LLM provider — multi‑bucket free fallback
+
+Every `:free` model on OpenRouter draws from **one account‑wide daily cap** — a chain of five `:free` models is not resilience. We have **two independent buckets**:
+
+| Bucket | Provider | Keys | Notes |
+|--------|----------|------|-------|
+| **A** | OpenRouter | `OPENROUTER_API_KEY` | Primary: `openrouter/free` (self‑updating, filters for tool support). Optional 1–2 pinned `:free` models as same‑bucket variety. Base: `https://openrouter.ai/api/v1`. |
+| **B** | NVIDIA NIM | `NVIDIA_API_KEY` … `NVIDIA_API_KEY5` | **Five keys** — rotate within this bucket before falling through to A. Base: `https://integrate.api.nvidia.com/v1`. **Must verify tool‑calling support** per model before adding to the chain. |
+
+**General rules**:
+- Never add a model you haven’t personally verified with a live call.
+- Never add a model that lacks tool‑calling support.
+- Keys only in `.env` — never hardcoded, never committed, never printed.
+- If a chain entry starts failing, re‑verify it before assuming transient error.
+- A third bucket (e.g. Groq) can be added later — not needed for the integration milestone.
+
+**Security**: the NVIDIA keys arrived as plaintext in a `.txt` file — move them to `.env` and **delete that file**. If there’s any chance it was shared, rotate the keys.
+
+**Pending MTG API**: if confirmed *and* genuinely free, post it in the Status Log with base URL and auth pattern. Freebuff can add it as a supplementary source without breaking the `Card` type.
+
+---
+
+## 3. Repo layout & track ownership (npm workspaces)
+/repo-root
+todo.md <- this file
+package.json <- workspaces root (see Step 0)
+/reference
+nexus-oracle.html
+nexus-constellation.html
+/apps
+/web <- TRACK A (Antigravity)
+src/
+scene/ (Oracle.tsx, CardMesh.tsx, CameraRig.tsx, Effects.tsx)
+components/ (CommandBar.tsx, ResponseCaption.tsx, InspectHUD.tsx, Spine.tsx)
+store/ (useOracleStore.ts, useSceneStore.ts)
+lib/api.ts (mock fetch → real fetch when endpoint live)
+App.tsx
+/server <- TRACK B (Freebuff)
+src/
+routes/oracle.ts
+routes/cards.ts
+llm/client.ts (fallback chain, system prompt, tool defs)
+index.ts
+/packages
+/card-data <- TRACK B (Freebuff)
+src/
+types.ts (canonical Card — frozen §4.1)
+mockData.ts (static Card[] — 30+ realistic entries)
+search.ts (searchCards(query, filters) over mockData)
+apiClient.ts (optional: for future MTG API integration)
+
+text
+
+**Step 0 – one‑time bootstrap** (only the first agent runs this):
+```bash
+mkdir -p apps/web apps/server packages/card-data reference
+git init
+Root package.json:
+
+json
+{ "name": "nexus", "private": true, "workspaces": ["apps/*", "packages/*"] }
+Copy prototypes into /reference/. Create root .gitignore with .env, .env.local, node_modules. Commit this skeleton once on main before any feature work.
+
+Branching: track-a-antigravity (apps/web), track-b-freebuff (apps/server + packages/card-data). Merge Freebuff’s branch first if Antigravity imports @nexus/card-data; otherwise Antigravity can keep a local type mirror (§4.1) until the package exists on main.
+
+4. Frozen contracts (do not change without posting in Status Log first)
+4.1 Card type — canonical shape (packages/card-data/src/types.ts)
+ts
+export interface Card {
+  id: string;               // unique (generated for mock)
+  name: string;
+  manaCost: string;         // e.g. "{3}{U}{U}"
+  manaValue: number;
+  typeLine: string;
+  oracleText: string;
+  colors: string[];         // ["U"] or []
+  colorIdentity: string[];
+  rarity: "common" | "uncommon" | "rare" | "mythic";
+  power?: string;
+  toughness?: string;
+  loyalty?: string;
+  set: string;
+  setName: string;
+  artCropUrl: string;       // URL to art (can be placeholder)
+  imageUrl: string;         // URL to full card image
+  keywords: string[];       // ["Flying", "Trample"]
+}
+4.2 Oracle endpoint — POST /api/oracle/ask
+Request:
+
+ts
+{ message: string; history: { role: "user" | "oracle"; content: string }[]; }
+Response:
+
+ts
+{ text: string; cards: Card[]; action: "none" | "explain" | "summon"; }
+Antigravity builds lib/api.ts with a local mock returning canned responses; flips to the real fetch when Freebuff posts that the endpoint is live.
+
+4.3 search_cards tool definition (Freebuff registers & implements)
+json
+{
+  "name": "search_cards",
+  "description": "Search the Nexus card archive for cards matching criteria drawn from the player's question.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "Free text — card name, theme, or strategy" },
+      "colors": { "type": "array", "items": { "type": "string", "enum": ["W","U","B","R","G","C"] } },
+      "types": { "type": "array", "items": { "type": "string" } },
+      "max_mana_value": { "type": "number" },
+      "keywords": { "type": "array", "items": { "type": "string" } },
+      "limit": { "type": "number", "default": 3 }
+    },
+    "required": ["query"]
+  }
+}
+Maps directly to searchCards(query, filters) in packages/card-data/src/search.ts.
+
+4.4 Card search endpoints (for future browse features)
+GET /api/cards/search?q=&colors=&type=&limit= → { cards: Card[] }
+
+GET /api/cards/:id → Card
+
+5. Draft Oracle system prompt (Track B)
+text
+You are the Nexus Oracle, an ancient intelligence woven into a Magic: The Gathering
+archive. Players speak to you directly, in a floating space with no menus — you are
+the interface. When you know cards that answer what they're asking, call
+search_cards to summon them; don't describe cards you haven't looked up. When the
+question is about rules, strategy, or anything that doesn't need specific cards,
+just answer directly and call search_cards with an empty or very narrow query only if
+it would genuinely help. Speak concisely — one to three sentences. Warm, a little
+arcane, never corporate. You are not a search engine describing its own behavior;
+you are answering a person standing in front of you.
+6. Track A — Antigravity (Immersive Scene — apps/web)
+Must‑have visual foundations
+□ Scaffold Vite + React + TS + R3F + drei + postprocessing + Tailwind in apps/web.
+□ Configure ACES colour space and enable bloom & lens flare in the render pipeline.
+□ Implement atmospheric fog and subtle volumetric light shafts (use drei’s SpotLight with shadows).
+□ Build the Oracle from nexus-oracle.html: icosahedron core, wireframe shell, orbiting particle ring, thinking‑state pulse (adjust timing per Freebuff’s streaming decision).
+□ useCameraRig hook: idle orbit, fly‑to‑card on click, inspect‑mode drag‑to‑rotate + zoom, smooth fly‑back‑out with custom easing curves.
+UI components (glass‑styled DOM overlays)
+□ CommandBar — floating input, matches prototype’s glass aesthetic.
+□ ResponseCaption — typewriter effect with character‑by‑character reveal.
+□ InspectHUD — shows card details when zoomed in.
+□ Spine.tsx — per §1.1; collapsed by default, sigil icons, glass expand‑on‑hover, auto‑hides during inspect and Oracle response.
+Asset & integration
+□ Inventory apps/web/public/assets/space/ and post contents in Status Log.
+□ Load space assets (skybox/nebula/star sprites) — keep procedural starfield as fallback.
+□ Wire CommandBar → lib/api.ts → POST /api/oracle/ask (mock first, then real fetch when Freebuff posts live endpoint).
+□ Card‑conjuring animation: fly cards in from random void positions, arrange in a gentle arc.
+□ Card face rendering: load artCropUrl as texture with a shimmering loading placeholder; card frame (name, oracle text, mana pips) rendered around the real art.
+□ Mobile/touch pass — pointer events from prototype should still work in R3F.
+□ Error state: graceful in‑world caption ("I can't reach the archive right now") — no browser errors.
+7. Track B — Freebuff (Card Data & Oracle Brain — packages/card-data + apps/server)
+Build order: Phase 1 (data layer) before Phase 2 (server) because the server imports searchCards. If .env is missing when you start, build Phase 1 and stub the LLM client behind an interface until keys appear — post the block in the Status Log.
+
+Phase 1 — card-data (packages/card-data)
+□ Scaffold as workspace @nexus/card-data (exact name for stable import).
+□ types.ts: export Card exactly as §4.1 — any change requires Status Log proposal.
+□ mockData.ts: create 30+ realistic Card objects (use real card names, mana costs, oracle texts, placeholders for art URLs) so searchCards returns meaningful results.
+□ search.ts: implement searchCards(query, filters) matching §4.3 — filter over mockData by name substring, colors, types, max mana, keywords. Ensure the signature allows swapping to a live API later.
+□ apiClient.ts (optional, future): wrapper for the confirmed MTG API — can be added and swapped into search.ts without changing the signature.
+□ Unit tests: verify search filters work against the mock set.
+□ README: document mock data, licensing, and how to switch to a live API once confirmed.
+Phase 2 — server (apps/server)
+□ Scaffold Fastify + TS.
+□ llm/client.ts: implement the two‑bucket fallback (§2.1) — rotate across NVIDIA_API_KEY–NVIDIA_API_KEY5 within Bucket B, then fall through to OpenRouter Bucket A (or vice versa, test which holds up). Provide a single reusable function.
+□ Before wiring into /api/oracle/ask: sanity‑test every candidate model with a live tool‑call request — drop any that lack tool support.
+□ POST /api/oracle/ask: wire system prompt (§5), register search_cards tool (§4.3), handle tool‑use round trip (call searchCards from @nexus/card-data → return result to model → final text), respond in exact shape from §4.2.
+□ Conversation history: accept history from request (stateless per‑request is fine).
+□ Read all keys from root .env — add .env.example with placeholders, never commit real values.
+□ CORS enabled for local dev against apps/web.
+□ Error handling: LLM or search failures degrade to { text, cards: [], action: "none" } — no 500.
+□ Decide streaming vs. fixed “thinking” delay — post decision in Status Log so Antigravity can align the pulse timing.
+□ When /api/oracle/ask is verified live with curl, post it in the Status Log so Track A knows to flip the mock.
+□ Stretch: stub POST /api/duel/move with a canned response — reserve the shape for later.
+8. Definition of done (integration milestone)
+apps/web runs (npm run dev) and apps/server runs (npm run dev).
+
+Asking a real question in the browser returns LLM‑generated text (via the §2.1 fallback chain) and real‑looking cards (from the mock dataset) flying into the scene.
+
+The scene is visually impressive: bloom, atmospheric fog, smooth camera transitions, and a premium feel that matches the prototype’s immersion.
+
+No money was spent to reach this state — all LLM calls went through free buckets, and no paid infrastructure was provisioned.
+
+If a paid tier is the only way to fix something, that’s a Status Log post, not a workaround.
+
+9. Status Log
+Append new entries at the top. Use this for: finished tasks, blockers, contract‑change proposals (wait for ack).
+
+Format: [DATE TIME] [AGENT] message
+
+<!-- entries go below this line -->
+[PLANNING] Refined plan finalised — mock data replaces Scryfall; visual impressiveness directives (bloom, ACES, fog, camera easing) added to Track A. Agent assignment: Antigravity (apps/web), Freebuff (apps/server + packages/card-data). Merge Freebuff first if Antigravity uses @nexus/card-data.
+
+[PLANNING] Repartitioned for two agents — Claude Code is out. Antigravity = Track A, Freebuff = Track B (merged former Tracks B+C). Branches: track-a-antigravity and track-b-freebuff. Sequencing caveat: if apps/web depends on @nexus/card-data, Freebuff merges first or Antigravity keeps a local type mirror.
+
+[PLANNING] Navigation revised — the Spine (collapsed/auto-hiding sigil rail) is in scope, not a dashboard sidebar. Space assets canonical path: apps/web/public/assets/space/ — inventory before using.
+
+[PLANNING] Hard cost constraint: $0 for build/run — no billing on any provider, no paid models, no paid infrastructure.
+
+[PLANNING] LLM fallback corrected to multi‑bucket — OpenRouter (bucket A) and NVIDIA NIM (bucket B, 5 keys). Each model must be verified for tool‑calling support before use.
+
+[PLANNING] Keys in root .env — read from there, never commit. OpenRouter supports both OpenAI‑ and Anthropic‑format endpoints; Freebuff may choose whichever fits the tool schema.
+
+[PLANNING] MTG API pending — proceed with mock data now; if an API is confirmed and genuinely free, it can be added later without breaking the Card contract.
