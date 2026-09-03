@@ -71,7 +71,7 @@ export function Spine() {
           </button>
         </div>
 
-        <div className="spine-section-label">General AI</div>
+        <div className="spine-section-label"> Ｎｅｘｕｓ</div>
         <div className="spine-modes">
           <button
             className={view === 'oracle' ? 'on' : ''}
@@ -87,7 +87,11 @@ export function Spine() {
           </button>
         </div>
 
-        <div className="spine-section-label" style={{ marginTop: '16px' }}>Magic: The Gathering</div>
+        <button className="spine-new" onClick={() => newConversation()} style={{ marginTop: '8px' }}>
+          <span>＋</span> New conversation
+        </button>
+
+        <div className="spine-section-label" style={{ marginTop: '24px' }}>Magic: The Gathering</div>
         <div className="spine-modes">
           <button
             className={view === 'browser' ? 'on' : ''}
@@ -102,10 +106,6 @@ export function Spine() {
             ⚔ Duel
           </button>
         </div>
-
-        <button className="spine-new" onClick={() => newConversation()}>
-          <span>＋</span> New conversation
-        </button>
 
         <div className="spine-list">
           {conversations.length === 0 && (
