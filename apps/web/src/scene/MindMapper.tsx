@@ -7,7 +7,7 @@ export function MindMapper() {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/assets/brain.glb');
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.1;
     }

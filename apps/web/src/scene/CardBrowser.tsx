@@ -8,19 +8,28 @@ import { Card3D } from './Card3D';
 const COLS = 5;
 const GAP_X = 3.0;
 const GAP_Y = 4.15;
-const TOP_Y = 3.2;
-const FOCUS_Z = 7;
+const TOP_Y = 2.4;
+const FOCUS_Z = 4.2;
+const FOCUS_SCALE = 1.32;
+
+interface DragState {
+  active: boolean;
+  rot: { x: number; y: number };
+  last: { x: number; y: number };
+  moved: number;
+}
 
 interface SlotProps {
   card: CardData;
   baseX: number;
-  baseY: number; // static row position inside the scrolling container
+  baseY: number;
   baseZ: number;
   baseRotY: number;
   focused: boolean;
   anyFocused: boolean;
   containerY: React.MutableRefObject<number>;
-  onClick: () => void;
+  drag: React.MutableRefObject<DragState>;
+  onToggle: () => void;
 }
 
 function Slot({
@@ -32,7 +41,8 @@ function Slot({
   focused,
   anyFocused,
   containerY,
-  onClick,
+  drag,
+  onToggle,
 }: SlotProps) {
   const g = useRef<THREE.Group>(null);
   const appear = useRef(0);
@@ -45,15 +55,16 @@ function Slot({
     let ty = baseY;
     let tz = baseZ;
     let ry = baseRotY;
+    let rx = 0;
     let s = 1;
 
     if (focused) {
-      // Pin to a fixed spot in front of the camera regardless of scroll.
       tx = 0;
-      ty = -containerY.current + 0.6;
+      ty = -containerY.current + 0.4;
       tz = FOCUS_Z;
-      ry = 0;
-      s = 1.7;
+      ry = drag.current.rot.y;
+      rx = drag.current.rot.x;
+      s = FOCUS_SCALE;
     } else if (anyFocused) {
       tz = baseZ - 5;
     }
@@ -62,14 +73,30 @@ function Slot({
     g.current.position.x += (tx - g.current.position.x) * k;
     g.current.position.y += (ty - g.current.position.y) * k;
     g.current.position.z += (tz - g.current.position.z) * k;
-    g.current.rotation.y += (ry - g.current.rotation.y) * k;
+    // Focused card follows the drag directly; others ease.
+    g.current.rotation.y += (ry - g.current.rotation.y) * (focused ? 0.4 : k);
+    g.current.rotation.x += (rx - g.current.rotation.x) * (focused ? 0.4 : k);
     const target = s * (0.5 + 0.5 * appear.current);
     g.current.scale.setScalar(g.current.scale.x + (target - g.current.scale.x) * k);
   });
 
   return (
     <group ref={g} position={[baseX, baseY + 5, baseZ]} scale={0.5}>
-      <Card3D card={card} focused={focused} onClick={onClick} />
+      <Card3D
+        card={card}
+        focused={focused}
+        onPointerDown={(e) => {
+          if (!focused) return;
+          drag.current.active = true;
+          drag.current.moved = 0;
+          drag.current.last = { x: e.clientX, y: e.clientY };
+        }}
+        onClick={() => {
+          // Ignore the click that ends a rotate-drag.
+          if (focused && drag.current.moved > 6) return;
+          onToggle();
+        }}
+      />
     </group>
   );
 }
@@ -82,6 +109,12 @@ export function CardBrowser() {
   const container = useRef<THREE.Group>(null);
   const containerY = useRef(0);
   const scrollTarget = useRef(0);
+  const drag = useRef<DragState>({
+    active: false,
+    rot: { x: 0, y: 0 },
+    last: { x: 0, y: 0 },
+    moved: 0,
+  });
 
   const rows = Math.max(1, Math.ceil(cards.length / COLS));
   const maxScroll = Math.max(0, (rows - 1) * GAP_Y - GAP_Y * 0.5);
@@ -89,6 +122,12 @@ export function CardBrowser() {
   useEffect(() => {
     scrollTarget.current = 0;
   }, [cards]);
+
+  // Reset the rotation whenever the focused card changes.
+  useEffect(() => {
+    drag.current.rot = { x: 0, y: 0 };
+    drag.current.active = false;
+  }, [inspectedCard]);
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
@@ -99,8 +138,30 @@ export function CardBrowser() {
         maxScroll
       );
     };
+    const onMove = (e: PointerEvent | MouseEvent) => {
+      if (!drag.current.active) return;
+      const dx = e.clientX - drag.current.last.x;
+      const dy = e.clientY - drag.current.last.y;
+      drag.current.last = { x: e.clientX, y: e.clientY };
+      drag.current.moved += Math.abs(dx) + Math.abs(dy);
+      drag.current.rot.y += dx * 0.011;
+      drag.current.rot.x = THREE.MathUtils.clamp(drag.current.rot.x - dy * 0.011, -0.9, 0.9);
+    };
+    const onUp = () => {
+      drag.current.active = false;
+    };
     window.addEventListener('wheel', onWheel, { passive: true });
-    return () => window.removeEventListener('wheel', onWheel);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('mouseup', onUp);
+    };
   }, [maxScroll, inspectedCard]);
 
   useFrame(() => {
@@ -126,6 +187,14 @@ export function CardBrowser() {
 
   return (
     <group ref={container} position={[0, 0, 0]}>
+      {/* click-away target to release a focused card */}
+      {inspectedCard && (
+        <mesh position={[0, 0, -8]} onClick={() => setInspectedCard(null)}>
+          <planeGeometry args={[80, 60]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+      )}
+
       {slots.map((slot) => (
         <Slot
           key={slot.card.id}
@@ -137,7 +206,8 @@ export function CardBrowser() {
           focused={inspectedCard?.id === slot.card.id}
           anyFocused={inspectedCard != null}
           containerY={containerY}
-          onClick={() =>
+          drag={drag}
+          onToggle={() =>
             setInspectedCard(inspectedCard?.id === slot.card.id ? null : slot.card)
           }
         />

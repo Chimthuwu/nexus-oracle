@@ -15,6 +15,19 @@ export function CameraRig() {
     let pz = 12;
     let lookY = 0;
 
+    if (view === 'duel') {
+      // Raised three-quarter view of the battlefield.
+      px = pointer.x * 0.8;
+      py = 9 + pointer.y * 0.5;
+      pz = 12.5;
+      lookY = 0;
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.05);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.05);
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.05);
+      camera.lookAt(_target.set(0, lookY, 0.5));
+      return;
+    }
+
     if (inspectedCard) {
       // Close-up on the inspected card (both modes park it near the centre).
       px = view === 'browser' ? 0 : 0;

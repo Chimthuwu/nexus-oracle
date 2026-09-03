@@ -61,7 +61,7 @@ export function Spine() {
       <div className="spine-panel glass" role="navigation" aria-label="Conversations">
         <div className="spine-head">
           <span className="spine-glyph">✦</span>
-          <span className="spine-word">NEXUS</span>
+          <span className="spine-word">The Oracle</span>
           <button
             className={`spine-pin ${pinned ? 'on' : ''}`}
             title={pinned ? 'Unpin' : 'Keep open'}

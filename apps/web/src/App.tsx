@@ -86,7 +86,7 @@ function App() {
 
       <div className="wordmark">
         <div className="glyph" />
-        <span>NEXUS</span>
+        <span>The Oracle</span>
       </div>
 
       <Spine />
