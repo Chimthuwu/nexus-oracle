@@ -118,6 +118,7 @@ function App() {
       <Transcript />
       <BrowserBar />
       <DuelHUD />
+      <DuelHand />
     </>
   );
 }

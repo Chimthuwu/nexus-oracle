@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
+import { useAskOracle } from '../hooks/useAskOracle';
 
 /**
- * The "deeper chat" view — the full active conversation as a scrollable
- * transcript, opened from the response caption or the command bar. The
- * floating caption stays the default; this is for reading back a long thread.
+ * The deep-conversation view — the full active thread as a scrollable chat with
+ * its own input, so you can keep talking without leaving it. The floating
+ * caption stays the ambient default; this is the "sit down and go deep" surface.
  */
 export function Transcript() {
   const view = useOracleStore((s) => s.view);
@@ -13,12 +14,15 @@ export function Transcript() {
   const conversations = useOracleStore((s) => s.conversations);
   const activeId = useOracleStore((s) => s.activeId);
   const isThinking = useOracleStore((s) => s.isThinking);
+  const newConversation = useOracleStore((s) => s.newConversation);
 
+  const ask = useAskOracle();
+  const [draft, setDraft] = useState('');
   const conv = conversations.find((c) => c.id === activeId) ?? null;
-  const endRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (open) endRef.current?.scrollIntoView({ block: 'end' });
+    if (open && bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
   }, [open, conv?.turns.length, isThinking]);
 
   useEffect(() => {
@@ -31,18 +35,38 @@ export function Transcript() {
 
   if (!open || (view !== 'oracle' && view !== 'mindmapper')) return null;
 
+  const send = () => {
+    const text = draft.trim();
+    if (!text || isThinking) return;
+    setDraft('');
+    void ask(text);
+  };
+
   return (
     <div className="transcript-scrim" onClick={() => setOpen(false)}>
-      <div className="transcript glass" onClick={(e) => e.stopPropagation()}>
+      <div className="transcript glass-strong" onClick={(e) => e.stopPropagation()}>
         <div className="transcript-head">
           <span className="transcript-title">{conv?.title ?? 'Conversation'}</span>
-          <button className="transcript-close" onClick={() => setOpen(false)} title="Close (Esc)">
-            ✕
-          </button>
+          <div className="transcript-head-actions">
+            <button
+              className="transcript-new"
+              onClick={() => {
+                newConversation();
+                setDraft('');
+              }}
+              title="Start a new conversation"
+            >
+              ＋ New
+            </button>
+            <button className="transcript-close" onClick={() => setOpen(false)} title="Close (Esc)">
+              ✕
+            </button>
+          </div>
         </div>
-        <div className="transcript-body">
+
+        <div className="transcript-body" ref={bodyRef}>
           {!conv || conv.turns.length === 0 ? (
-            <div className="transcript-empty">Nothing said yet. Ask the Oracle something.</div>
+            <div className="transcript-empty">Nothing said yet — start below.</div>
           ) : (
             conv.turns.map((t, i) => (
               <div key={i} className={`transcript-turn ${t.role}`}>
@@ -64,8 +88,32 @@ export function Transcript() {
               <div className="transcript-text dim">consulting the archive…</div>
             </div>
           )}
-          <div ref={endRef} />
         </div>
+
+        <form
+          className="transcript-input"
+          onSubmit={(e) => {
+            e.preventDefault();
+            send();
+          }}
+        >
+          <textarea
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                send();
+              }
+            }}
+            placeholder="Keep the conversation going…"
+            rows={1}
+            autoFocus
+          />
+          <button type="submit" disabled={isThinking || !draft.trim()} aria-label="Send">
+            ➤
+          </button>
+        </form>
       </div>
     </div>
   );

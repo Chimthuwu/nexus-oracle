@@ -1,29 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
+import { useAskOracle } from '../hooks/useAskOracle';
 
-const API_URL = 'https://nexus-oracle-u6ra.onrender.com/api/oracle/ask';
-
-// SpeechRecognition Types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-
-/** Server §4.2 response shape. `cards` are full @nexus/card-data `Card` objects. */
-interface AskResponse {
-  text: string;
-  cards: import('../store/useOracleStore').CardData[];
-  action: 'none' | 'explain' | 'summon';
-}
 
 export function CommandBar() {
   const [query, setQuery] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
 
-  const setResponseText = useOracleStore((s) => s.setResponseText);
-  const setThinking = useOracleStore((s) => s.setThinking);
-  const setCards = useOracleStore((s) => s.setCards);
-  const setInspectedCard = useOracleStore((s) => s.setInspectedCard);
-  const appendTurn = useOracleStore((s) => s.appendTurn);
+  const ask = useAskOracle();
+  const isThinking = useOracleStore((s) => s.isThinking);
   const view = useOracleStore((s) => s.view);
   const setShowTranscript = useOracleStore((s) => s.setShowTranscript);
   const turnCount = useOracleStore((s) => s.activeTurns().length);
@@ -44,121 +33,35 @@ export function CommandBar() {
       ];
 
   useEffect(() => {
-    if (SpeechRecognitionAPI) {
-      const recognition = new SpeechRecognitionAPI();
-      recognition.continuous = false;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US';
-
-      recognition.onstart = () => setIsListening(true);
-      
-      recognition.onresult = (event: any) => {
-        let transcript = '';
-        for (let i = 0; i < event.results.length; ++i) {
-          transcript += event.results[i][0].transcript;
-        }
-        setQuery(transcript);
-      };
-
-      recognition.onerror = (event: any) => {
-        console.error("Speech recognition error", event.error);
-        setIsListening(false);
-      };
-
-      recognition.onend = () => setIsListening(false);
-      
-      recognitionRef.current = recognition;
-    }
+    if (!SpeechRecognitionAPI) return;
+    const recognition = new SpeechRecognitionAPI();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    recognition.onstart = () => setIsListening(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recognition.onresult = (event: any) => {
+      let transcript = '';
+      for (let i = 0; i < event.results.length; ++i) transcript += event.results[i][0].transcript;
+      setQuery(transcript);
+    };
+    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
   }, []);
 
   const toggleListening = () => {
-    if (isListening) {
-      recognitionRef.current?.stop();
-    } else {
+    if (isListening) recognitionRef.current?.stop();
+    else {
       setQuery('');
       recognitionRef.current?.start();
     }
   };
 
-  const ask = async (raw: string) => {
-    const message = raw.trim();
-    if (!message || isSubmitting) return;
-
+  const submit = (raw: string) => {
     if (isListening) recognitionRef.current?.stop();
-
-    if (message.startsWith('/memory ')) {
-      const text = message.replace('/memory ', '').trim();
-      const randomPos: [number, number, number] = [
-        (Math.random() - 0.5) * 3,
-        (Math.random() - 0.5) * 2 + 1,
-        (Math.random() - 0.5) * 3,
-      ];
-      const colors = ['#8b6cff', '#d6a84f', '#5b8cff', '#ff5b5b', '#5bff8b'];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      
-      useOracleStore.getState().addMemory(text, randomPos, randomColor);
-      setQuery('');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setThinking(true);
-    setInspectedCard(null);
-    setResponseText('');
     setQuery('');
-
-    // Snapshot history *before* adding this turn, so we don't echo the new
-    // message back to the server as prior context.
-    const history = useOracleStore.getState().historyForSend();
-    appendTurn({ role: 'user', content: message });
-
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, history }),
-      });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = (await res.json()) as AskResponse;
-
-      let responseText = data.text;
-      const memoryMatches = responseText.match(/^\/memory (.*)$/gm);
-      if (memoryMatches) {
-        memoryMatches.forEach((match) => {
-          const text = match.replace('/memory ', '').trim();
-          const randomPos: [number, number, number] = [
-            (Math.random() - 0.5) * 3,
-            (Math.random() - 0.5) * 2 + 1,
-            (Math.random() - 0.5) * 3,
-          ];
-          const colors = ['#8b6cff', '#d6a84f', '#5b8cff', '#ff5b5b', '#5bff8b'];
-          const randomColor = colors[Math.floor(Math.random() * colors.length)];
-          useOracleStore.getState().addMemory(text, randomPos, randomColor);
-        });
-        responseText = responseText.replace(/^\/memory (.*)$/gm, '').trim();
-      }
-
-      const summoned = Array.isArray(data.cards) ? data.cards : [];
-      setResponseText(responseText);
-      appendTurn({ role: 'oracle', content: responseText, cards: summoned });
-      setCards(summoned);
-    } catch (error) {
-      console.error('Oracle query failed:', error);
-      setResponseText(
-        'I cannot reach the archive right now — the connection to the well has gone quiet.'
-      );
-      setCards([]);
-    } finally {
-      setIsSubmitting(false);
-      setThinking(false);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    void ask(query);
+    void ask(raw);
   };
 
   return (
@@ -168,47 +71,36 @@ export function CommandBar() {
           ? 'Talk with the Oracle — it listens and remembers'
           : 'Ask the Oracle anything, or try a suggestion below'}
         {turnCount > 0 && (
-          <button
-            type="button"
-            className="hint-link"
-            onClick={() => setShowTranscript(true)}
-          >
+          <button type="button" className="hint-link" onClick={() => setShowTranscript(true)}>
             · view this conversation
           </button>
         )}
       </div>
       <div className="suggestions" id="suggestions">
         {suggestions.map((s) => (
-          <button
-            key={s}
-            type="button"
-            className="chip"
-            disabled={isSubmitting}
-            onClick={() => void ask(s)}
-          >
+          <button key={s} type="button" className="chip" disabled={isThinking} onClick={() => submit(s)}>
             {s}
           </button>
         ))}
       </div>
       <div className="command-bar glass">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e: React.FormEvent) => {
+            e.preventDefault();
+            submit(query);
+          }}
           style={{ display: 'flex', width: '100%', alignItems: 'center', gap: 10 }}
         >
           <input
             id="commandInput"
             type="text"
             placeholder={
-              isListening
-                ? 'Listening…'
-                : mind
-                  ? 'Tell the Oracle about yourself…'
-                  : 'Ask the Oracle anything…'
+              isListening ? 'Listening…' : mind ? 'Tell the Oracle about yourself…' : 'Ask the Oracle anything…'
             }
             autoComplete="off"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            disabled={isSubmitting}
+            disabled={isThinking}
             style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff' }}
           />
           {SpeechRecognitionAPI && (
@@ -217,12 +109,12 @@ export function CommandBar() {
               className="command-send"
               title="Speak to the Oracle"
               onClick={toggleListening}
-              disabled={isSubmitting}
-              style={{ 
-                background: isListening ? 'rgba(214,168,79,.3)' : 'transparent', 
+              disabled={isThinking}
+              style={{
+                background: isListening ? 'rgba(214,168,79,.3)' : 'transparent',
                 border: isListening ? '1px solid var(--gold)' : '1px solid rgba(255,255,255,.1)',
                 color: isListening ? 'var(--gold)' : 'rgba(255,255,255,.5)',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
               }}
             >
               <span aria-hidden>🎤</span>
@@ -230,10 +122,10 @@ export function CommandBar() {
           )}
           <button
             type="submit"
-            className={`command-send${isSubmitting ? ' busy' : ''}`}
+            className={`command-send${isThinking ? ' busy' : ''}`}
             id="commandSend"
             aria-label="Ask"
-            disabled={isSubmitting || !query.trim()}
+            disabled={isThinking || !query.trim()}
           >
             <span aria-hidden>➤</span>
           </button>

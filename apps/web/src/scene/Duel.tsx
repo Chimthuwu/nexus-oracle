@@ -5,88 +5,58 @@ import { useDuelStore } from '../store/useDuelStore';
 import type { DuelCard, Side } from '../store/useDuelStore';
 import { Card3D } from './Card3D';
 
-const CARD_SCALE = 0.6;
-const HAND_SCALE = 0.78;
-const COL_GAP = 1.8;
+const CARD_SCALE = 0.85;
+const COL_GAP = 2.5;
 
-interface SlotProps {
-  dc: DuelCard;
-  target: [number, number, number];
-  rotX: number;
-  fan: number;
-  scale: number;
-  tapped: boolean;
-  focused: boolean;
-  anyFocused: boolean;
-  playable: boolean;
-  onClick: () => void;
-}
-
+/** A card standing on the battlefield, easing toward its slot. */
 function BoardCard({
   dc,
   target,
-  rotX,
-  fan,
-  scale,
+  selected,
   tapped,
-  focused,
-  anyFocused,
   playable,
   onClick,
-}: SlotProps) {
+}: {
+  dc: DuelCard;
+  target: [number, number, number];
+  selected: boolean;
+  tapped: boolean;
+  playable: boolean;
+  onClick: () => void;
+}) {
   const g = useRef<THREE.Group>(null);
-  const inner = useRef<THREE.Group>(null);
 
   useFrame(() => {
-    if (!g.current || !inner.current) return;
-    const k = 0.15;
-
-    let [tx, ty, tz] = target;
-    let rx = rotX;
-    let rz = tapped ? Math.PI / 2 : 0;
-    let ry = fan;
-    let s = playable ? scale * 1.06 : scale;
-
-    if (focused) {
-      tx = 1.5;
-      ty = 1.9;
-      tz = 9;
-      rx = 0;
-      rz = 0;
-      ry = 0;
-      s = 0.9;
-    } else if (anyFocused) {
-      tz = target[2] - 5;
-      s *= 0.85;
-    }
-
-    g.current.position.x += (tx - g.current.position.x) * k;
-    g.current.position.y += (ty - g.current.position.y) * k;
-    g.current.position.z += (tz - g.current.position.z) * k;
-    g.current.rotation.x += (rx - g.current.rotation.x) * k;
+    if (!g.current) return;
+    const k = 0.16;
+    const lift = selected ? 0.6 : playable ? 0.2 : 0;
+    g.current.position.x += (target[0] - g.current.position.x) * k;
+    g.current.position.y += (target[1] + lift - g.current.position.y) * k;
+    g.current.position.z += (target[2] + (selected ? 0.6 : 0) - g.current.position.z) * k;
+    const rz = tapped ? Math.PI / 2 : 0;
     g.current.rotation.z += (rz - g.current.rotation.z) * k;
-    inner.current.rotation.y += (ry - inner.current.rotation.y) * k;
-    const cur = g.current.scale.x + (s - g.current.scale.x) * k;
-    g.current.scale.setScalar(cur);
+    g.current.rotation.x += (-0.12 - g.current.rotation.x) * k;
+    const s = selected ? CARD_SCALE * 1.15 : CARD_SCALE - (dc.sick ? 0.04 : 0);
+    g.current.scale.setScalar(g.current.scale.x + (s - g.current.scale.x) * k);
   });
 
   return (
-    <group ref={g} position={[target[0], target[1] + 3, target[2]]} scale={0.01}>
-      <group ref={inner}>
-        <Card3D card={dc.card} focused={focused || playable} onClick={onClick} />
-      </group>
+    <group ref={g} position={[target[0], target[1] + 2.5, target[2]]} scale={0.01}>
+      <Card3D card={dc.card} focused={selected || playable} onClick={onClick} />
     </group>
   );
 }
 
-function rowSlots(cards: DuelCard[], z: number, y: number) {
+function row(cards: DuelCard[], z: number, y: number) {
   const start = -((cards.length - 1) * COL_GAP) / 2;
-  return cards.map((dc, i) => ({
-    dc,
-    pos: [start + i * COL_GAP, y, z] as [number, number, number],
-  }));
+  return cards.map((dc, i) => ({ dc, pos: [start + i * COL_GAP, y, z] as [number, number, number] }));
 }
 
+/**
+ * The battlefield — board state only (both sides' creatures + lands). The hand
+ * lives in a DOM strip (DuelHand) and card details in the DuelHUD panel, so the
+ * 3D view never gets crowded.
+ */
 export function Duel() {
   const cards = useDuelStore((s) => s.cards);
   const phase = useDuelStore((s) => s.phase);
@@ -95,97 +65,64 @@ export function Duel() {
   const inspectedUid = useDuelStore((s) => s.inspectedUid);
   const setInspected = useDuelStore((s) => s.setInspected);
 
-  const yourTurn = current === 'you' && !winner;
-  const canPlay = yourTurn && (phase === 'main1' || phase === 'main2');
-  const canAttack = yourTurn && phase === 'combat';
+  const canAttack = current === 'you' && !winner && phase === 'combat';
 
-  const zoneCards = (owner: Side, zone: DuelCard['zone']) =>
-    cards.filter((c) => c.owner === owner && c.zone === zone);
+  const zone = (owner: Side, z: DuelCard['zone']) =>
+    cards.filter((c) => c.owner === owner && c.zone === z);
 
   const layout = useMemo(
     () => ({
-      oracleLands: rowSlots(zoneCards('oracle', 'lands'), -5.4, 1.75),
-      oracleCreatures: rowSlots(zoneCards('oracle', 'creatures'), -3.2, 1.75),
-      youCreatures: rowSlots(zoneCards('you', 'creatures'), 0.6, 1.75),
-      youLands: rowSlots(zoneCards('you', 'lands'), 2.5, 1.65),
-      hand: zoneCards('you', 'hand'),
+      oracleLands: row(zone('oracle', 'lands'), -6.2, 1.6),
+      oracleCreatures: row(zone('oracle', 'creatures'), -3.6, 1.6),
+      youCreatures: row(zone('you', 'creatures'), 0.4, 1.6),
+      youLands: row(zone('you', 'lands'), 3.0, 1.55),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [cards]
   );
 
-  const hand = layout.hand;
-  const handStart = -((hand.length - 1) * 1.45) / 2;
-  const anyFocused = inspectedUid != null;
-
   const toggle = (uid: string) => setInspected(inspectedUid === uid ? null : uid);
+  const empty =
+    layout.oracleCreatures.length +
+      layout.oracleLands.length +
+      layout.youCreatures.length +
+      layout.youLands.length ===
+    0;
 
   return (
     <group>
-      {/* click-away plane to release a focused card */}
-      {anyFocused && (
-        <mesh position={[0, 1, -6]} onClick={() => setInspected(null)}>
-          <planeGeometry args={[90, 60]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
-      )}
-
       {/* battlefield seam */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, -1.2]}>
-        <planeGeometry args={[22, 0.05]} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, -1.3]}>
+        <planeGeometry args={[26, 0.05]} />
         <meshBasicMaterial color="#8b6cff" transparent opacity={0.35} blending={THREE.AdditiveBlending} />
       </mesh>
 
-      {[...layout.oracleLands, ...layout.oracleCreatures].map(({ dc, pos }) => (
-        <BoardCard
-          key={dc.uid}
-          dc={dc}
-          target={pos}
-          rotX={-0.1}
-          fan={0}
-          scale={CARD_SCALE}
-          tapped={dc.tapped}
-          focused={inspectedUid === dc.uid}
-          anyFocused={anyFocused}
-          playable={false}
-          onClick={() => toggle(dc.uid)}
-        />
-      ))}
+      {empty && (
+        <mesh position={[0, 1.7, -1.3]}>
+          <planeGeometry args={[0.001, 0.001]} />
+          <meshBasicMaterial visible={false} />
+        </mesh>
+      )}
 
-      {[...layout.youCreatures, ...layout.youLands].map(({ dc, pos }) => (
-        <BoardCard
-          key={dc.uid}
-          dc={dc}
-          target={pos}
-          rotX={-0.1}
-          fan={0}
-          scale={CARD_SCALE}
-          tapped={dc.tapped}
-          focused={inspectedUid === dc.uid}
-          anyFocused={anyFocused}
-          playable={canAttack && dc.zone === 'creatures' && !dc.tapped && !dc.sick}
-          onClick={() => toggle(dc.uid)}
-        />
-      ))}
-
-      {hand.map((dc, i) => {
-        const x = handStart + i * 1.45;
-        return (
+      {[...layout.oracleLands, ...layout.oracleCreatures, ...layout.youCreatures, ...layout.youLands].map(
+        ({ dc, pos }) => (
           <BoardCard
             key={dc.uid}
             dc={dc}
-            target={[x, 0.55 + Math.abs(x) * -0.05, 7.2]}
-            rotX={-0.2}
-            fan={-x * 0.05}
-            scale={HAND_SCALE}
-            tapped={false}
-            focused={inspectedUid === dc.uid}
-            anyFocused={anyFocused}
-            playable={canPlay}
+            target={pos}
+            selected={inspectedUid === dc.uid}
+            tapped={dc.tapped}
+            playable={
+              canAttack &&
+              dc.owner === 'you' &&
+              dc.zone === 'creatures' &&
+              !dc.tapped &&
+              !dc.sick
+            }
             onClick={() => toggle(dc.uid)}
           />
-        );
-      })}
+        )
+      )}
     </group>
   );
 }
