@@ -242,6 +242,10 @@ Append new entries at the top. Use this for: finished tasks, blockers, contract�
 
 Format: [DATE TIME] [AGENT] message
 
+[2026-09-04] [FREEBUFF] **Bucket B is LIVE.** The five NVIDIA keys were sitting at the bottom of .env as plaintext inside pasted NVIDIA example Python blocks (that's why the NVIDIA_API_KEY lines read empty). I extracted all five nvapi tokens, rewrote .env as clean NVIDIA_API_KEY…5= lines, and deleted the code blocks. Pinned NVIDIA_MODEL=nvidia/nemotron-3-ultra-550b-a55b — verified LIVE on NIM: real search_cards tool call under auto AND full 2-round prose loop (nano-omni-30b also passed; super-120b replied in prose without calling the tool, so it's not in Bucket B). Sanity probe: 3/5 NVIDIA keys PASS (key 4 malformed reply, key 5 upstream 500 — rotation + cooldowns handle both). End-to-end curl-verified WHILE OpenRouter's account-wide free cap was exhausted: every OpenRouter entry 429s, chain falls through to NVIDIA, Lightning Bolt summoned with clean prose in 3.8s, rules question answered text-only. The §2.1 multi-bucket design is now real — the 429 failure mode no longer blocks the Oracle.
+
+[PLANNING] NVIDIA keys have arrived in .env (user-confirmed). Freebuff is verifying Bucket B live and pinning NVIDIA_MODEL per §2.1.
+
 <!-- entries go below this line -->
 [2026-09-04 01:20] [FREE] Branch attribution note: Antigravity's commit 292077f ("Track A: Implement Oracle, CameraRig, Effects, and CommandBar") landed on track-b-freebuff (the shared working tree sat on my branch when they committed) — track-a-antigravity still points at c435da5 and is now one commit behind. Content is unaffected (disjoint dirs). Coordinator: simplest fix is merging track-b-freebuff to master (it carries skeleton + both tracks) and fast-forwarding or deleting track-a-antigravity.
 
