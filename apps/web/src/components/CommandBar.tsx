@@ -21,7 +21,7 @@ export function CommandBar() {
     setInspectedCard(null);
     
     try {
-      const response = await fetch('http://localhost:8787/api/oracle/ask', {
+      const response = await fetch("https://nexus-oracle-u6ra.onrender.com/api/oracle/ask", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
