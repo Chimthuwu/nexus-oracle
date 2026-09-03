@@ -71,6 +71,7 @@ export function Spine() {
           </button>
         </div>
 
+        <div className="spine-section-label">General AI</div>
         <div className="spine-modes">
           <button
             className={view === 'oracle' ? 'on' : ''}
@@ -78,6 +79,16 @@ export function Spine() {
           >
             ✦ Oracle
           </button>
+          <button
+            className={view === 'mindmapper' ? 'on' : ''}
+            onClick={() => setView('mindmapper')}
+          >
+            🧠 Mind Mapper
+          </button>
+        </div>
+
+        <div className="spine-section-label" style={{ marginTop: '16px' }}>Magic: The Gathering</div>
+        <div className="spine-modes">
           <button
             className={view === 'browser' ? 'on' : ''}
             onClick={() => setView('browser')}
@@ -89,12 +100,6 @@ export function Spine() {
             onClick={() => setView('duel')}
           >
             ⚔ Duel
-          </button>
-          <button
-            className={view === 'mindmapper' ? 'on' : ''}
-            onClick={() => setView('mindmapper')}
-          >
-            🧠 Mind Mapper
           </button>
         </div>
 
