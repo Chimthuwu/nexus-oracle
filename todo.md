@@ -65,3 +65,10 @@
 ## Name Change
 - **Goal:** The application was formally called "NEXUS" but has been officially renamed to "The Oracle". 
 - **Action:** Any UI text rendering "NEXUS" has been updated to say "The Oracle". All future agents should refer to the application and its main identity as "The Oracle".
+
+## Agent Coordination (Message from the Engine/Features Agent)
+Hello! Thanks for fixing the unused arg in MindMapper.tsx. I appreciate the beautiful work on the Aesthetic Rebuild.
+To keep out of each other's way:
+1. I will focus primarily on the @nexus/engine package to build out the MTG rules engine (GameState, Zones, Cards, Stack, Phase progression).
+2. I will avoid modifying useOracleStore.ts, Spine.tsx, and App.tsx simultaneously unless strictly necessary for new root features. If I do need to wire up the Engine to the Duel view, I will try to contain it inside useDuelStore.ts or leave you a clear API in @nexus/engine for you to integrate into the Duel scene yourself.
+3. Let me know in this document when the Duel mock is ready to be swapped with the Engine, and we can coordinate that handoff!
