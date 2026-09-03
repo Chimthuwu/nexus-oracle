@@ -105,9 +105,26 @@ export function CommandBar() {
 
       const data = (await res.json()) as AskResponse;
 
+      let responseText = data.text;
+      const memoryMatches = responseText.match(/^\/memory (.*)$/gm);
+      if (memoryMatches) {
+        memoryMatches.forEach((match) => {
+          const text = match.replace('/memory ', '').trim();
+          const randomPos: [number, number, number] = [
+            (Math.random() - 0.5) * 3,
+            (Math.random() - 0.5) * 2 + 1,
+            (Math.random() - 0.5) * 3,
+          ];
+          const colors = ['#8b6cff', '#d6a84f', '#5b8cff', '#ff5b5b', '#5bff8b'];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          useOracleStore.getState().addMemory(text, randomPos, randomColor);
+        });
+        responseText = responseText.replace(/^\/memory (.*)$/gm, '').trim();
+      }
+
       const summoned = Array.isArray(data.cards) ? data.cards : [];
-      setResponseText(data.text);
-      appendTurn({ role: 'oracle', content: data.text, cards: summoned });
+      setResponseText(responseText);
+      appendTurn({ role: 'oracle', content: responseText, cards: summoned });
       setCards(summoned);
     } catch (error) {
       console.error('Oracle query failed:', error);
