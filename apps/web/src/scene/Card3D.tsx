@@ -115,8 +115,8 @@ function getBackTexture(): THREE.CanvasTexture {
   ctx.font = '600 40px Georgia, "Times New Roman", serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.letterSpacing = '14px';
-  ctx.fillText('NEXUS', cx + 7, cy + 250);
+  ctx.letterSpacing = '10px';
+  ctx.fillText('THE ORACLE', cx + 5, cy + 250);
 
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
