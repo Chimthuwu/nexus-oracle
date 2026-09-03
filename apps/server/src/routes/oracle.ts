@@ -192,4 +192,38 @@ export async function registerOracleRoutes(app: FastifyInstance): Promise<void> 
       }
     }
   );
+
+  app.post<{ Body: { text: string } }>(
+    "/tts",
+    {
+      schema: {
+        body: {
+          type: "object",
+          required: ["text"],
+          properties: {
+            text: { type: "string" }
+          }
+        }
+      }
+    },
+    async (request, reply) => {
+      try {
+        const response = await fetch("https://freetts.org/api/tts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: request.body.text,
+            voice: "en-US-JennyNeural"
+          })
+        });
+        const data = await response.json();
+        return data; // { file_id: "..." }
+      } catch (err) {
+        request.log.error({ err }, "tts failed");
+        reply.code(500);
+        return { error: "TTS generation failed" };
+      }
+    }
+  );
 }
+
