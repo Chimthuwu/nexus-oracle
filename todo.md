@@ -2,58 +2,52 @@
 
 ## Current State
 - **Backend**: Fastify on Render (`https://nexus-oracle-u6ra.onrender.com`).
-  `/api/oracle/ask` (LLM + card search) and `/api/oracle/tts` (freetts.org
-  proxy) are live. Note: Render free tier cold-starts (~30–50 s on first hit).
-- **Frontend**: React Three Fiber → Cloudflare Pages. The Oracle scene,
-  command bar, response caption, card summon, and inspect HUD all work
-  end-to-end against the live backend.
+  `/api/oracle/ask`, `/api/oracle/tts`, `/api/cards/search`, `/api/cards/:id`
+  all live. Render free tier cold-starts (~30–50 s on first hit).
+- **Frontend**: React Three Fiber → Cloudflare Pages. Three view modes now:
+  **Oracle** (chat), **Archive** (3D card browser), **Duel** (battlefield —
+  mock-backed, see below). Switched from the Spine.
 
-## Done this pass (branch `claude/oracle-aesthetic-rebuild`)
-- **Aesthetic rebuild** — the space environment now uses the real assets with
-  their own vertex colours (nebula backdrop, distant companion galaxy, far
-  spiral) over a procedural starfield, with ACES tone mapping, bloom, fog, and
-  a reworked Oracle (molten core / wire shell / halo / orbiting ring).
-- **Fixed the broken data flow** — `CommandBar` was reading `data.message`
-  (server sends `data.text`) and remapping card fields that don't exist, so
-  every response and every card was silently blank. Now wired to the real
-  §4.2 shape and sends conversation `history`.
-- Typewriter caption no longer drops letters; card summon fan reframed;
-  `index.html` font links fixed; `history` log added to the store.
-- Verified in-browser: response text + card summon + art all render.
+## Shipped
+- **Aesthetic rebuild** — real space assets with vertex colours over a
+  procedural starfield, ACES/bloom/fog, reworked Oracle. (`d55852d`)
+- **Big feature #1 — general-purpose Oracle + conversation history**
+  (`d8a0933`). Persisted threads (localStorage `nexus-conversations`),
+  Spine is the conversation switcher (new/rename/delete, replay last
+  exchange on switch). Server prompt broadened past MTG — *takes effect on
+  next Render deploy*.
+- **Big feature #2 — 3D card browser** (`62a9da1`). Curved wall of real
+  Scryfall card images, scroll to sift, click to inspect (real card data in
+  the HUD), archive search with colour filters against `/api/cards/search`.
+- Data-flow fix (response text + cards were silently blank), typewriter fix,
+  index.html font links.
 
-⚠️ **Concurrent work landed on `master` during this pass**: commits
-`e58d9f7` / `f3cba7c` add FreeTTS (Oracle speaks its answer). It POSTs the
-response text to `freetts.org` (third-party) and the client pulls audio from
-`freetts.org` directly — worth a look for CORS + the TODO.txt "$0 / no
-outside infra" rule. My branch is *not* rebased on those yet — merge order is
-the human's call.
+## In progress
+- **Big feature #3 — playable MTG.**
+  - `@nexus/engine` (rules engine) — **being built by the other agent**
+    (`c015c51`+). Skeleton so far: GameState / Player / Zone+Phase+Step
+    enums, class-based.
+  - Frontend **Duel view** — a 3D battlefield (two sides, land/creature
+    rows, hand fan, life totals, phase bar) rendering from a **local mock
+    `useDuelStore`** for now: draw, play a card to the battlefield, tap for
+    mana, advance the phase, swing. Structured so `@nexus/engine`'s state +
+    action API drops in behind it once stable. ← my next piece.
 
-## Now
-- [ ] Decide merge strategy for `claude/oracle-aesthetic-rebuild` vs the
-      FreeTTS commits on master (no file overlap except `ResponseCaption.tsx`,
-      which already contains both changes on master).
-- [ ] Aesthetic polish pass with real eyes — nebula density, galaxy.obj
-      placement, Oracle core detail, card-face material.
+## Coordination
+- Two agents active. Rough split: **other agent** owns `packages/engine`
+  (+ FreeTTS, Web Speech). **This agent** owns the frontend view modes
+  (Oracle / Archive / Duel) and the store. Don't cross into `packages/engine`.
+- When the engine has a stable `GameState` serialization + an `applyAction`
+  entry point, swap the Duel mock for it (one file: the store's actions).
 
-## Next — the three big features (need a design pass before building)
-1. **General-purpose AI + chat-history sidebar**
-   - Server: broaden `SYSTEM_PROMPT` beyond MTG (it's currently MTG-only).
-   - Web: expand `Spine.tsx` into a real conversation list — persist threads
-     (localStorage to start), switch/rename/delete, feed the selected thread's
-     turns as `history`. Store already has a bounded `history` array to build on.
-2. **3D card browser** — a proper interactive card space: grid/arc layout,
-   hover/scroll/sift, click-to-inspect with a premium card material. Replaces
-   the current summon-only `CardMesh`. Needs the full card dataset exposed
-   (there's `/api/cards/search`).
-3. **Playable MTG** — rules engine + turn/priority state machine +
-   interactive 3D battlefield. Large; scope it on its own.
+## Polish backlog (not blocking)
+- Card browser: initial scroll sometimes lands mid-grid; nail row-0 framing.
+- `cloud_180.ply` is 4.5 MB — downsample; ~8 s first paint of the nebula.
+- FreeTTS: client pulls audio from `freetts.org` directly — confirm CORS.
+- Conversation transcript view (currently only the last exchange replays).
+- Spine "not yet" affordance is now the mode toggle — fine.
 
-## Later
-- Downsample / compress `cloud_180.ply` (4.5 MB) — slow first paint.
-- Spine "not yet" states for Duel Arena / Collection.
-- Swap `THREE.Clock` deprecation warning (R3F internal — wait for upstream).
-
-## Open questions for the human
-- Merge/rebase order for the aesthetic branch vs FreeTTS?
-- Which big feature first — chat history, card browser, or gameplay?
-- Is FreeTTS staying? (affects the "$0 / no outside infra" constraint)
+## Open questions
+- Duel: 1-player-vs-Oracle-AI only, or hot-seat too?
+- How much rules depth for a first playable? (suggest: creatures + lands +
+  combat + basic targeted removal, no stack interaction yet.)
