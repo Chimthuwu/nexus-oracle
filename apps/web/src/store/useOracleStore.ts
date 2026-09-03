@@ -46,7 +46,7 @@ export interface Conversation {
 /** Turns sent back to the server as `history` (server bounds its own window). */
 const HISTORY_SEND_LIMIT = 16;
 
-export type View = 'oracle' | 'browser';
+export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper';
 
 const CARDS_API = 'https://nexus-oracle-u6ra.onrender.com/api/cards/search';
 

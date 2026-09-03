@@ -6,9 +6,12 @@ import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';
 import { CardMesh } from './scene/CardMesh';
 import { CardBrowser } from './scene/CardBrowser';
+import { Duel } from './scene/Duel';
 import { SpaceAssets } from './scene/SpaceAssets';
+import { MindMapper } from './scene/MindMapper';
 import { CommandBar } from './components/CommandBar';
 import { BrowserBar } from './components/BrowserBar';
+import { DuelHUD } from './components/DuelHUD';
 import { ResponseCaption } from './components/ResponseCaption';
 import { InspectHUD } from './components/InspectHUD';
 import { Spine } from './components/Spine';
@@ -20,9 +23,10 @@ function SceneContent() {
   return (
     <>
       <SpaceAssets />
-      {view === 'browser' ? (
-        <CardBrowser />
-      ) : (
+      {view === 'browser' && <CardBrowser />}
+      {view === 'duel' && <Duel />}
+      {view === 'mindmapper' && <MindMapper />}
+      {view === 'oracle' && (
         <>
           <Oracle />
           {cards.map((card, idx) => (
@@ -95,6 +99,7 @@ function App() {
         </>
       )}
       <BrowserBar />
+      <DuelHUD />
     </>
   );
 }

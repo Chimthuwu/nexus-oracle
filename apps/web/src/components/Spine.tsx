@@ -84,6 +84,18 @@ export function Spine() {
           >
             ⌘ Archive
           </button>
+          <button
+            className={view === 'duel' ? 'on' : ''}
+            onClick={() => setView('duel')}
+          >
+            ⚔ Duel
+          </button>
+          <button
+            className={view === 'mindmapper' ? 'on' : ''}
+            onClick={() => setView('mindmapper')}
+          >
+            🧠 Mind Mapper
+          </button>
         </div>
 
         <button className="spine-new" onClick={() => newConversation()}>
