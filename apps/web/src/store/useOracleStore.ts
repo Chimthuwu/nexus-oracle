@@ -46,6 +46,10 @@ export interface Conversation {
 /** Turns sent back to the server as `history` (server bounds its own window). */
 const HISTORY_SEND_LIMIT = 16;
 
+export type View = 'oracle' | 'browser';
+
+const CARDS_API = 'https://nexus-oracle-u6ra.onrender.com/api/cards/search';
+
 interface OracleState {
   // ── Ephemeral view state (not persisted) ──────────────────────────────
   isThinking: boolean;
@@ -57,6 +61,15 @@ interface OracleState {
   setCards: (cards: CardData[]) => void;
   inspectedCard: CardData | null;
   setInspectedCard: (card: CardData | null) => void;
+
+  // ── Card browser ─────────────────────────────────────────────────────
+  view: View;
+  setView: (v: View) => void;
+  browserCards: CardData[];
+  browserLoading: boolean;
+  browserQuery: string;
+  browserColors: string[];
+  loadBrowser: (opts?: { query?: string; colors?: string[] }) => Promise<void>;
 
   // ── Persisted conversation history ────────────────────────────────────
   conversations: Conversation[];
@@ -96,6 +109,31 @@ export const useOracleStore = create<OracleState>()(
       setCards: (cards) => set({ cards }),
       inspectedCard: null,
       setInspectedCard: (card) => set({ inspectedCard: card }),
+
+      view: 'oracle',
+      setView: (v) => set({ view: v, inspectedCard: null }),
+      browserCards: [],
+      browserLoading: false,
+      browserQuery: '',
+      browserColors: [],
+      loadBrowser: async (opts) => {
+        const query = opts?.query ?? get().browserQuery;
+        const colors = opts?.colors ?? get().browserColors;
+        set({ browserLoading: true, browserQuery: query, browserColors: colors });
+        try {
+          const params = new URLSearchParams({ limit: '50' });
+          if (query.trim()) params.set('q', query.trim());
+          if (colors.length) params.set('colors', colors.join(','));
+          const res = await fetch(`${CARDS_API}?${params.toString()}`);
+          const data = (await res.json()) as { cards?: CardData[] };
+          set({ browserCards: Array.isArray(data.cards) ? data.cards : [] });
+        } catch (err) {
+          console.error('Card browser load failed:', err);
+          set({ browserCards: [] });
+        } finally {
+          set({ browserLoading: false });
+        }
+      },
 
       conversations: [],
       activeId: null,

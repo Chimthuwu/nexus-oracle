@@ -5,22 +5,31 @@ import { Oracle } from './scene/Oracle';
 import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';
 import { CardMesh } from './scene/CardMesh';
+import { CardBrowser } from './scene/CardBrowser';
 import { SpaceAssets } from './scene/SpaceAssets';
 import { CommandBar } from './components/CommandBar';
+import { BrowserBar } from './components/BrowserBar';
 import { ResponseCaption } from './components/ResponseCaption';
 import { InspectHUD } from './components/InspectHUD';
 import { Spine } from './components/Spine';
 import { useOracleStore } from './store/useOracleStore';
 
 function SceneContent() {
+  const view = useOracleStore((state) => state.view);
   const cards = useOracleStore((state) => state.cards);
   return (
     <>
       <SpaceAssets />
-      <Oracle />
-      {cards.map((card, idx) => (
-        <CardMesh key={card.id} card={card} index={idx} total={cards.length} />
-      ))}
+      {view === 'browser' ? (
+        <CardBrowser />
+      ) : (
+        <>
+          <Oracle />
+          {cards.map((card, idx) => (
+            <CardMesh key={card.id} card={card} index={idx} total={cards.length} />
+          ))}
+        </>
+      )}
       <CameraRig />
       <Effects />
     </>
@@ -43,6 +52,8 @@ function LoadingVeil() {
 }
 
 function App() {
+  const view = useOracleStore((s) => s.view);
+
   return (
     <>
       <div id="scene">
@@ -75,9 +86,15 @@ function App() {
       </div>
 
       <Spine />
-      <ResponseCaption />
       <InspectHUD />
-      <CommandBar />
+
+      {view === 'oracle' && (
+        <>
+          <ResponseCaption />
+          <CommandBar />
+        </>
+      )}
+      <BrowserBar />
     </>
   );
 }

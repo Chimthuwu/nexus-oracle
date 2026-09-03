@@ -17,6 +17,8 @@ export function Spine() {
   const activeId = useOracleStore((s) => s.activeId);
   const isThinking = useOracleStore((s) => s.isThinking);
   const inspectedCard = useOracleStore((s) => s.inspectedCard);
+  const view = useOracleStore((s) => s.view);
+  const setView = useOracleStore((s) => s.setView);
   const newConversation = useOracleStore((s) => s.newConversation);
   const selectConversation = useOracleStore((s) => s.selectConversation);
   const deleteConversation = useOracleStore((s) => s.deleteConversation);
@@ -66,6 +68,21 @@ export function Spine() {
             onClick={() => setPinned((p) => !p)}
           >
             {pinned ? '📌' : '📍'}
+          </button>
+        </div>
+
+        <div className="spine-modes">
+          <button
+            className={view === 'oracle' ? 'on' : ''}
+            onClick={() => setView('oracle')}
+          >
+            ✦ Oracle
+          </button>
+          <button
+            className={view === 'browser' ? 'on' : ''}
+            onClick={() => setView('browser')}
+          >
+            ⌘ Archive
           </button>
         </div>
 
