@@ -61,3 +61,7 @@
   - Each time a memory/fact is stored, the 3D brain model receives color, lights up, and visually evolves to reflect the AI's growing knowledge of the user.
 - **UI:** A new button in the sidebar (Spine.tsx) to switch to this mode.
 - **Status:** Being worked on by the agents. Needs a 3D brain model asset and a backend mechanism for the AI to extract and save user memories, then sync that state to the frontend to drive the brain's color/illumination.
+
+## Name Change
+- **Goal:** The application was formally called "NEXUS" but has been officially renamed to "The Oracle". 
+- **Action:** Any UI text rendering "NEXUS" has been updated to say "The Oracle". All future agents should refer to the application and its main identity as "The Oracle".
