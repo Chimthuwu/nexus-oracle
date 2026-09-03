@@ -14,6 +14,7 @@ import { CommandBar } from './components/CommandBar';
 import { BrowserBar } from './components/BrowserBar';
 import { DuelHUD } from './components/DuelHUD';
 import { ResponseCaption } from './components/ResponseCaption';
+import { Transcript } from './components/Transcript';
 import { InspectHUD } from './components/InspectHUD';
 import { Spine } from './components/Spine';
 import { useOracleStore } from './store/useOracleStore';
@@ -111,6 +112,7 @@ function App() {
           <CommandBar />
         </>
       )}
+      <Transcript />
       <BrowserBar />
       <DuelHUD />
     </>

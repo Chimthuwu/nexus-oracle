@@ -3,8 +3,26 @@ import { useOracleStore } from '../store/useOracleStore';
 
 export function ResponseCaption() {
   const responseText = useOracleStore((s) => s.responseText);
+  const setResponseText = useOracleStore((s) => s.setResponseText);
+  const setCards = useOracleStore((s) => s.setCards);
+  const setShowTranscript = useOracleStore((s) => s.setShowTranscript);
+  const turnCount = useOracleStore((s) => s.activeTurns().length);
   const [count, setCount] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const dismiss = () => {
+    setResponseText('');
+    setCards([]);
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (timer.current) clearInterval(timer.current);
@@ -25,10 +43,10 @@ export function ResponseCaption() {
     fetch('https://nexus-oracle-u6ra.onrender.com/api/oracle/tts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: responseText })
+      body: JSON.stringify({ text: responseText }),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.file_id) {
           const audio = new Audio(`https://freetts.org/api/audio/${data.file_id}`);
           audio.play().catch(console.error);
@@ -49,6 +67,9 @@ export function ResponseCaption() {
   return (
     <div className="response-wrap show" id="responseWrap">
       <div className="glass">
+        <button className="response-close" onClick={dismiss} title="Dismiss (Esc)">
+          ✕
+        </button>
         <div className="response-eyebrow">
           <span className="pulse" />
           THE ORACLE
@@ -57,6 +78,11 @@ export function ResponseCaption() {
           {shown}
           {typing && <span className="cursor" />}
         </div>
+        {turnCount > 1 && (
+          <button className="response-more" onClick={() => setShowTranscript(true)}>
+            View the full conversation ({turnCount} messages) →
+          </button>
+        )}
       </div>
     </div>
   );

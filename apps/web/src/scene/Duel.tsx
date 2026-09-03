@@ -48,15 +48,16 @@ function BoardCard({
     let s = playable ? scale * 1.06 : scale;
 
     if (focused) {
-      tx = 1.4;
+      tx = 1.5;
       ty = 1.9;
-      tz = 5.6;
+      tz = 9;
       rx = 0;
       rz = 0;
       ry = 0;
-      s = 1.0;
+      s = 0.9;
     } else if (anyFocused) {
-      s *= 0.9;
+      tz = target[2] - 5;
+      s *= 0.85;
     }
 
     g.current.position.x += (tx - g.current.position.x) * k;

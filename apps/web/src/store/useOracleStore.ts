@@ -72,6 +72,10 @@ interface OracleState {
   // ── Card browser ─────────────────────────────────────────────────────
   view: View;
   setView: (v: View) => void;
+
+  /** Whether the full-conversation transcript panel is open (Oracle view). */
+  showTranscript: boolean;
+  setShowTranscript: (open: boolean) => void;
   browserCards: CardData[];
   browserLoading: boolean;
   browserQuery: string;
@@ -123,6 +127,8 @@ export const useOracleStore = create<OracleState>()(
 
       view: 'oracle',
       setView: (v) => set({ view: v, inspectedCard: null }),
+      showTranscript: false,
+      setShowTranscript: (open) => set({ showTranscript: open }),
       browserCards: [],
       browserLoading: false,
       browserQuery: '',
