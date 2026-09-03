@@ -1,6 +1,6 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF, Html } from '@react-three/drei';
+import { useGLTF, Html, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { useOracleStore } from '../store/useOracleStore';
 
@@ -19,7 +19,8 @@ export function MindMapper() {
   });
 
   return (
-    <group ref={groupRef} position={[0, 1.5, 0]} scale={[0.5, 0.5, 0.5]}>
+    <>
+      <group ref={groupRef} position={[0, 1.5, 0]} scale={[0.5, 0.5, 0.5]}>
       {/* 3D Brain Model */}
       <primitive object={scene} />
 
@@ -61,7 +62,17 @@ export function MindMapper() {
           </mesh>
         );
       })}
-    </group>
+      </group>
+      {/* Orbit Controls */}
+      <OrbitControls
+        makeDefault
+        target={[0, 1.5, 0]}
+        enablePan={false}
+        enableZoom={true}
+        enableDamping
+        dampingFactor={0.05}
+      />
+    </>
   );
 }
 

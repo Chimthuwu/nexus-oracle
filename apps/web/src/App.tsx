@@ -105,7 +105,7 @@ function App() {
       <Spine />
       <InspectHUD />
 
-      {view === 'oracle' && (
+      {(view === 'oracle' || view === 'mindmapper') && (
         <>
           <ResponseCaption />
           <CommandBar />
