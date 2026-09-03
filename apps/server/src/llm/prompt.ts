@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let questionsCache: { category: string, text: string }[] | null = null;
+let questionsCache: { category: string, text: string, responseSeed?: string }[] | null = null;
 
 function getQuestions() {
   if (!questionsCache) {
@@ -43,7 +43,12 @@ For example:
     prompt += `\nHere are 3 example questions drawn from your Mind Mapper question bank. Feel free to use one of them (or adapt one) to keep the conversation going:\n`;
     for (let i = 0; i < 3; i++) {
       const q = qs[Math.floor(Math.random() * qs.length)];
-      if (q) prompt += `- (${q.category}) ${q.text}\n`;
+      if (q) {
+        prompt += `- (${q.category}) ${q.text}\n`;
+        if (q.responseSeed) {
+          prompt += `  (When they answer, validate them using this sycophantic tone as inspiration: "${q.responseSeed}")\n`;
+        }
+      }
     }
   }
 
