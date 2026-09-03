@@ -48,13 +48,13 @@ function BoardCard({
     let s = playable ? scale * 1.06 : scale;
 
     if (focused) {
-      tx = -1.6;
-      ty = 1.7;
-      tz = 9.4;
+      tx = 1.4;
+      ty = 1.9;
+      tz = 5.6;
       rx = 0;
       rz = 0;
       ry = 0;
-      s = 1.55;
+      s = 1.0;
     } else if (anyFocused) {
       s *= 0.9;
     }
@@ -173,8 +173,8 @@ export function Duel() {
           <BoardCard
             key={dc.uid}
             dc={dc}
-            target={[x, -0.2 + Math.abs(x) * -0.05, 7.6]}
-            rotX={-0.22}
+            target={[x, 0.55 + Math.abs(x) * -0.05, 7.2]}
+            rotX={-0.2}
             fan={-x * 0.05}
             scale={HAND_SCALE}
             tapped={false}
