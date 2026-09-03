@@ -64,12 +64,14 @@ interface DuelState {
   cards: DuelCard[];
   library: Record<Side, CardData[]>;
   log: string[];
+  inspectedUid: string | null;
 
   startDuel: () => Promise<void>;
   playCard: (uid: string) => void;
   attack: (uid: string) => void;
   nextPhase: () => void;
   endDuel: () => void;
+  setInspected: (uid: string | null) => void;
 }
 
 const say = (log: string[], line: string) => [line, ...log].slice(0, 30);
@@ -85,6 +87,9 @@ export const useDuelStore = create<DuelState>((set, get) => ({
   cards: [],
   library: { you: [], oracle: [] },
   log: [],
+  inspectedUid: null,
+
+  setInspected: (uid) => set({ inspectedUid: uid }),
 
   startDuel: async () => {
     set({ loading: true });
@@ -118,6 +123,7 @@ export const useDuelStore = create<DuelState>((set, get) => ({
         cards,
         library: { you: youDeck.slice(5), oracle: oracleDeck.slice(5) },
         log: ['The duel begins. You have priority.'],
+        inspectedUid: null,
       });
     } catch (err) {
       console.error('startDuel failed:', err);
@@ -127,6 +133,7 @@ export const useDuelStore = create<DuelState>((set, get) => ({
 
   playCard: (uid) => {
     const s = get();
+    set({ inspectedUid: null });
     if (!s.active || s.winner || s.current !== 'you') return;
     if (s.phase !== 'main1' && s.phase !== 'main2') return;
     const dc = s.cards.find((c) => c.uid === uid && c.owner === 'you' && c.zone === 'hand');
@@ -144,6 +151,7 @@ export const useDuelStore = create<DuelState>((set, get) => ({
 
   attack: (uid) => {
     const s = get();
+    set({ inspectedUid: null });
     if (!s.active || s.winner || s.current !== 'you' || s.phase !== 'combat') return;
     const atk = s.cards.find(
       (c) => c.uid === uid && c.owner === 'you' && c.zone === 'creatures' && !c.tapped && !c.sick
