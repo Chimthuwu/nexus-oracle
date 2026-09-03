@@ -10,6 +10,9 @@ export function CameraRig() {
   const inspectedCard = useOracleStore((s) => s.inspectedCard);
 
   useFrame(() => {
+    // Oracle + Mind Mapper modes are driven by <OrbitControls> — hands off.
+    if (view === 'oracle' || view === 'mindmapper') return;
+
     let px = 0;
     let py = 1;
     let pz = 12;
@@ -17,14 +20,13 @@ export function CameraRig() {
 
     if (view === 'duel') {
       // Raised three-quarter view of the battlefield.
-      px = pointer.x * 0.8;
-      py = 9 + pointer.y * 0.5;
-      pz = 12.5;
-      lookY = 0;
+      px = pointer.x * 0.7;
+      py = 6.5 + pointer.y * 0.4;
+      pz = 13.5;
       camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.05);
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.05);
       camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.05);
-      camera.lookAt(_target.set(0, lookY, 0.5));
+      camera.lookAt(_target.set(0, 0.5, -1.5));
       return;
     }
 

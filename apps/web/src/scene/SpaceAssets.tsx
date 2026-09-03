@@ -1,5 +1,6 @@
 import { Component, Suspense, useMemo, useRef, type ReactNode } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
+import { Stars } from '@react-three/drei';
 import { PLYLoader } from 'three-stdlib';
 import * as THREE from 'three';
 import { Starfield } from './Starfield';
@@ -110,18 +111,18 @@ function Nebula() {
     <points
       ref={ref}
       geometry={centred}
-      position={[-2, 1, -44]}
+      position={[3, 2, -50]}
       rotation={[1.2, 0.3, 0.15]}
-      scale={50}
+      scale={52}
       frustumCulled={false}
     >
       <pointsMaterial
         vertexColors
-        color="#bd93ff"
-        size={0.075}
+        color="#a98adf"
+        size={0.06}
         sizeAttenuation
         transparent
-        opacity={0.16}
+        opacity={0.09}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />
@@ -184,6 +185,8 @@ class AssetBoundary extends Component<{ children: ReactNode }, { failed: boolean
 export function SpaceAssets() {
   return (
     <>
+      {/* Crisp deep-field stars all around — the 360° backdrop. */}
+      <Stars radius={120} depth={80} count={6000} factor={4} saturation={0} fade speed={0.6} />
       <Starfield />
       <AssetBoundary>
         <Suspense fallback={null}>

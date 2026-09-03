@@ -1,20 +1,18 @@
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 
 /**
- * Post pipeline: additive glow on everything bright (the Oracle, the point
- * clouds, card summon flashes) plus a gentle lens vignette to pull the eye to
- * centre.
+ * Post pipeline: additive bloom for every bright source, soft vignette.
  */
 export function Effects() {
   return (
     <EffectComposer multisampling={0}>
       <Bloom
-        luminanceThreshold={0.18}
+        luminanceThreshold={0.2}
         luminanceSmoothing={0.9}
-        intensity={1.15}
+        intensity={1.1}
         mipmapBlur
       />
-      <Vignette eskil={false} offset={0.15} darkness={0.95} />
+      <Vignette eskil={false} offset={0.16} darkness={0.98} />
     </EffectComposer>
   );
 }

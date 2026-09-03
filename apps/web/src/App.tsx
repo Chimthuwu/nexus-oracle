@@ -1,5 +1,6 @@
 import { useEffect, useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { Oracle } from './scene/Oracle';
 import { CameraRig } from './scene/CameraRig';
@@ -32,6 +33,18 @@ function SceneContent() {
           {cards.map((card, idx) => (
             <CardMesh key={card.id} card={card} index={idx} total={cards.length} />
           ))}
+          {/* Orbit the Oracle 360° — no pan, no zoom, framing stays fixed. */}
+          <OrbitControls
+            makeDefault
+            target={[0, 0.4, 0]}
+            enablePan={false}
+            enableZoom={false}
+            enableDamping
+            dampingFactor={0.055}
+            rotateSpeed={0.5}
+            autoRotate
+            autoRotateSpeed={0.22}
+          />
         </>
       )}
       <CameraRig />

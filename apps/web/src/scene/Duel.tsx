@@ -68,17 +68,17 @@ export function Duel() {
 
   const layout = useMemo(() => {
     return {
-      oracleCreatures: row(zoneCards('oracle', 'creatures'), -4.2, 0.05),
-      oracleLands: row(zoneCards('oracle', 'lands'), -6.4, 0.05),
-      youCreatures: row(zoneCards('you', 'creatures'), 1.8, 0.05),
-      youLands: row(zoneCards('you', 'lands'), 4.0, 0.05),
+      oracleCreatures: row(zoneCards('oracle', 'creatures'), -3.6, 0.05),
+      oracleLands: row(zoneCards('oracle', 'lands'), -5.6, 0.05),
+      youCreatures: row(zoneCards('you', 'creatures'), 1.4, 0.05),
+      youLands: row(zoneCards('you', 'lands'), 3.4, 0.05),
       hand: zoneCards('you', 'hand'),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards]);
 
   const hand = layout.hand;
-  const handStart = -((hand.length - 1) * 1.35) / 2;
+  const handStart = -((hand.length - 1) * 1.5) / 2;
 
   return (
     <group position={[0, 0, 0]}>
@@ -105,13 +105,13 @@ export function Duel() {
       ))}
 
       {hand.map((dc, i) => {
-        const x = handStart + i * 1.35;
+        const x = handStart + i * 1.5;
         return (
           <BoardCard
             key={dc.uid}
             dc={dc}
-            target={[x, -1.4 + Math.abs(x) * -0.04, 7.4]}
-            rotX={-0.4}
+            target={[x, 1.9 + Math.abs(x) * -0.05, 8.4]}
+            rotX={-0.5}
             tapped={false}
             playable={canPlay}
             onClick={() => canPlay && playCard(dc.uid)}
