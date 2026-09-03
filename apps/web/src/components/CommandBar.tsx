@@ -4,16 +4,23 @@ import { useOracleStore } from '../store/useOracleStore';
 export function CommandBar() {
   const [query, setQuery] = useState('');
   const setThinking = useOracleStore(state => state.setThinking);
+  const setResponseText = useOracleStore(state => state.setResponseText);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
     
     setThinking(true);
+    setResponseText('');
+    
     // TODO: wire up real API call here
     setTimeout(() => {
       setThinking(false);
       setQuery('');
+      setResponseText('I have searched the archives. Behold these artifacts of power.');
+      
+      // Auto clear after 6 seconds for testing
+      setTimeout(() => setResponseText(''), 6000);
     }, 2000);
   };
 

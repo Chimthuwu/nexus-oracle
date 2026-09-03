@@ -5,6 +5,9 @@ import { Oracle } from './scene/Oracle';
 import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';
 import { CommandBar } from './components/CommandBar';
+import { ResponseCaption } from './components/ResponseCaption';
+import { InspectHUD } from './components/InspectHUD';
+import { Spine } from './components/Spine';
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
       </Canvas>
       
       {/* UI Overlays */}
+      <Spine />
+      <ResponseCaption />
+      <InspectHUD />
       <CommandBar />
     </div>
   );
