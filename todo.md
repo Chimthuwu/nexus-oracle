@@ -1,32 +1,59 @@
-# Project Nexus - Handoff & TODO for Claude
+# Project Nexus — Handoff & TODO
 
-## Current State & Handoff Context
-This document serves as a handoff from the previous AI agent (Antigravity). We have successfully established the fundamental architecture:
-- **Backend**: A Fastify Node.js server deployed live on Render (`https://nexus-oracle-u6ra.onrender.com`).
-- **Frontend**: A React Three Fiber application building and deploying continuously to Cloudflare Pages.
-- **Connection**: The frontend's `CommandBar` is successfully POSTing queries to the backend's `/api/oracle/ask` endpoint and receiving data.
+## Current State
+- **Backend**: Fastify on Render (`https://nexus-oracle-u6ra.onrender.com`).
+  `/api/oracle/ask` (LLM + card search) and `/api/oracle/tts` (freetts.org
+  proxy) are live. Note: Render free tier cold-starts (~30–50 s on first hit).
+- **Frontend**: React Three Fiber → Cloudflare Pages. The Oracle scene,
+  command bar, response caption, card summon, and inspect HUD all work
+  end-to-end against the live backend.
 
-## User Frustration & Aesthetic Rebuild (URGENT)
-**Context for Claude**: The user is extremely frustrated with how the frontend aesthetic currently looks. The previous agent (me) did a lazy, cheap, and unsatisfactory job of integrating the user's provided 3D assets (`cloud_180.ply`, `model.ply`, `galaxy.obj`). 
+## Done this pass (branch `claude/oracle-aesthetic-rebuild`)
+- **Aesthetic rebuild** — the space environment now uses the real assets with
+  their own vertex colours (nebula backdrop, distant companion galaxy, far
+  spiral) over a procedural starfield, with ACES tone mapping, bloom, fog, and
+  a reworked Oracle (molten core / wire shell / halo / orbiting ring).
+- **Fixed the broken data flow** — `CommandBar` was reading `data.message`
+  (server sends `data.text`) and remapping card fields that don't exist, so
+  every response and every card was silently blank. Now wired to the real
+  §4.2 shape and sends conversation `history`.
+- Typewriter caption no longer drops letters; card summon fan reframed;
+  `index.html` font links fixed; `history` log added to the store.
+- Verified in-browser: response text + card summon + art all render.
 
-**Your Task**: You need to completely rebuild the aesthetic of the Oracle. 
-- The user provided a monolithic HTML file (`nexus-oracle.html`) which should be used as a reference point for *at least* what a basic, clean version should look like.
-- Please discard the cheap procedural implementations and elevate the 3D aesthetic to match the user's vision of a beautiful, premium space/galaxy environment.
+⚠️ **Concurrent work landed on `master` during this pass**: commits
+`e58d9f7` / `f3cba7c` add FreeTTS (Oracle speaks its answer). It POSTs the
+response text to `freetts.org` (third-party) and the client pulls audio from
+`freetts.org` directly — worth a look for CORS + the TODO.txt "$0 / no
+outside infra" rule. My branch is *not* rebased on those yet — merge order is
+the human's call.
 
-## The Broader Vision & Future Roadmap
+## Now
+- [ ] Decide merge strategy for `claude/oracle-aesthetic-rebuild` vs the
+      FreeTTS commits on master (no file overlap except `ResponseCaption.tsx`,
+      which already contains both changes on master).
+- [ ] Aesthetic polish pass with real eyes — nebula density, galaxy.obj
+      placement, Oracle core detail, card-face material.
 
-The application is pivoting from a pure MTG-only tool to a **General-Purpose AI**. Magic: The Gathering will just be one small aspect of its capabilities.
+## Next — the three big features (need a design pass before building)
+1. **General-purpose AI + chat-history sidebar**
+   - Server: broaden `SYSTEM_PROMPT` beyond MTG (it's currently MTG-only).
+   - Web: expand `Spine.tsx` into a real conversation list — persist threads
+     (localStorage to start), switch/rename/delete, feed the selected thread's
+     turns as `history`. Store already has a bounded `history` array to build on.
+2. **3D card browser** — a proper interactive card space: grid/arc layout,
+   hover/scroll/sift, click-to-inspect with a premium card material. Replaces
+   the current summon-only `CardMesh`. Needs the full card dataset exposed
+   (there's `/api/cards/search`).
+3. **Playable MTG** — rules engine + turn/priority state machine +
+   interactive 3D battlefield. Large; scope it on its own.
 
-Please implement the following major features:
+## Later
+- Downsample / compress `cloud_180.ply` (4.5 MB) — slow first paint.
+- Spine "not yet" states for Duel Arena / Collection.
+- Swap `THREE.Clock` deprecation warning (R3F internal — wait for upstream).
 
-### 1. General Purpose AI & Chat History
-- The AI should be able to handle general-purpose queries, not just MTG.
-- **Sidebar Integration**: The left sidebar (`Spine.tsx`) must be expanded to store, manage, and display past conversations (chat history), similar to standard AI chat interfaces.
-
-### 2. 3D Card Browser
-- Implement a fully interactive 3D card browser.
-- Users should be able to visually search, inspect, and sift through MTG cards in a highly polished 3D interface within the canvas.
-
-### 3. Playable MTG Integration
-- Integrate actual MTG gameplay rules and logic so the user can play full matches of Magic: The Gathering against the Oracle AI directly within the application.
-- This will require sophisticated state management, a rules engine, and an interactive 3D battlefield.
+## Open questions for the human
+- Merge/rebase order for the aesthetic branch vs FreeTTS?
+- Which big feature first — chat history, card browser, or gameplay?
+- Is FreeTTS staying? (affects the "$0 / no outside infra" constraint)
