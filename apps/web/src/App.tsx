@@ -36,7 +36,7 @@ function SceneContent() {
           {/* Orbit the Oracle 360° — no pan, no zoom, framing stays fixed. */}
           <OrbitControls
             makeDefault
-            target={[0, 0.4, 0]}
+            target={[0, 0.9, 0]}
             enablePan={false}
             enableZoom={false}
             enableDamping
@@ -76,7 +76,7 @@ function App() {
       <div id="scene">
         <Canvas
           dpr={[1, 2]}
-          camera={{ position: [0, 1.6, 9], fov: 50 }}
+          camera={{ position: [0, 2.2, 12.5], fov: 50 }}
           gl={{
             antialias: true,
             toneMapping: THREE.ACESFilmicToneMapping,
