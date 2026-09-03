@@ -29,7 +29,7 @@ export function Transcript() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open, setOpen]);
 
-  if (view !== 'oracle' || !open) return null;
+  if (!open || (view !== 'oracle' && view !== 'mindmapper')) return null;
 
   return (
     <div className="transcript-scrim" onClick={() => setOpen(false)}>

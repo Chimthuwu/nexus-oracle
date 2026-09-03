@@ -24,6 +24,24 @@ export function CommandBar() {
   const setCards = useOracleStore((s) => s.setCards);
   const setInspectedCard = useOracleStore((s) => s.setInspectedCard);
   const appendTurn = useOracleStore((s) => s.appendTurn);
+  const view = useOracleStore((s) => s.view);
+  const setShowTranscript = useOracleStore((s) => s.setShowTranscript);
+  const turnCount = useOracleStore((s) => s.activeTurns().length);
+
+  const mind = view === 'mindmapper';
+  const suggestions = mind
+    ? [
+        'Tell me about a place that shaped you',
+        'What are you working toward right now?',
+        'Describe a memory that still makes you smile',
+        'What do you wish people understood about you?',
+      ]
+    : [
+        'Show me red aggro cards',
+        'Explain the stack in Magic',
+        'Help me plan my week',
+        'Give me a metaphor for entropy',
+      ];
 
   useEffect(() => {
     if (SpeechRecognitionAPI) {
@@ -146,15 +164,21 @@ export function CommandBar() {
   return (
     <div className="command-dock">
       <div className="hint show" id="hint">
-        Ask the Oracle anything, or try a suggestion below
+        {mind
+          ? 'Talk with the Oracle — it listens and remembers'
+          : 'Ask the Oracle anything, or try a suggestion below'}
+        {turnCount > 0 && (
+          <button
+            type="button"
+            className="hint-link"
+            onClick={() => setShowTranscript(true)}
+          >
+            · view this conversation
+          </button>
+        )}
       </div>
       <div className="suggestions" id="suggestions">
-        {[
-          'Show me red aggro cards',
-          'Explain the stack in Magic',
-          'Help me plan my week',
-          'Give me a metaphor for entropy',
-        ].map((s) => (
+        {suggestions.map((s) => (
           <button
             key={s}
             type="button"
@@ -174,7 +198,13 @@ export function CommandBar() {
           <input
             id="commandInput"
             type="text"
-            placeholder={isListening ? "Listening..." : "Ask the Oracle anything..."}
+            placeholder={
+              isListening
+                ? 'Listening…'
+                : mind
+                  ? 'Tell the Oracle about yourself…'
+                  : 'Ask the Oracle anything…'
+            }
             autoComplete="off"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

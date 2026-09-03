@@ -53,7 +53,7 @@ export interface Memory {
   color: string;
 }
 
-export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper';
+export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper' | 'deckbuilder';
 
 const CARDS_API = 'https://nexus-oracle-u6ra.onrender.com/api/cards/search';
 
@@ -73,9 +73,19 @@ interface OracleState {
   view: View;
   setView: (v: View) => void;
 
+  // ── Deck Builder ─────────────────────────────────────────────────────
+  deckList: { card: CardData; count: number }[];
+  addCardToDeck: (card: CardData, count?: number) => void;
+  removeCardFromDeck: (cardId: string, count?: number) => void;
+  clearDeck: () => void;
+
   /** Whether the full-conversation transcript panel is open (Oracle view). */
   showTranscript: boolean;
   setShowTranscript: (open: boolean) => void;
+
+  /** Whether the Oracle speaks its replies aloud (persisted). */
+  voiceEnabled: boolean;
+  setVoiceEnabled: (on: boolean) => void;
   browserCards: CardData[];
   browserLoading: boolean;
   browserQuery: string;
@@ -127,8 +137,34 @@ export const useOracleStore = create<OracleState>()(
 
       view: 'oracle',
       setView: (v) => set({ view: v, inspectedCard: null }),
+      
+      deckList: [],
+      addCardToDeck: (card, count = 1) => set((s) => {
+        const idx = s.deckList.findIndex(d => d.card.id === card.id);
+        if (idx !== -1) {
+          const newList = [...s.deckList];
+          newList[idx] = { ...newList[idx], count: newList[idx].count + count };
+          return { deckList: newList };
+        }
+        return { deckList: [...s.deckList, { card, count }] };
+      }),
+      removeCardFromDeck: (cardId, count = 1) => set((s) => {
+        const idx = s.deckList.findIndex(d => d.card.id === cardId);
+        if (idx === -1) return s;
+        const newList = [...s.deckList];
+        if (newList[idx].count <= count) {
+          newList.splice(idx, 1);
+        } else {
+          newList[idx] = { ...newList[idx], count: newList[idx].count - count };
+        }
+        return { deckList: newList };
+      }),
+      clearDeck: () => set({ deckList: [] }),
+
       showTranscript: false,
       setShowTranscript: (open) => set({ showTranscript: open }),
+      voiceEnabled: false,
+      setVoiceEnabled: (on) => set({ voiceEnabled: on }),
       browserCards: [],
       browserLoading: false,
       browserQuery: '',
@@ -249,7 +285,12 @@ export const useOracleStore = create<OracleState>()(
     }),
     {
       name: 'nexus-conversations',
-      partialize: (s) => ({ conversations: s.conversations, activeId: s.activeId, memories: s.memories }),
+      partialize: (s) => ({
+        conversations: s.conversations,
+        activeId: s.activeId,
+        memories: s.memories,
+        voiceEnabled: s.voiceEnabled,
+      }),
     }
   )
 );

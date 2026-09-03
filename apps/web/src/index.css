@@ -73,6 +73,8 @@
 
   .hint{font-size:9.5px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;opacity:0;transition:opacity .6s ease;pointer-events:none;}
   .hint.show{opacity:.8;}
+  .hint-link{font:inherit;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;background:none;border:0;color:var(--gold2);cursor:pointer;padding:0 0 0 4px;pointer-events:auto;opacity:.85;transition:opacity .2s;}
+  .hint-link:hover{opacity:1;}
 
   /* ---------- inspect HUD (reused from card viewer) ---------- */
   .inspect-hud{position:fixed;right:30px;top:50%;transform:translateY(-50%) translateX(20px);width:300px;z-index:25;opacity:0;pointer-events:none;transition:opacity .4s ease, transform .4s ease;}
