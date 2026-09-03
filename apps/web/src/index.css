@@ -110,7 +110,7 @@
   /* ---------- duel ---------- */
   .duel-life{position:fixed;z-index:24;display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none;}
   .duel-life-oracle{top:22px;left:50%;transform:translateX(-50%);}
-  .duel-life-you{bottom:150px;left:50%;transform:translateX(-50%);}
+  .duel-life-you{left:28px;bottom:26px;align-items:flex-start;}
   .duel-life-name{font-family:Cinzel,serif;font-size:8.5px;letter-spacing:2.5px;color:var(--muted);}
   .duel-life-num{font-family:Cinzel,serif;font-size:26px;font-weight:700;color:var(--ink);text-shadow:0 0 16px rgba(214,168,79,.4);}
   .duel-life-oracle .duel-life-num{color:#e7b3b3;text-shadow:0 0 16px rgba(224,96,63,.45);}
@@ -128,7 +128,7 @@
   .duel-btn.primary{border-color:rgba(214,168,79,.4);background:rgba(214,168,79,.14);color:var(--gold2);}
   .duel-btn.ghost{flex:0 0 auto;color:var(--muted);}
   .duel-log{font-size:10.5px;line-height:1.5;color:#b6bac6;min-height:16px;}
-  .duel-hint{position:fixed;left:50%;bottom:8px;transform:translateX(-50%);z-index:24;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);opacity:.7;pointer-events:none;}
+  .duel-hint{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);z-index:24;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);opacity:.6;pointer-events:none;text-align:center;}
 
   /* ---------- card browser ---------- */
   .browser-bar{position:fixed;left:0;right:0;bottom:0;z-index:24;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 20px 22px;pointer-events:none;transition:opacity .3s ease, transform .3s ease;}

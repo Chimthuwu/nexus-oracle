@@ -78,7 +78,7 @@ export function Duel() {
   }, [cards]);
 
   const hand = layout.hand;
-  const handStart = -((hand.length - 1) * 1.5) / 2;
+  const handStart = -((hand.length - 1) * 1.35) / 2;
 
   return (
     <group position={[0, 0, 0]}>
@@ -105,13 +105,13 @@ export function Duel() {
       ))}
 
       {hand.map((dc, i) => {
-        const x = handStart + i * 1.5;
+        const x = handStart + i * 1.35;
         return (
           <BoardCard
             key={dc.uid}
             dc={dc}
-            target={[x, 1.9 + Math.abs(x) * -0.05, 8.4]}
-            rotX={-0.5}
+            target={[x, 3.35 + Math.abs(x) * -0.05, 7.2]}
+            rotX={-0.42}
             tapped={false}
             playable={canPlay}
             onClick={() => canPlay && playCard(dc.uid)}

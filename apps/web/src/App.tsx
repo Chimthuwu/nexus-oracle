@@ -2,7 +2,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { Oracle } from './scene/Oracle';
+import { BlackHole } from './scene/BlackHole';
 import { CameraRig } from './scene/CameraRig';
 import { Effects } from './scene/Effects';
 import { CardMesh } from './scene/CardMesh';
@@ -29,7 +29,7 @@ function SceneContent() {
       {view === 'mindmapper' && <MindMapper />}
       {view === 'oracle' && (
         <>
-          <Oracle />
+          <BlackHole />
           {cards.map((card, idx) => (
             <CardMesh key={card.id} card={card} index={idx} total={cards.length} />
           ))}

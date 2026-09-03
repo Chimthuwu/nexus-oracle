@@ -20,13 +20,13 @@ export function CameraRig() {
 
     if (view === 'duel') {
       // Raised three-quarter view of the battlefield.
-      px = pointer.x * 0.7;
-      py = 6.5 + pointer.y * 0.4;
-      pz = 13.5;
+      px = pointer.x * 0.6;
+      py = 5.6 + pointer.y * 0.35;
+      pz = 14.2;
       camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.05);
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.05);
       camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.05);
-      camera.lookAt(_target.set(0, 0.5, -1.5));
+      camera.lookAt(_target.set(0, 1.3, -2));
       return;
     }
 
