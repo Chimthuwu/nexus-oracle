@@ -74,16 +74,51 @@ describe("searchCards — name & free text", () => {
     expect(byOracle.some((c) => c.name === "Jace, the Mind Sculptor")).toBe(true);
   });
 
-  it("requires every space-separated token to match", () => {
-    // "angel" hits the type line of white angels; "lifelink" is a keyword
-    // only Baneslayer Angel carries in this set — every hit must have both.
+  it("treats color words as identity filters, not text to match", () => {
+    // "white" never appears in these cards' text — it must filter by identity.
+    const whites = searchCards("white angel flying", { limit: 20 });
+    expect(whites.length).toBeGreaterThan(0);
+    for (const c of whites) expect(c.colorIdentity).toContain("W");
+    // Angels (match both tokens) rank above cards that only match "flying".
+    expect(whites[0]?.typeLine.toLowerCase()).toContain("angel");
+    expect(whites.some((c) => c.name === "Avacyn, Angel of Hope")).toBe(true);
+    expect(whites.some((c) => c.name === "Counterspell")).toBe(false);
+
+    // Single letters work too, and colorless maps to empty identity.
+    const blues = searchCards("blue counter", { limit: 10 });
+    for (const c of blues) expect(c.colorIdentity).toContain("U");
+    expect(blues.some((c) => c.name === "Counterspell")).toBe(true);
+    const colorless = searchCards("colorless artifact", { limit: 20 });
+    for (const c of colorless) expect(c.colorIdentity).toEqual([]);
+
+    // A pure color-word query returns identity matches (alphabetical).
+    const justRed = searchCards("red", { limit: 50 });
+    expect(justRed.length).toBeGreaterThan(0);
+    for (const c of justRed) expect(c.colorIdentity).toContain("R");
+  });
+
+  it("matches ANY token, ranking cards that match more tokens higher", () => {
+    // LLM-generated queries copy whole sentences; any-match keeps recall high
+    // while cumulative scoring ranks the best cards first.
     const hits = searchCards("angel lifelink", { limit: 10 });
     expect(hits.length).toBeGreaterThan(0);
-    for (const c of hits) {
-      expect(c.typeLine.toLowerCase()).toContain("angel");
-      expect(c.keywords.map((k) => k.toLowerCase())).toContain("lifelink");
+    // Baneslayer Angel matches both tokens (type line + keyword) → first.
+    expect(hits[0].name).toBe("Baneslayer Angel");
+    const otherAngels = hits.filter((c) => c.typeLine.toLowerCase().includes("angel"));
+    expect(otherAngels.length).toBeGreaterThan(1);
+  });
+
+  it("handles long verbose queries from LLM tool calls", () => {
+    // A model paraphrasing the user will pass something like this verbatim.
+    const hits = searchCards("white creature with flying that protects others", { limit: 5 });
+    expect(hits.length).toBeGreaterThan(0);
+    // The white angels should dominate the top of the ranking.
+    const top = hits.slice(0, 3);
+    for (const c of top) {
+      expect(c.colorIdentity).toContain("W");
+      expect(c.typeLine.toLowerCase()).toContain("creature");
     }
-    expect(hits.some((c) => c.name === "Baneslayer Angel")).toBe(true);
+    expect(top.some((c) => c.typeLine.toLowerCase().includes("angel"))).toBe(true);
   });
 
   it("returns [] for nonsense queries", () => {

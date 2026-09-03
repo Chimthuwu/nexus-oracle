@@ -21,6 +21,29 @@ export interface SearchFilters {
 
 const COLOR_LETTERS = new Set(["W", "U", "B", "R", "G", "C"]);
 
+/**
+ * Color words in free text map to the color identity (a card's oracle text
+ * rarely contains the word "white"), so "white angel" should mean identity W
+ * + type line "angel", not a text search for the string "white".
+ */
+const COLOR_WORD_TO_LETTER: Record<string, string> = {
+  white: "W",
+  blue: "U",
+  black: "B",
+  red: "R",
+  green: "G",
+  w: "W",
+  u: "U",
+  b: "B",
+  r: "R",
+  g: "G",
+  colorless: "C",
+};
+
+function letterForColorWord(word: string): string | undefined {
+  return COLOR_WORD_TO_LETTER[word];
+}
+
 function matchesColorFilter(card: Card, colors: string[]): boolean {
   return colors.every((c) => {
     if (c === "C") return card.colorIdentity.length === 0;
@@ -51,9 +74,10 @@ function tokenScore(card: Card, token: string): number {
 /**
  * Search the Nexus card archive.
  *
- * - `query`: free text — card name, theme, or strategy. Every space-separated
- *   token must match somewhere (name / oracle text / type line / keywords).
- *   Empty query matches everything (subject to filters).
+ * - `query`: free text — card name, theme, or strategy. Cards matching ANY
+ *   space-separated token qualify; cards matching more tokens (or an exact
+ *   name match) rank higher. Empty query matches everything (subject to
+ *   filters).
  * - `filters`: optional restrictions per the §4.3 schema. `colors` requires
  *   every listed color to be present on the card's color identity (searching
  *   for "U" includes multicolor cards that contain blue; "C" = colorless).
@@ -63,13 +87,25 @@ function tokenScore(card: Card, token: string): number {
  */
 export function searchCards(query: string, filters: SearchFilters = {}): Card[] {
   const limit = filters.limit ?? 3;
-  const tokens = query
+  const rawTokens = query
     .trim()
     .toLowerCase()
     .split(/\s+/)
     .filter(Boolean);
 
-  const colors = (filters.colors ?? []).filter((c) => COLOR_LETTERS.has(c));
+  // Split color words (implicit identity filter) from text tokens.
+  const textTokens: string[] = [];
+  const implicitColors: string[] = [];
+  for (const token of rawTokens) {
+    const letter = letterForColorWord(token);
+    if (letter) implicitColors.push(letter);
+    else textTokens.push(token);
+  }
+  const tokens = textTokens;
+
+  // Explicit colors filter ∪ color words mentioned in the query.
+  const explicitColors = (filters.colors ?? []).filter((c) => COLOR_LETTERS.has(c));
+  const colors = [...new Set([...explicitColors, ...implicitColors])];
   const types = (filters.types ?? []).map((t) => t.toLowerCase()).filter(Boolean);
   const keywords = (filters.keywords ?? []).map((k) => k.toLowerCase()).filter(Boolean);
   const maxMv = filters.max_mana_value;
@@ -85,21 +121,16 @@ export function searchCards(query: string, filters: SearchFilters = {}): Card[] 
       if (!keywords.every((k) => owned.includes(k))) return false;
     }
     if (maxMv != null && !Number.isNaN(maxMv) && card.manaValue > maxMv) return false;
-    if (tokens.length) {
-      let total = 0;
-      for (const token of tokens) {
-        const score = tokenScore(card, token);
-        if (score === 0) return false; // every token must match somewhere
-        total += score;
-      }
-      return total > 0;
-    }
     return true;
   });
 
+  // Token matching is ANY + weighted, not ALL: LLM-generated queries copy
+  // whole user sentences ("…protects others…"), and all-tokens semantics would
+  // return nothing, making the model flail. Cards matching more tokens rank
+  // higher; the Oracle reads the returned cards and picks what it wants.
+  const full = query.trim().toLowerCase();
   const scored = matches.map((card) => {
     if (!tokens.length) return { card, score: 0 };
-    const full = query.trim().toLowerCase();
     let score = 0;
     for (const token of tokens) score += tokenScore(card, token);
     // Whole-phrase exact-name bonus puts the exact card on top.
@@ -107,10 +138,14 @@ export function searchCards(query: string, filters: SearchFilters = {}): Card[] 
     return { card, score };
   });
 
-  scored.sort((a, b) => {
+  const withHits = tokens.length ? scored.filter((s) => s.score > 0) : scored;
+
+  // Color-word-only queries have no text tokens, so every match scores 0 and
+  // the sort below degrades to alphabetical order — deterministic and fine.
+  withHits.sort((a, b) => {
     if (b.score !== a.score) return b.score - a.score;
     return a.card.name.localeCompare(b.card.name);
   });
 
-  return scored.slice(0, limit).map((s) => s.card);
+  return withHits.slice(0, limit).map((s) => s.card);
 }
