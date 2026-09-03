@@ -35,7 +35,7 @@ export function DuelHUD() {
   return (
     <>
       <div className="duel-life duel-life-oracle">
-        <span className="duel-life-name">THE ORACLE</span>
+        <span className="duel-life-name">ORACLE</span>
         <span className="duel-life-num">{life.oracle}</span>
       </div>
       <div className="duel-life duel-life-you">
@@ -43,53 +43,41 @@ export function DuelHUD() {
         <span className="duel-life-num">{life.you}</span>
       </div>
 
-      <div className="duel-bar glass">
-        <div className="duel-status">
-          <span className="duel-turn">Turn {turn}</span>
-          <span className="duel-phase">{winner ? '—' : PHASE_LABEL[phase]}</span>
-          <span className={`duel-who ${yourTurn ? 'you' : ''}`}>
-            {winner
-              ? winner === 'you'
-                ? 'Victory'
-                : 'Defeat'
-              : yourTurn
-                ? 'Your move'
-                : 'Oracle thinking…'}
-          </span>
-        </div>
-
-        <div className="duel-actions">
-          {winner ? (
-            <button className="duel-btn primary" onClick={() => void startDuel()}>
-              New duel
-            </button>
-          ) : (
-            <>
-              <button
-                className="duel-btn"
-                disabled={!yourTurn}
-                onClick={() => nextPhase()}
-              >
-                {phase === 'end' ? 'End turn ▸' : 'Next phase ▸'}
-              </button>
-              <button className="duel-btn ghost" onClick={() => void startDuel()}>
-                Restart
-              </button>
-            </>
-          )}
-        </div>
-
-        <div className="duel-log">{log[0] ?? ''}</div>
+      {/* slim status strip, top-centre */}
+      <div className="duel-strip glass">
+        <span className="duel-turn">Turn {turn}</span>
+        <span className="duel-phase">{winner ? '—' : PHASE_LABEL[phase]}</span>
+        <span className={`duel-who ${yourTurn ? 'you' : ''}`}>
+          {winner
+            ? winner === 'you'
+              ? 'Victory'
+              : 'Defeat'
+            : yourTurn
+              ? 'Your move'
+              : 'Oracle thinking…'}
+        </span>
       </div>
 
-      <div className="duel-hint">
-        {loading
-          ? 'dealing the opening hands…'
-          : winner
-            ? ''
-            : phase === 'combat'
-              ? 'click a creature to send it in'
-              : 'click a card in hand to play it'}
+      {/* action cluster, bottom-right */}
+      <div className="duel-actions">
+        {winner ? (
+          <button className="duel-btn primary" onClick={() => void startDuel()}>
+            New duel
+          </button>
+        ) : (
+          <>
+            <button className="duel-btn primary" disabled={!yourTurn} onClick={() => nextPhase()}>
+              {phase === 'end' ? 'End turn ▸' : 'Next phase ▸'}
+            </button>
+            <button className="duel-btn ghost" onClick={() => void startDuel()}>
+              Restart
+            </button>
+          </>
+        )}
+      </div>
+
+      <div className="duel-log">
+        {loading ? 'dealing the opening hands…' : (log[0] ?? '')}
       </div>
     </>
   );

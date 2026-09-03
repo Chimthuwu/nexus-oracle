@@ -31,15 +31,14 @@ export function MindMapper() {
     scene.position.set(-center.x * s, -center.y * s, -center.z * s);
 
     const mat = new THREE.MeshStandardMaterial({
-      color: '#1b1330',
-      emissive: '#3a2c78',
-      emissiveIntensity: 0.25,
-      roughness: 0.6,
-      metalness: 0,
+      color: '#2a1f52',
+      emissive: '#6a52c8',
+      emissiveIntensity: 0.55,
+      roughness: 0.5,
+      metalness: 0.15,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.55,
       depthWrite: false,
-      wireframe: true,
     });
     brainMat.current = mat;
     scene.traverse((c) => {
@@ -73,15 +72,16 @@ export function MindMapper() {
       groupRef.current.position.y = CENTER_Y + Math.sin(t * 0.4) * 0.03;
     }
     if (brainMat.current) {
-      brainMat.current.opacity = 0.3 + learn * 0.25;
-      brainMat.current.emissiveIntensity = 0.2 + learn * 0.6 + Math.sin(t * 1.4) * 0.03;
+      brainMat.current.opacity = 0.45 + learn * 0.3;
+      brainMat.current.emissiveIntensity = 0.45 + learn * 0.7 + Math.sin(t * 1.4) * 0.04;
     }
   });
 
   return (
     <>
-      <ambientLight intensity={0.3} color="#6a5ad0" />
-      <pointLight position={[3, 4, 4]} intensity={0.5 + learn * 0.5} color="#8b6cff" distance={18} />
+      <ambientLight intensity={0.5} color="#6a5ad0" />
+      <pointLight position={[4, 4, 5]} intensity={1.4 + learn * 1.2} color="#8b6cff" distance={22} />
+      <pointLight position={[-4, -2, -3]} intensity={0.7} color="#d6a84f" distance={18} />
 
       <group ref={groupRef} position={[0, CENTER_Y, 0]}>
         <primitive object={brain} />

@@ -5,9 +5,9 @@ import { useDuelStore } from '../store/useDuelStore';
 import type { DuelCard, Side } from '../store/useDuelStore';
 import { Card3D } from './Card3D';
 
-const CARD_SCALE = 0.46;
-const HAND_SCALE = 0.5;
-const COL_GAP = 1.55;
+const CARD_SCALE = 0.58;
+const HAND_SCALE = 0.92;
+const COL_GAP = 1.75;
 
 /** One card on the board or in hand, easing toward its slot. */
 function BoardCard({
@@ -77,17 +77,17 @@ export function Duel() {
 
   const layout = useMemo(() => {
     return {
-      oracleLands: row(zoneCards('oracle', 'lands'), -6.5, 1.4),
-      oracleCreatures: row(zoneCards('oracle', 'creatures'), -3.8, 1.4),
-      youCreatures: row(zoneCards('you', 'creatures'), 0.8, 1.4),
-      youLands: row(zoneCards('you', 'lands'), 3.4, 1.35),
+      oracleLands: row(zoneCards('oracle', 'lands'), -5.6, 1.7),
+      oracleCreatures: row(zoneCards('oracle', 'creatures'), -3.4, 1.7),
+      youCreatures: row(zoneCards('you', 'creatures'), 0.6, 1.7),
+      youLands: row(zoneCards('you', 'lands'), 2.6, 1.6),
       hand: zoneCards('you', 'hand'),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards]);
 
   const hand = layout.hand;
-  const handStart = -((hand.length - 1) * 1.5) / 2;
+  const handStart = -((hand.length - 1) * 1.55) / 2;
 
   return (
     <group position={[0, 0, 0]}>
@@ -123,13 +123,13 @@ export function Duel() {
       ))}
 
       {hand.map((dc, i) => {
-        const x = handStart + i * 1.3;
+        const x = handStart + i * 1.55;
         return (
           <BoardCard
             key={dc.uid}
             dc={dc}
-            target={[x, 0.5 + Math.abs(x) * -0.05, 6.6]}
-            rotX={-0.28}
+            target={[x, -0.4 + Math.abs(x) * -0.06, 7.4]}
+            rotX={-0.24}
             scale={HAND_SCALE}
             tapped={false}
             playable={canPlay}

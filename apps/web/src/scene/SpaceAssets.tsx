@@ -1,6 +1,6 @@
 import { Component, Suspense, useMemo, useRef, type ReactNode } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
-import { Stars } from '@react-three/drei';
+import { Stars, useTexture } from '@react-three/drei';
 import { PLYLoader } from 'three-stdlib';
 import * as THREE from 'three';
 import { Starfield } from './Starfield';
@@ -182,6 +182,29 @@ class AssetBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
 }
 
+/** Distant nebula haze from the supplied astronomy plate (eso1723a). */
+function NebulaPlate() {
+  const tex = useTexture('/assets/nebula/eso1723a.png');
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const ref = useRef<THREE.Mesh>(null);
+  useFrame((_, delta) => {
+    if (ref.current) ref.current.rotation.z += delta * 0.002;
+  });
+  return (
+    <mesh ref={ref} position={[6, 3, -60]} rotation={[0, 0, 0.3]} frustumCulled={false}>
+      <planeGeometry args={[110, 55]} />
+      <meshBasicMaterial
+        map={tex}
+        color="#8a74d8"
+        transparent
+        opacity={0.22}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </mesh>
+  );
+}
+
 export function SpaceAssets() {
   return (
     <>
@@ -190,6 +213,7 @@ export function SpaceAssets() {
       <Starfield />
       <AssetBoundary>
         <Suspense fallback={null}>
+          <NebulaPlate />
           <Nebula />
           <Galaxy />
           <StarCluster />
