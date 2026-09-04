@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useOracleStore } from '../store/useOracleStore';
@@ -11,6 +11,9 @@ const GAP_Y = 4.15;
 const TOP_Y = 2.4;
 const FOCUS_Z = 4.2;
 const FOCUS_SCALE = 1.32;
+// How many rows to keep rendered around the camera
+const RENDER_WINDOW_UP = 3;
+const RENDER_WINDOW_DOWN = 4;
 
 interface DragState {
   active: boolean;
@@ -76,12 +79,13 @@ function Slot({
     // Focused card follows the drag directly; others ease.
     g.current.rotation.y += (ry - g.current.rotation.y) * (focused ? 0.4 : k);
     g.current.rotation.x += (rx - g.current.rotation.x) * (focused ? 0.4 : k);
-    const target = s * (0.5 + 0.5 * appear.current);
+    const target = s * (0.5 + 0.5 * Math.pow(appear.current, 0.5));
     g.current.scale.setScalar(g.current.scale.x + (target - g.current.scale.x) * k);
   });
 
+  // Start slightly behind and scaled down to animate in cleanly when virtualized
   return (
-    <group ref={g} position={[baseX, baseY + 5, baseZ]} scale={0.5}>
+    <group ref={g} position={[baseX, baseY, baseZ - 4]} scale={0.2}>
       <Card3D
         card={card}
         focused={focused}
@@ -116,11 +120,14 @@ export function CardBrowser() {
     moved: 0,
   });
 
+  const [currentRow, setCurrentRow] = useState(0);
+
   const rows = Math.max(1, Math.ceil(cards.length / COLS));
   const maxScroll = Math.max(0, (rows - 1) * GAP_Y - GAP_Y * 0.5);
 
   useEffect(() => {
     scrollTarget.current = 0;
+    setCurrentRow(0);
   }, [cards]);
 
   // Reset the rotation whenever the focused card changes.
@@ -132,12 +139,17 @@ export function CardBrowser() {
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
       if (inspectedCard) return;
-      scrollTarget.current = THREE.MathUtils.clamp(
-        scrollTarget.current + e.deltaY * 0.01,
+      const nextTarget = THREE.MathUtils.clamp(
+        scrollTarget.current + e.deltaY * 0.015,
         0,
         maxScroll
       );
+      scrollTarget.current = nextTarget;
+      
+      const newRow = Math.round(nextTarget / GAP_Y);
+      setCurrentRow((prev) => (prev !== newRow ? newRow : prev));
     };
+    
     const onMove = (e: PointerEvent | MouseEvent) => {
       if (!drag.current.active) return;
       const dx = e.clientX - drag.current.last.x;
@@ -171,26 +183,39 @@ export function CardBrowser() {
 
   const slots = useMemo(() => {
     const center = (COLS - 1) / 2;
-    return cards.map((card, i) => {
-      const col = i % COLS;
+    const minRow = Math.max(0, currentRow - RENDER_WINDOW_UP);
+    const maxRow = Math.min(rows - 1, currentRow + RENDER_WINDOW_DOWN);
+    
+    const visibleSlots = [];
+    
+    for (let i = 0; i < cards.length; i++) {
       const row = Math.floor(i / COLS);
+      
+      // Virtualization check: ONLY render the card if it's within our window,
+      // OR if it is currently the inspected card (so it doesn't unmount mid-inspection).
+      const isInspected = inspectedCard?.id === cards[i].id;
+      if (!isInspected && (row < minRow || row > maxRow)) continue;
+      
+      const col = i % COLS;
       const off = col - center;
-      return {
-        card,
+      
+      visibleSlots.push({
+        card: cards[i],
         baseX: off * GAP_X,
         baseZ: -(Math.abs(off) ** 1.3) * 0.45,
         baseRotY: -off * 0.11,
         rowY: TOP_Y - row * GAP_Y,
-      };
-    });
-  }, [cards]);
+      });
+    }
+    return visibleSlots;
+  }, [cards, currentRow, rows, inspectedCard]);
 
   return (
     <group ref={container} position={[0, 0, 0]}>
       {/* click-away target to release a focused card */}
       {inspectedCard && (
         <mesh position={[0, 0, -8]} onClick={() => setInspectedCard(null)}>
-          <planeGeometry args={[80, 60]} />
+          <planeGeometry args={[180, 160]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
       )}
