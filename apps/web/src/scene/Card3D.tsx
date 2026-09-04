@@ -1,6 +1,5 @@
-import { Suspense, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import type { CardData } from '../store/useOracleStore';
 
@@ -134,10 +133,38 @@ function CardBack() {
   );
 }
 
+/**
+ * Card art is loaded imperatively rather than through drei's Suspense-based
+ * `useTexture`. In the virtualized browser the archive can open to a static
+ * window of cards with nothing else re-rendering; drei's loader would resolve
+ * the image but never flush the suspended component, leaving every card stuck
+ * on the fallback until an unrelated re-render (scroll, resize, hover). A
+ * `useState` set on load guarantees the swap happens. Textures are cached by
+ * URL so scrolling back to a row doesn't re-decode.
+ */
+const _texCache = new Map<string, THREE.Texture>();
+const _texLoader = new THREE.TextureLoader();
+
 function CardFront({ url }: { url: string }) {
-  const tex = useTexture(url);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 8;
+  // `url` is stable for a card instance (the browser keys each Slot by card id),
+  // so the initializer settles cache hits and the effect only runs a real load.
+  const [tex, setTex] = useState<THREE.Texture | null>(() => _texCache.get(url) ?? null);
+
+  useEffect(() => {
+    if (_texCache.has(url)) return;
+    let cancelled = false;
+    _texLoader.load(url, (t) => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = 8;
+      _texCache.set(url, t);
+      if (!cancelled) setTex(t);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [url]);
+
+  if (!tex) return <FrontFallback />;
   return (
     <mesh position={[0, 0, 0.006]}>
       <planeGeometry args={[CARD_W, CARD_H]} />
@@ -223,13 +250,8 @@ export function Card3D({
         />
       </mesh>
 
-      <Suspense fallback={<FrontFallback />}>
-        <CardBack />
-      </Suspense>
-
-      <Suspense fallback={<FrontFallback />}>
-        <CardFront url={card.imageUrl} />
-      </Suspense>
+      <CardBack />
+      <CardFront url={card.imageUrl} />
     </group>
   );
 }
