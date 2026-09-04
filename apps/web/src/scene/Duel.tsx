@@ -138,8 +138,8 @@ export function Duel() {
         const x = handStart + i * 1.5;
         const slot = {
           x,
-          y: 0.6 + Math.abs(x) * -0.04,
-          z: 7.2,
+          y: 1.5 + Math.abs(x) * -0.04,
+          z: 6.6,
           tilt: HAND_TILT,
           fan: -x * 0.05,
           scale: HAND_SCALE,
