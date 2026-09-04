@@ -13,6 +13,10 @@
   .wordmark .glyph::before{content:"✦";position:absolute;font-size:24px;color:var(--gold);transform:rotate(15deg);line-height:1;}
   .wordmark span{font-family:Cinzel,serif;letter-spacing:2.5px;font-size:13px;font-weight:600;}
 
+  .voice-toggle{position:fixed;top:22px;right:24px;z-index:26;width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(6,3,16,.5);backdrop-filter:blur(10px);color:#8a8f9f;font-size:14px;cursor:pointer;transition:.18s;display:grid;place-items:center;}
+  .voice-toggle:hover{color:#fff;border-color:rgba(139,108,255,.3);}
+  .voice-toggle.on{color:var(--gold2);border-color:rgba(214,168,79,.35);background:rgba(214,168,79,.08);}
+
   .loading{position:fixed;inset:0;z-index:100;background:#020103;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;transition:opacity .6s ease;}
   .loading.hide{opacity:0;pointer-events:none;}
   .loading .glyph{width:34px;height:34px;position:relative;animation:spin 2.2s linear infinite;}

@@ -193,34 +193,72 @@ export async function registerOracleRoutes(app: FastifyInstance): Promise<void> 
     }
   );
 
-  app.post<{ Body: { text: string } }>(
+  // ── Text-to-speech proxy ─────────────────────────────────────────────
+  // The browser can't hit freetts.org directly (no CORS); the v1 endpoint
+  // needs a key. Proxy it here and stream the audio straight back.
+  const FREETTS_KEY = process.env.FREETTS_API_KEY?.trim();
+  const FREETTS_VOICE = process.env.FREETTS_VOICE?.trim() || "en-US-JennyNeural";
+
+  app.post<{ Body: { text: string; voice?: string } }>(
     "/tts",
     {
       schema: {
         body: {
           type: "object",
           required: ["text"],
+          additionalProperties: false,
           properties: {
-            text: { type: "string" }
-          }
-        }
-      }
+            text: { type: "string", minLength: 1, maxLength: 4000 },
+            voice: { type: "string", maxLength: 60 },
+          },
+        },
+      },
     },
     async (request, reply) => {
+      if (!FREETTS_KEY) {
+        reply.code(503);
+        return { error: "TTS not configured — set FREETTS_API_KEY on the server." };
+      }
       try {
-        const response = await fetch("https://freetts.org/api/tts", {
+        const upstream = await fetch("https://freetts.org/api/v1/tts", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": FREETTS_KEY,
+          },
           body: JSON.stringify({
             text: request.body.text,
-            voice: "en-US-JennyNeural"
-          })
+            voice: request.body.voice || FREETTS_VOICE,
+          }),
         });
-        const data = await response.json();
-        return data; // { file_id: "..." }
+
+        const type = upstream.headers.get("content-type") ?? "";
+        if (!upstream.ok) {
+          const detail = await upstream.text().catch(() => "");
+          request.log.warn({ status: upstream.status, detail }, "freetts v1 rejected");
+          reply.code(502);
+          return { error: `TTS upstream ${upstream.status}`, detail: detail.slice(0, 200) };
+        }
+
+        // Audio bytes → stream straight through.
+        if (type.startsWith("audio/") || type === "application/octet-stream") {
+          const buf = Buffer.from(await upstream.arrayBuffer());
+          reply.header("content-type", type.startsWith("audio/") ? type : "audio/mpeg");
+          reply.header("cache-control", "no-store");
+          return reply.send(buf);
+        }
+
+        // Otherwise it's JSON pointing at the audio — pass it back normalised.
+        const data = (await upstream.json().catch(() => ({}))) as Record<string, unknown>;
+        const url =
+          (typeof data.audio_url === "string" && data.audio_url) ||
+          (typeof data.url === "string" && data.url) ||
+          (typeof data.file_id === "string" && `https://freetts.org/api/audio/${data.file_id}`) ||
+          null;
+        return url ? { url } : { error: "TTS returned no audio", raw: data };
       } catch (err) {
         request.log.error({ err }, "tts failed");
-        reply.code(500);
+        reply.code(502);
         return { error: "TTS generation failed" };
       }
     }

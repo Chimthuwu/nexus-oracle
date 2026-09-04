@@ -39,21 +39,6 @@ export function ResponseCaption() {
       }
     }, 16);
 
-    // Call our backend TTS proxy
-    fetch('https://nexus-oracle-u6ra.onrender.com/api/oracle/tts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: responseText }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.file_id) {
-          const audio = new Audio(`https://freetts.org/api/audio/${data.file_id}`);
-          audio.play().catch(console.error);
-        }
-      })
-      .catch(console.error);
-
     return () => {
       if (timer.current) clearInterval(timer.current);
     };
