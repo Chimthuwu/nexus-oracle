@@ -184,7 +184,7 @@ export function Card3D({
   useFrame(() => {
     if (glow.current) {
       const mat = glow.current.material as THREE.MeshBasicMaterial;
-      const target = focused ? 0.6 : lit ? 0.4 : 0.1;
+      const target = focused ? 0.32 : lit ? 0.28 : 0.08;
       mat.opacity += (target - mat.opacity) * 0.15;
       const s = focused ? 1.1 : lit ? 1.07 : 1.03;
       glow.current.scale.x += (s - glow.current.scale.x) * 0.15;

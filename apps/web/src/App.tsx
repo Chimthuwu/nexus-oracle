@@ -14,7 +14,7 @@ import { MindMapper } from './scene/MindMapper';
 import { CommandBar } from './components/CommandBar';
 import { BrowserBar } from './components/BrowserBar';
 import { DuelHUD } from './components/DuelHUD';
-import { DuelHand } from './components/DuelHand';
+import { DuelAction } from './components/DuelAction';
 import { MindMapperHUD } from './components/MindMapperHUD';
 import { ResponseCaption } from './components/ResponseCaption';
 import { Transcript } from './components/Transcript';
@@ -120,7 +120,7 @@ function App() {
       <Transcript />
       <BrowserBar />
       <DuelHUD />
-      <DuelHand />
+      <DuelAction />
     </>
   );
 }

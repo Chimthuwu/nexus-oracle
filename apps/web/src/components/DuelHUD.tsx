@@ -21,12 +21,8 @@ export function DuelHUD() {
   const winner = useDuelStore((s) => s.winner);
   const log = useDuelStore((s) => s.log);
   const cards = useDuelStore((s) => s.cards);
-  const inspectedUid = useDuelStore((s) => s.inspectedUid);
   const startDuel = useDuelStore((s) => s.startDuel);
   const nextPhase = useDuelStore((s) => s.nextPhase);
-  const playCard = useDuelStore((s) => s.playCard);
-  const attack = useDuelStore((s) => s.attack);
-  const setInspected = useDuelStore((s) => s.setInspected);
 
   useEffect(() => {
     if (view === 'duel' && !active && !loading) void startDuel();
@@ -36,28 +32,8 @@ export function DuelHUD() {
   if (view !== 'duel') return null;
 
   const yourTurn = current === 'you' && !winner;
-  const inspected = cards.find((c) => c.uid === inspectedUid) ?? null;
   const youCreatures = cards.filter((c) => c.owner === 'you' && c.zone === 'creatures').length;
   const oracleCreatures = cards.filter((c) => c.owner === 'oracle' && c.zone === 'creatures').length;
-
-  const canPlay = yourTurn && (phase === 'main1' || phase === 'main2');
-  const canAttack = yourTurn && phase === 'combat';
-  const isLand = inspected ? /land/i.test(inspected.card.typeLine) : false;
-
-  let action: { label: string; run: () => void } | null = null;
-  if (inspected) {
-    if (inspected.zone === 'hand' && canPlay) {
-      action = { label: isLand ? 'PLAY LAND' : 'PLAY CARD', run: () => playCard(inspected.uid) };
-    } else if (
-      inspected.zone === 'creatures' &&
-      inspected.owner === 'you' &&
-      canAttack &&
-      !inspected.tapped &&
-      !inspected.sick
-    ) {
-      action = { label: 'SEND TO ATTACK', run: () => attack(inspected.uid) };
-    }
-  }
 
   return (
     <>
@@ -103,31 +79,6 @@ export function DuelHUD() {
             </>
           )}
         </div>
-
-        {/* selected-card inspector — sits right under Next phase */}
-        {inspected && (
-          <div className="duel-card-view">
-            <img className="duel-card-img" src={inspected.card.imageUrl} alt={inspected.card.name} />
-            <div className="duel-card-meta">
-              <div className="duel-card-name">{inspected.card.name}</div>
-              <div className="duel-card-sub">
-                {inspected.zone === 'hand' ? 'In hand' : inspected.zone} ·{' '}
-                {inspected.owner === 'you' ? 'yours' : 'Oracle'}
-                {inspected.sick && inspected.zone === 'creatures' ? ' · summoning sick' : ''}
-                {inspected.tapped ? ' · tapped' : ''}
-              </div>
-            </div>
-            {action ? (
-              <button className="duel-btn primary block" onClick={action.run}>
-                {action.label}
-              </button>
-            ) : (
-              <button className="duel-btn ghost block" onClick={() => setInspected(null)}>
-                Deselect
-              </button>
-            )}
-          </div>
-        )}
 
         <div className="duel-panel-row">
           <span>Your board</span>
