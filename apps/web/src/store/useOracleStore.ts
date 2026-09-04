@@ -174,7 +174,7 @@ export const useOracleStore = create<OracleState>()(
         const colors = opts?.colors ?? get().browserColors;
         set({ browserLoading: true, browserQuery: query, browserColors: colors });
         try {
-          const params = new URLSearchParams({ limit: '500' });
+          const params = new URLSearchParams({ limit: '4000' });
           if (query.trim()) params.set('q', query.trim());
           if (colors.length) params.set('colors', colors.join(','));
           const res = await fetch(`${CARDS_API}?${params.toString()}`);
