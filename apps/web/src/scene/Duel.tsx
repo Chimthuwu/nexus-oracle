@@ -5,8 +5,9 @@ import { useDuelStore } from '../store/useDuelStore';
 import type { DuelCard, Side } from '../store/useDuelStore';
 import { Card3D } from './Card3D';
 
-const CARD_SCALE = 0.85;
-const COL_GAP = 2.5;
+const CARD_SCALE = 0.72;
+const COL_GAP = 2.15;
+const CARD_TILT = -0.95; // lying back on the "table", angled up toward the camera
 
 /** A card standing on the battlefield, easing toward its slot. */
 function BoardCard({
@@ -32,10 +33,10 @@ function BoardCard({
     const lift = selected ? 0.6 : playable ? 0.2 : 0;
     g.current.position.x += (target[0] - g.current.position.x) * k;
     g.current.position.y += (target[1] + lift - g.current.position.y) * k;
-    g.current.position.z += (target[2] + (selected ? 0.6 : 0) - g.current.position.z) * k;
+    g.current.position.z += (target[2] + (selected ? 0.4 : 0) - g.current.position.z) * k;
     const rz = tapped ? Math.PI / 2 : 0;
     g.current.rotation.z += (rz - g.current.rotation.z) * k;
-    g.current.rotation.x += (-0.12 - g.current.rotation.x) * k;
+    g.current.rotation.x += ((selected ? -0.55 : CARD_TILT) - g.current.rotation.x) * k;
     const s = selected ? CARD_SCALE * 1.15 : CARD_SCALE - (dc.sick ? 0.04 : 0);
     g.current.scale.setScalar(g.current.scale.x + (s - g.current.scale.x) * k);
   });
@@ -72,10 +73,10 @@ export function Duel() {
 
   const layout = useMemo(
     () => ({
-      oracleLands: row(zone('oracle', 'lands'), -6.2, 1.6),
-      oracleCreatures: row(zone('oracle', 'creatures'), -3.6, 1.6),
-      youCreatures: row(zone('you', 'creatures'), 0.4, 1.6),
-      youLands: row(zone('you', 'lands'), 3.0, 1.55),
+      oracleLands: row(zone('oracle', 'lands'), -4.7, 0.05),
+      oracleCreatures: row(zone('oracle', 'creatures'), -2.6, 0.05),
+      youCreatures: row(zone('you', 'creatures'), 2.1, 0.05),
+      youLands: row(zone('you', 'lands'), 4.3, 0.05),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [cards]
@@ -91,16 +92,20 @@ export function Duel() {
 
   return (
     <group>
-      {/* battlefield seam */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, -1.3]}>
-        <planeGeometry args={[26, 0.05]} />
-        <meshBasicMaterial color="#8b6cff" transparent opacity={0.35} blending={THREE.AdditiveBlending} />
+      {/* the table surface */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, -1]}>
+        <planeGeometry args={[26, 16]} />
+        <meshBasicMaterial color="#0c0a18" transparent opacity={0.55} />
       </mesh>
-
+      {/* battlefield seam between the two sides */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -0.7]}>
+        <planeGeometry args={[24, 0.05]} />
+        <meshBasicMaterial color="#8b6cff" transparent opacity={0.4} blending={THREE.AdditiveBlending} />
+      </mesh>
       {empty && (
-        <mesh position={[0, 1.7, -1.3]}>
+        <mesh position={[0, 0.6, -0.7]} visible={false}>
           <planeGeometry args={[0.001, 0.001]} />
-          <meshBasicMaterial visible={false} />
+          <meshBasicMaterial />
         </mesh>
       )}
 

@@ -19,14 +19,14 @@ export function CameraRig() {
     let lookY = 0;
 
     if (view === 'duel') {
-      // Low three-quarter view — cards stand up and read from here.
-      px = pointer.x * 0.35;
-      py = 3.8 + pointer.y * 0.2;
-      pz = 15;
+      // Looking down at the table — opponent's side up-screen, yours down-screen.
+      px = pointer.x * 0.4;
+      py = 8.4 + pointer.y * 0.3;
+      pz = 10.5;
       camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.06);
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.06);
       camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.06);
-      camera.lookAt(_target.set(0, 1.5, -2));
+      camera.lookAt(_target.set(0, 0, -1.2));
       return;
     }
 
