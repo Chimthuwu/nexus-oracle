@@ -15,6 +15,7 @@ import { CommandBar } from './components/CommandBar';
 import { BrowserBar } from './components/BrowserBar';
 import { DuelHUD } from './components/DuelHUD';
 import { DuelHand } from './components/DuelHand';
+import { MindMapperHUD } from './components/MindMapperHUD';
 import { ResponseCaption } from './components/ResponseCaption';
 import { Transcript } from './components/Transcript';
 import { InspectHUD } from './components/InspectHUD';
@@ -109,12 +110,13 @@ function App() {
       <Spine />
       <InspectHUD />
 
-      {(view === 'oracle' || view === 'mindmapper' || view === 'deckbuilder') && (
+      {(view === 'oracle' || view === 'deckbuilder') && (
         <>
           <ResponseCaption />
           <CommandBar />
         </>
       )}
+      <MindMapperHUD />
       <Transcript />
       <BrowserBar />
       <DuelHUD />

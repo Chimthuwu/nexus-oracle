@@ -100,6 +100,28 @@
   .hud-close{position:absolute;top:-14px;right:-14px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(14,11,20,.9);border:1px solid rgba(255,255,255,.14);color:#dcdfe8;cursor:pointer;font-size:14px;transition:.2s;}
   .hud-close:hover{background:rgba(139,108,255,.25);border-color:rgba(139,108,255,.5);transform:rotate(90deg);}
 
+  /* ---------- Mind Mapper interview HUD ---------- */
+  .mm-hud{position:fixed;left:0;right:0;bottom:0;z-index:24;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 20px 30px;pointer-events:none;}
+  .mm-progress{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);opacity:.8;}
+  .mm-review{font:inherit;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;background:none;border:0;color:var(--gold2);cursor:pointer;padding:0 0 0 4px;pointer-events:auto;opacity:.85;}
+  .mm-review:hover{opacity:1;}
+  .mm-question{width:min(600px,92vw);padding:20px 26px;pointer-events:auto;position:relative;overflow:hidden;}
+  .mm-question::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 0%,rgba(139,108,255,.08),transparent 70%);pointer-events:none;}
+  .mm-q-eyebrow{font-size:9px;letter-spacing:3px;color:var(--purple);font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:9px;position:relative;z-index:1;}
+  .mm-q-text{margin-top:11px;font-family:Cinzel,serif;font-size:17px;line-height:1.5;color:#efeaff;position:relative;z-index:1;}
+  .mm-answer{width:min(600px,92vw);padding:12px;pointer-events:auto;display:flex;flex-direction:column;gap:10px;}
+  .mm-answer textarea{width:100%;resize:none;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:11px 14px;color:#f0ecf5;font:inherit;font-size:13.5px;line-height:1.55;outline:0;transition:border-color .2s;}
+  .mm-answer textarea:focus{border-color:rgba(139,108,255,.4);}
+  .mm-answer textarea::placeholder{color:#5a5f7a;}
+  .mm-answer textarea:disabled{opacity:.6;}
+  .mm-answer-actions{display:flex;gap:8px;justify-content:flex-end;}
+  .mm-skip,.mm-send{font:inherit;font-size:11.5px;letter-spacing:.5px;padding:9px 16px;border-radius:9px;cursor:pointer;transition:.16s;}
+  .mm-skip{border:1px solid rgba(255,255,255,.12);background:none;color:var(--muted);}
+  .mm-skip:hover:not(:disabled){color:#fff;}
+  .mm-send{border:1px solid rgba(139,108,255,.45);background:rgba(139,108,255,.16);color:#efeaff;}
+  .mm-send:hover:not(:disabled){background:rgba(139,108,255,.26);}
+  .mm-skip:disabled,.mm-send:disabled{opacity:.35;cursor:default;}
+
   /* ---------- the Spine — conversation history rail ---------- */
   .spine{position:fixed;left:0;top:0;bottom:0;z-index:40;display:flex;transition:opacity .4s ease, transform .4s ease;}
   .spine.gone{opacity:0;transform:translateX(-12px);pointer-events:none;}

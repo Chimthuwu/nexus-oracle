@@ -24,7 +24,7 @@ const randomPos = (): [number, number, number] => [
 export function useAskOracle() {
   const store = useOracleStore;
 
-  const ask = useCallback(async (raw: string) => {
+  const ask = useCallback(async (raw: string, opts?: { silent?: boolean }) => {
     const message = raw.trim();
     const s = store.getState();
     if (!message || s.isThinking) return;
@@ -40,7 +40,9 @@ export function useAskOracle() {
     s.setResponseText('');
 
     const history = s.historyForSend();
-    s.appendTurn({ role: 'user', content: message });
+    // `silent` = system-y kickoff messages (e.g. Mind Mapper asking for a
+    // question) that shouldn't show up as the user's own line in the thread.
+    if (!opts?.silent) s.appendTurn({ role: 'user', content: message });
 
     try {
       const res = await fetch(API_URL, {
