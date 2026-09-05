@@ -41,6 +41,25 @@
   entry point, swap the Duel mock for it (one file: the store's actions).
 
 ## Recently fixed
+- **Full archive now loads (was capped at 4k) + cold-start UX** (this agent,
+  2026-09-06). `mockData.ts` has 31,679 cards but the frontend asked for
+  `limit=4000` and the server capped at 5000. Now: `@fastify/compress`
+  registered (25 MB archive JSON → ~2–3 MB gzipped), caps raised to 50k,
+  frontend pulls the whole set (wall is virtualised — ~40 meshes at a time).
+  BrowserBar shows "waking the archive — first load can take ~30s" after 4s
+  and an unreachable + Retry state on failure instead of a silent "0 cards".
+  Also fixed pre-existing type errors: `rarity` now includes
+  `special`/`bonus`; `searchCards` return annotation is `{data,total}`.
+  **`packages/card-data/test/search.test.ts` still expects the old array
+  return — left for the data-package owner.** `c2072a9`.
+- **Mind Mapper: brain framing + glare** (this agent, 2026-09-06). Brain
+  (radius-8 mesh) overlapped the bottom HUD at short viewport heights and
+  the core was blown out. CameraRig now frames Mind Mapper directly (pulled
+  back, aimed above centre, slow orbit) instead of deferring to an in-scene
+  `<OrbitControls>` — brain sits in the upper ~60% at any height. Shell
+  emissive/opacity, fresnel rim and the violet key light all turned down;
+  it still brightens with `learn`. HUD got a legibility scrim. `c4378f4` +
+  `4e9b234`.
 - **Live site had no cards and no AI** (this agent, 2026-09-06). `d96e077`
   changed every backend call from the absolute Render URL to a relative
   `/api/...` path — fine in dev (vite proxies `/api` → local server), but the
