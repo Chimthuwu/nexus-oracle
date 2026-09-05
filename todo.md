@@ -41,6 +41,18 @@
   entry point, swap the Duel mock for it (one file: the store's actions).
 
 ## Recently fixed
+- **Archive data pipeline: JSON not a 25 MB TS literal** (this agent,
+  2026-09-06). `mockData.ts` was a 705k-line `export const MOCK_CARDS = [...]`
+  that tsx re-transformed on every server boot. Now `mockData.ts` does
+  `JSON.parse(readFileSync('cards.json'))` — 31,679 cards in ~140 ms.
+  `fetch-cards.mjs` writes `cards.json`; `search.test.ts` re-baselined for the
+  bulk dataset (20/20 green); one bad record fixed (Fallaji Wayfarer colours).
+  `/health` now reports `{cards, commit, startedAt}`.
+  **Verified live**: `nexus-oracle-u6ra.onrender.com/health` →
+  `cards:31679, commit:0f65f93`; `/api/cards/search?limit=50000` returns the
+  whole archive (~3.9 MB gzipped — Render gzips automatically). Render
+  auto-deploy is working and fast; the earlier "3588 CARDS" was a stale
+  frontend bundle / mid-deploy, not a stuck backend. `bd37da1`, `0f65f93`.
 - **Full archive now loads (was capped at 4k) + cold-start UX** (this agent,
   2026-09-06). `mockData.ts` has 31,679 cards but the frontend asked for
   `limit=4000` and the server capped at 5000. Now: `@fastify/compress`
