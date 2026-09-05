@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF, Html, OrbitControls } from '@react-three/drei';
+import { useGLTF, Html } from '@react-three/drei';
 import { mergeBufferGeometries } from 'three-stdlib';
 import * as THREE from 'three';
 import { useOracleStore } from '../store/useOracleStore';
@@ -191,18 +191,6 @@ export function MindMapper() {
 
 
       </group>
-
-      <OrbitControls
-        makeDefault
-        target={[0, 0.9, 0]}
-        enablePan={false}
-        enableZoom={false}
-        enableDamping
-        dampingFactor={0.055}
-        rotateSpeed={0.5}
-        autoRotate
-        autoRotateSpeed={0.2}
-      />
     </>
   );
 }

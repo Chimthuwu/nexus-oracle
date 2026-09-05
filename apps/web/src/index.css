@@ -113,6 +113,9 @@
 
   /* ---------- Mind Mapper interview HUD ---------- */
   .mm-hud{position:fixed;left:0;right:0;bottom:0;z-index:24;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 20px 30px;pointer-events:none;}
+  /* Legibility scrim — the brain is large and its lower edge can sit behind
+     the HUD at short viewport heights; fade the backdrop so text always reads. */
+  .mm-hud::before{content:'';position:absolute;left:0;right:0;bottom:0;height:150%;background:linear-gradient(to top,rgba(5,3,8,.92) 0%,rgba(5,3,8,.78) 38%,rgba(5,3,8,.35) 70%,transparent 100%);pointer-events:none;z-index:-1;}
   .mm-progress{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);opacity:.8;}
   .mm-review{font:inherit;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;background:none;border:0;color:var(--gold2);cursor:pointer;padding:0 0 0 4px;pointer-events:auto;opacity:.85;}
   .mm-review:hover{opacity:1;}

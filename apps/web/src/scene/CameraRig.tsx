@@ -9,14 +9,39 @@ export function CameraRig() {
   const view = useOracleStore((s) => s.view);
   const inspectedCard = useOracleStore((s) => s.inspectedCard);
 
-  useFrame(() => {
-    // Oracle + Mind Mapper modes are driven by <OrbitControls> — hands off.
-    if (view === 'oracle' || view === 'mindmapper') return;
+  useFrame((state) => {
+    // Oracle mode is driven by <OrbitControls> — hands off.
+    if (view === 'oracle') return;
 
     let px = 0;
     let py = 1;
     let pz = 12;
     let lookY = 0;
+
+    if (view === 'mindmapper') {
+      // The brain mesh is deliberately oversized (radius 8). Frame it pulled
+      // back and raised so its whole bulk sits in the upper screen, clear of
+      // the bottom question/answer HUD, then orbit it slowly. Removes the
+      // mount-time-camera fragility of the old in-scene <OrbitControls> and
+      // keeps framing identical regardless of viewport height.
+      const cam = camera as THREE.PerspectiveCamera;
+      if (cam.fov !== 50) {
+        cam.fov = 50;
+        cam.updateProjectionMatrix();
+      }
+      const ang = state.clock.elapsedTime * 0.06;
+      const dist = 26;
+      px = Math.sin(ang) * dist + pointer.x * 0.6;
+      py = 1 + pointer.y * 0.4;
+      pz = Math.cos(ang) * dist;
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, px, 0.05);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, py, 0.05);
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, pz, 0.05);
+      // Aim above the brain's centre (it sits at y≈-5) so the whole mesh
+      // rides in the upper ~60% of the frame, above the HUD.
+      camera.lookAt(_target.set(0, -2, 0));
+      return;
+    }
 
     if (view === 'duel') {
       // Looking down at the table — opponent's side up-screen, yours down-screen.
