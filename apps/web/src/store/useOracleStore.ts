@@ -91,6 +91,8 @@ interface OracleState {
   browserCards: CardData[];
   browserTotalCards: number;
   browserLoading: boolean;
+  /** Set when the last archive fetch failed (network / server unreachable). */
+  browserError: boolean;
   browserQuery: string;
   browserColors: string[];
   loadBrowser: (opts?: { query?: string; colors?: string[] }) => Promise<void>;
@@ -173,14 +175,18 @@ export const useOracleStore = create<OracleState>()(
       browserCards: [],
       browserTotalCards: 0,
       browserLoading: false,
+      browserError: false,
       browserQuery: '',
       browserColors: [],
       loadBrowser: async (opts) => {
         const query = opts?.query ?? get().browserQuery;
         const colors = opts?.colors ?? get().browserColors;
-        set({ browserLoading: true, browserQuery: query, browserColors: colors });
+        set({ browserLoading: true, browserError: false, browserQuery: query, browserColors: colors });
         try {
-          const params = new URLSearchParams({ limit: '4000' });
+          // The whole archive — the wall is virtualised (renders ~40 cards at
+          // a time) and the response is gzipped, so pulling every card once
+          // per session is cheap and makes the full archive browsable.
+          const params = new URLSearchParams({ limit: '50000' });
           if (query.trim()) params.set('q', query.trim());
           if (colors.length) params.set('colors', colors.join(','));
           const res = await fetch(`${CARDS_API}?${params.toString()}`);
@@ -191,7 +197,7 @@ export const useOracleStore = create<OracleState>()(
           });
         } catch (err) {
           console.error('Card browser load failed:', err);
-          set({ browserCards: [], browserTotalCards: 0 });
+          set({ browserCards: [], browserTotalCards: 0, browserError: true });
         } finally {
           set({ browserLoading: false });
         }

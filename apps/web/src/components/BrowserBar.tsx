@@ -15,12 +15,25 @@ export function BrowserBar() {
   const setView = useOracleStore((s) => s.setView);
   const loadBrowser = useOracleStore((s) => s.loadBrowser);
   const loading = useOracleStore((s) => s.browserLoading);
+  const error = useOracleStore((s) => s.browserError);
   const count = useOracleStore((s) => s.browserTotalCards);
   const storedColors = useOracleStore((s) => s.browserColors);
   const inspecting = useOracleStore((s) => s.inspectedCard != null);
 
   const [q, setQ] = useState('');
   const [colors, setColors] = useState<string[]>(storedColors);
+
+  // After a few seconds of loading, tell the user the server is likely
+  // cold-starting (Render free tier sleeps and takes ~30–50s to wake).
+  const [slow, setSlow] = useState(false);
+  useEffect(() => {
+    if (!loading) {
+      setSlow(false);
+      return;
+    }
+    const t = setTimeout(() => setSlow(true), 4000);
+    return () => clearTimeout(t);
+  }, [loading]);
 
   // Load the archive the first time the browser opens.
   useEffect(() => {
@@ -49,7 +62,15 @@ export function BrowserBar() {
         </button>
         <div className="browser-title">
           THE ARCHIVE
-          <span>{loading ? 'consulting…' : `${count} card${count === 1 ? '' : 's'}`}</span>
+          <span>
+            {loading
+              ? slow
+                ? 'waking the archive — first load can take ~30s'
+                : 'consulting…'
+              : error
+                ? 'the archive is unreachable — retry'
+                : `${count} card${count === 1 ? '' : 's'}`}
+          </span>
         </div>
         <form onSubmit={submit} className="browser-search">
           <input
@@ -78,6 +99,15 @@ export function BrowserBar() {
           <div className="browser-loading-track">
             <div className="browser-loading-bar" />
           </div>
+        )}
+        {error && !loading && (
+          <button
+            type="button"
+            className="browser-retry"
+            onClick={() => void loadBrowser({ query: q, colors })}
+          >
+            ↻ Retry
+          </button>
         )}
       </div>
       <div className="browser-hint">scroll to sift · click a card to inspect</div>

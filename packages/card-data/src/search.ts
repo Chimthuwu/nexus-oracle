@@ -85,7 +85,10 @@ function tokenScore(card: Card, token: string): number {
  * Results are relevance-ranked: exact name matches first, then name-prefix,
  * then substring hits, then oracle/keyword/type hits, then alphabetical.
  */
-export function searchCards(query: string, filters: SearchFilters = {}): Card[] {
+export function searchCards(
+  query: string,
+  filters: SearchFilters = {},
+): { data: Card[]; total: number } {
   const limit = filters.limit ?? 3;
   const rawTokens = query
     .trim()

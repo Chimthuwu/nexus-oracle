@@ -24,7 +24,7 @@ export async function registerCardsRoutes(app: FastifyInstance): Promise<void> {
   app.get<{ Querystring: SearchQuery }>("/search", async (request) => {
     const q = (request.query.q ?? "").trim();
     const limitRaw = Number(request.query.limit);
-    const limit = Number.isNaN(limitRaw) ? 10 : Math.min(Math.max(Math.floor(limitRaw), 1), 5000);
+    const limit = Number.isNaN(limitRaw) ? 10 : Math.min(Math.max(Math.floor(limitRaw), 1), 50000);
 
     const colors = parseListParam(request.query.colors).filter((c) => COLOR_ENUM.includes(c));
     const filters: SearchFilters = {

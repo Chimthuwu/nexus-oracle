@@ -13,7 +13,9 @@ export interface Card {
   oracleText: string;
   colors: string[]; // e.g. ["U"], [] for colorless
   colorIdentity: string[];
-  rarity: "common" | "uncommon" | "rare" | "mythic";
+  // Scryfall's full rarity set — "special" (e.g. Time Spiral timeshifted) and
+  // "bonus" (e.g. The List / Mystery Booster) show up in the bulk data.
+  rarity: "common" | "uncommon" | "rare" | "mythic" | "special" | "bonus";
   power?: string;
   toughness?: string;
   loyalty?: string;

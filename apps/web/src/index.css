@@ -247,6 +247,8 @@
   .browser-loading-track { position: absolute; bottom: 0; left: 16px; right: 16px; height: 2px; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,0.05); }
   .browser-loading-bar { position: absolute; top: 0; left: -30%; height: 100%; width: 30%; background: var(--gold2); animation: loading-slide 1s infinite ease-in-out; }
   @keyframes loading-slide { 0% { left: -30%; } 100% { left: 100%; } }
+  .browser-retry { margin-top: 8px; align-self: flex-start; padding: 5px 12px; border-radius: 8px; border: 1px solid var(--gold2); background: rgba(214,168,79,0.12); color: var(--gold2); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background .2s ease; }
+  .browser-retry:hover { background: rgba(214,168,79,0.24); }
 
 
   @media(max-width:760px){
