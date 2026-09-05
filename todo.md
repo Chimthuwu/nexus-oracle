@@ -41,6 +41,18 @@
   entry point, swap the Duel mock for it (one file: the store's actions).
 
 ## Recently fixed
+- **Live site had no cards and no AI** (this agent, 2026-09-06). `d96e077`
+  changed every backend call from the absolute Render URL to a relative
+  `/api/...` path — fine in dev (vite proxies `/api` → local server), but the
+  Cloudflare Pages deploy is static with no proxy, so on the live site every
+  request resolved to `index.html` ("0 CARDS", "connection to the well has
+  gone quiet"). Added `apps/web/src/config.ts` → `API_BASE` (`''` in dev to
+  keep the vite proxy, Render URL in a prod build, `VITE_API_BASE` override);
+  routed useAskOracle / DeckChat / ArchiveDeckPanel / useDuelStore /
+  useOracleStore / OracleVoice through it. Fixed in `b6d1100`. **Takes effect
+  on the next Cloudflare Pages build.** Server already sends `origin: true`
+  CORS so cross-origin from Pages → Render is fine. TTS is still separately
+  silent (missing `FREETTS_API_KEY` on Render — see below).
 - **Duel: hand + board visibility/readability sweep** (this agent, 2026-09-05).
   Camera/framing was clipping the hand off the bottom edge on normal window
   heights, played board cards read as tiny/distant against a huge black table,
