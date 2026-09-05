@@ -211,9 +211,11 @@ export function Card3D({
   useFrame(() => {
     if (glow.current) {
       const mat = glow.current.material as THREE.MeshBasicMaterial;
-      const target = focused ? 0.32 : lit ? 0.28 : 0.08;
+      // Kept subtle — with bloom in the postprocessing stack, even modest
+      // additive opacity here washes out the card art and text underneath.
+      const target = focused ? 0.2 : lit ? 0.16 : 0.05;
       mat.opacity += (target - mat.opacity) * 0.15;
-      const s = focused ? 1.1 : lit ? 1.07 : 1.03;
+      const s = focused ? 1.06 : lit ? 1.04 : 1.015;
       glow.current.scale.x += (s - glow.current.scale.x) * 0.15;
       glow.current.scale.y = glow.current.scale.x;
     }

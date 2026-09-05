@@ -147,5 +147,8 @@ export function searchCards(query: string, filters: SearchFilters = {}): Card[] 
     return a.card.name.localeCompare(b.card.name);
   });
 
-  return withHits.slice(0, limit).map((s) => s.card);
+  return {
+    data: withHits.slice(0, limit).map((s) => s.card),
+    total: withHits.length
+  };
 }

@@ -8,7 +8,6 @@ import { Effects } from './scene/Effects';
 import { CardMesh } from './scene/CardMesh';
 import { CardBrowser } from './scene/CardBrowser';
 import { Duel } from './scene/Duel';
-import { DeckBuilder } from './scene/DeckBuilder';
 import { SpaceAssets } from './scene/SpaceAssets';
 import { MindMapper } from './scene/MindMapper';
 import { CommandBar } from './components/CommandBar';
@@ -20,6 +19,7 @@ import { OracleVoice } from './components/OracleVoice';
 import { ResponseCaption } from './components/ResponseCaption';
 import { Transcript } from './components/Transcript';
 import { InspectHUD } from './components/InspectHUD';
+import { ArchiveDeckPanel } from './components/ArchiveDeckPanel';
 import { Spine } from './components/Spine';
 import { useOracleStore } from './store/useOracleStore';
 
@@ -30,7 +30,6 @@ function SceneContent() {
     <>
       <SpaceAssets />
       {view === 'browser' && <CardBrowser />}
-      {view === 'deckbuilder' && <DeckBuilder />}
       {view === 'duel' && <Duel />}
       {view === 'mindmapper' && <MindMapper />}
       {view === 'oracle' && (
@@ -111,7 +110,7 @@ function App() {
       <Spine />
       <InspectHUD />
 
-      {(view === 'oracle' || view === 'deckbuilder') && (
+      {view === 'oracle' && (
         <>
           <ResponseCaption />
           <CommandBar />
@@ -121,6 +120,7 @@ function App() {
       <OracleVoice />
       <Transcript />
       <BrowserBar />
+      <ArchiveDeckPanel />
       <DuelHUD />
       <DuelAction />
     </>

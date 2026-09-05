@@ -5,7 +5,7 @@ import { useDuelStore } from '../store/useDuelStore';
 import type { DuelCard, Side } from '../store/useDuelStore';
 import { Card3D } from './Card3D';
 
-const BOARD_SCALE = 0.7;
+const BOARD_SCALE = 0.85;
 const HAND_SCALE = 0.62;
 const COL_GAP = 2.15;
 const BOARD_TILT = -0.95; // lying back on the table
@@ -61,7 +61,11 @@ function boardRow(cards: DuelCard[], z: number) {
   const start = -((cards.length - 1) * COL_GAP) / 2;
   return cards.map((dc, i) => ({
     dc,
-    slot: { x: start + i * COL_GAP, y: 0.05, z, tilt: BOARD_TILT, fan: 0, scale: BOARD_SCALE },
+    // Tiny per-card z-step: with equal COL_GAP < CARD_W, neighbours overlap on
+    // screen, and identical z leaves the raycaster's hit order for that overlap
+    // undefined (a tie), so clicks there can land on the wrong card. The step
+    // is too small to read as a depth difference but breaks the tie.
+    slot: { x: start + i * COL_GAP, y: 0.05, z: z + i * 0.01, tilt: BOARD_TILT, fan: 0, scale: BOARD_SCALE },
   }));
 }
 
@@ -77,8 +81,9 @@ export function Duel() {
   const winner = useDuelStore((s) => s.winner);
   const inspectedUid = useDuelStore((s) => s.inspectedUid);
   const setInspected = useDuelStore((s) => s.setInspected);
+  const pendingMulligan = useDuelStore((s) => s.pendingMulligan);
 
-  const canAttack = current === 'you' && !winner && phase === 'combat';
+  const canAttack = current === 'you' && !winner && !pendingMulligan && phase === 'combat';
   const anyFocused = inspectedUid != null;
 
   const zone = (owner: Side, z: DuelCard['zone']) =>
@@ -86,10 +91,10 @@ export function Duel() {
 
   const board = useMemo(
     () => [
-      ...boardRow(zone('oracle', 'lands'), -4.7),
-      ...boardRow(zone('oracle', 'creatures'), -2.6),
-      ...boardRow(zone('you', 'creatures'), 2.1),
-      ...boardRow(zone('you', 'lands'), 4.3),
+      ...boardRow(zone('oracle', 'lands'), -3.6),
+      ...boardRow(zone('oracle', 'creatures'), -1.9),
+      ...boardRow(zone('you', 'creatures'), 1.6),
+      ...boardRow(zone('you', 'lands'), 3.4),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [cards]
@@ -97,6 +102,11 @@ export function Duel() {
 
   const hand = zone('you', 'hand');
   const handStart = -((hand.length - 1) * 1.5) / 2;
+  const untappedLands = zone('you', 'lands').filter((c) => !c.tapped).length;
+  const canPlay =
+    current === 'you' && !winner && !pendingMulligan && (phase === 'main1' || phase === 'main2');
+  const canAfford = (dc: DuelCard) =>
+    /land/i.test(dc.card.typeLine) || untappedLands >= (dc.card.manaValue ?? 0);
 
   const toggle = (uid: string) => setInspected(inspectedUid === uid ? null : uid);
 
@@ -138,8 +148,11 @@ export function Duel() {
         const x = handStart + i * 1.5;
         const slot = {
           x,
-          y: 1.5 + Math.abs(x) * -0.04,
-          z: 6.6,
+          y: 1.9 + Math.abs(x) * -0.04,
+          // Each card a hair closer than its left neighbour — matches the
+          // fanned stacking order visually and gives the raycaster an
+          // unambiguous winner in the overlap between adjacent cards.
+          z: 6 + i * 0.015,
           tilt: HAND_TILT,
           fan: -x * 0.05,
           scale: HAND_SCALE,
@@ -155,7 +168,7 @@ export function Duel() {
             }
             selected={inspectedUid === dc.uid}
             tapped={false}
-            playable={current === 'you' && !winner && (phase === 'main1' || phase === 'main2')}
+            playable={canPlay && canAfford(dc)}
             onClick={() => toggle(dc.uid)}
           />
         );

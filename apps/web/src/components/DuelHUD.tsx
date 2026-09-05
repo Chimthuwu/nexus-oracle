@@ -21,8 +21,14 @@ export function DuelHUD() {
   const winner = useDuelStore((s) => s.winner);
   const log = useDuelStore((s) => s.log);
   const cards = useDuelStore((s) => s.cards);
+  const inspectedUid = useDuelStore((s) => s.inspectedUid);
+  const setInspected = useDuelStore((s) => s.setInspected);
   const startDuel = useDuelStore((s) => s.startDuel);
   const nextPhase = useDuelStore((s) => s.nextPhase);
+  const pendingMulligan = useDuelStore((s) => s.pendingMulligan);
+  const mulligansTaken = useDuelStore((s) => s.mulligansTaken);
+  const mulligan = useDuelStore((s) => s.mulligan);
+  const keepHand = useDuelStore((s) => s.keepHand);
 
   useEffect(() => {
     if (view === 'duel' && !active && !loading) void startDuel();
@@ -34,6 +40,10 @@ export function DuelHUD() {
   const yourTurn = current === 'you' && !winner;
   const youCreatures = cards.filter((c) => c.owner === 'you' && c.zone === 'creatures').length;
   const oracleCreatures = cards.filter((c) => c.owner === 'oracle' && c.zone === 'creatures').length;
+  const yourLands = cards.filter((c) => c.owner === 'you' && c.zone === 'lands');
+  const yourManaOpen = yourLands.filter((c) => !c.tapped).length;
+  const yourHandSize = cards.filter((c) => c.owner === 'you' && c.zone === 'hand').length;
+  const nextMulliganSize = Math.max(0, 5 - (mulligansTaken + 1));
 
   return (
     <>
@@ -63,23 +73,45 @@ export function DuelHUD() {
       <div className="duel-panel glass">
         <div className="duel-panel-head">THE DUEL</div>
 
-        <div className="duel-panel-actions">
-          {winner ? (
-            <button className="duel-btn primary" onClick={() => void startDuel()}>
-              New duel
-            </button>
-          ) : (
-            <>
-              <button className="duel-btn primary" disabled={!yourTurn} onClick={() => nextPhase()}>
-                {phase === 'end' ? 'End turn ▸' : 'Next phase ▸'}
+        {pendingMulligan ? (
+          <div className="duel-mulligan">
+            <div className="duel-mulligan-head">
+              Your opening hand — {yourHandSize} card{yourHandSize === 1 ? '' : 's'}
+            </div>
+            <div className="duel-panel-actions">
+              <button className="duel-btn primary" onClick={() => keepHand()}>
+                Keep ▸
               </button>
-              <button className="duel-btn ghost" onClick={() => void startDuel()}>
-                Restart
+              <button className="duel-btn ghost" onClick={() => mulligan()}>
+                Mulligan to {nextMulliganSize} ▸
               </button>
-            </>
-          )}
-        </div>
+            </div>
+          </div>
+        ) : (
+          <div className="duel-panel-actions">
+            {winner ? (
+              <button className="duel-btn primary" onClick={() => void startDuel()}>
+                New duel
+              </button>
+            ) : (
+              <>
+                <button className="duel-btn primary" disabled={!yourTurn} onClick={() => nextPhase()}>
+                  {phase === 'end' ? 'End turn ▸' : 'Next phase ▸'}
+                </button>
+                <button className="duel-btn ghost" onClick={() => void startDuel()}>
+                  Restart
+                </button>
+              </>
+            )}
+          </div>
+        )}
 
+        <div className="duel-panel-row">
+          <span>Your mana</span>
+          <b>
+            {yourManaOpen} / {yourLands.length} open
+          </b>
+        </div>
         <div className="duel-panel-row">
           <span>Your board</span>
           <b>
@@ -94,9 +126,22 @@ export function DuelHUD() {
         </div>
 
         <div className="duel-panel-log">
-          {(loading ? ['Dealing the opening hands…'] : log).slice(0, 14).map((line, i) => (
+          {(loading ? [[{ text: 'Dealing the opening hands…' }]] : log).slice(0, 14).map((line, i) => (
             <div key={i} className={i === 0 ? 'latest' : ''}>
-              {line}
+              {line.map((part, j) =>
+                part.uid && cards.some((c) => c.uid === part.uid) ? (
+                  <span
+                    key={j}
+                    className={`duel-log-card ${inspectedUid === part.uid ? 'active' : ''}`}
+                    onClick={() => setInspected(inspectedUid === part.uid ? null : part.uid!)}
+                    title="Inspect this card"
+                  >
+                    {part.text}
+                  </span>
+                ) : (
+                  <span key={j}>{part.text}</span>
+                )
+              )}
             </div>
           ))}
         </div>

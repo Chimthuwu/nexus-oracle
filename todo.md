@@ -40,8 +40,52 @@
 - When the engine has a stable `GameState` serialization + an `applyAction`
   entry point, swap the Duel mock for it (one file: the store's actions).
 
+## Recently fixed
+- **Duel: hand + board visibility/readability sweep** (this agent, 2026-09-05).
+  Camera/framing was clipping the hand off the bottom edge on normal window
+  heights, played board cards read as tiny/distant against a huge black table,
+  and cards in the fanned hand could grab the wrong card's click (all hand
+  cards shared literally the same world z, so the raycaster's nearest-hit
+  order in the overlap between neighbours was an unresolved tie). Fixed in
+  `CameraRig.tsx` (duel branch gets its own wider fov=58 + repositioned
+  cam/lookAt) and `Duel.tsx` (bigger `BOARD_SCALE`, tighter row spacing so the
+  board isn't spread across a dead void, hand raised/pulled in so it isn't
+  clipped, and a tiny per-card z-step in both `boardRow` and the hand map so
+  overlapping cards resolve clicks deterministically). Also toned down the
+  per-card glow in `Card3D.tsx` — bloom in the postprocessing stack was
+  amplifying it enough to wash out card art/text (flagged twice independently
+  as "too much glow" / "hard to read").
+- **Fixed a live Vite syntax error in `Transcript.tsx`** (line 95 had literal
+  `\`` / `\$` escapes inside a JSX expression instead of a real template
+  literal — broke the whole dev server for anyone with it open). This file is
+  mid-edit by the other agent (MindMapper work) — I only unescaped the
+  backticks, didn't touch anything else in it.
+- **Wordmark/loading text said "MindMapper" everywhere**, including outside
+  Mind Mapper mode (`App.tsx`'s persistent top-left brand mark + the loading
+  veil) — leftover from Mind Mapper dev, contradicts the Name Change note
+  below. Now reads "The Oracle" per that directive; left MindMapper's own
+  in-mode "MINDMAPPER:" speaker label alone since that's the feature's actual
+  persona name, not the app brand.
+- **TTS is silent** — confirmed live (`curl` to `/api/oracle/tts` → 503) that
+  `FREETTS_API_KEY` isn't set on the Render service. freetts.org's public
+  widget doesn't need a key, but the server-to-server `/api/v1/tts` endpoint
+  our proxy calls does (verified: unauthenticated request → 403). Needs a
+  free freetts.org account + API key set as `FREETTS_API_KEY` on Render — not
+  something I can do myself (credential).
+
+- **Archive cards blank on the Cloudflare deploy** — after the 3D
+  virtualization landed, opening the Archive showed "3588 cards" but a black
+  wall; card art only appeared after a scroll/resize/hover. Cause: drei's
+  Suspense `useTexture` resolved the Scryfall image but never flushed the
+  suspended `CardFront`, so it stayed on the fallback until an unrelated
+  re-render. Fix (`apps/web/src/scene/Card3D.tsx`): load art imperatively with
+  `THREE.TextureLoader` + `useState`, module-level URL→Texture cache, dropped
+  the per-card `<Suspense>`. Verified on a production build.
+
 ## Polish backlog (not blocking)
 - Card browser: initial scroll sometimes lands mid-grid; nail row-0 framing.
+- `Card3D` `_texCache` never evicts — fine for normal use, but scrolling the
+  whole 718-row archive would pile up GPU textures. Add an LRU cap if it bites.
 - `cloud_180.ply` is 4.5 MB — downsample; ~8 s first paint of the nebula.
 - FreeTTS: client pulls audio from `freetts.org` directly — confirm CORS.
 - Conversation transcript view (currently only the last exchange replays).
@@ -51,6 +95,56 @@
 - Duel: 1-player-vs-Oracle-AI only, or hot-seat too?
 - How much rules depth for a first playable? (suggest: creatures + lands +
   combat + basic targeted removal, no stack interaction yet.)
+
+## Requested — not started
+- **Oracle suggestion chips ("Show me red aggro cards") don't show example
+  cards** (user, 2026-09-05): the ask pipeline already supports it end-to-end
+  — `/api/oracle/ask` can return `cards[]`, `useAskOracle.ts` stores them,
+  and `CardMesh` renders `cards` in Oracle view — so this is either the LLM
+  not invoking whatever card-search tool it has for a generic prompt like
+  that, or the suggestion chip's prompt text not being one the model treats
+  as a search trigger. Backend/prompt territory (`apps/server/src/llm`),
+  which the other agent has been actively changing (`prompt.ts` modified,
+  uncommitted) — check with them before digging in. Reproduces the same way
+  from the new Archive "Ask the Oracle to build one" button below (see next
+  item) — same root cause, seen twice now.
+
+## Recently fixed (cont.)
+- **Deck builder moved into Archive, standalone view removed** (this agent,
+  2026-09-05). Deleted `scene/DeckBuilder.tsx` and the `deckbuilder` view
+  (Spine entry, `View` type, `App.tsx` switch) per direct request. In its
+  place: `components/ArchiveDeckPanel.tsx` — a toggle button + panel anchored
+  **left** side of the Archive view (`data/deckPresets.ts` has 4 starter
+  presets, each resolved against `/api/cards/search` by exact name at load
+  time — verified all 40 preset card names resolve exactly against the
+  current mock dataset, don't add more without checking they resolve, since
+  the search is relevance-ranked and silently returns its best *guess* for a
+  miss rather than nothing), a "✦ Ask the Oracle to build one" button that
+  reuses the existing `/deck add "Name" N` pipeline in `useAskOracle.ts`, and
+  a deck list with per-card remove + clear-all. `InspectHUD.tsx` grew
+  "+ Add to deck" / "− Remove" buttons, shown only in `view === 'browser'`.
+  - **Deliberately on the left, not the right**: `InspectHUD` and the Duel
+    panel both already own the right edge for card-detail popups app-wide;
+    first pass put the new panel there too and it visually overlapped
+    InspectHUD when both were open (which happens constantly — inspecting a
+    card *while* the deck list is open is the whole point of the "+ Add"
+    button). Found this by actually testing in a browser tab, not just
+    reading the diff.
+  - **Preset resolution needs an exact-match guard.** The search endpoint is
+    relevance-ranked and always returns *something* for `limit=1`, even a
+    barely-related card, if the literal name isn't in the mock dataset. First
+    version trusted `cards[0]` unconditionally and silently added wrong cards
+    (e.g. "Bonecrusher Giant" → "Giant Adephage", "Kari Zev, Skyship Raider"
+    → "Prossh, Skyraider of Kher") — caught by actually loading each preset
+    and reading the resulting list, not just by code review. Fixed with a
+    `card.name.toLowerCase() === name.toLowerCase()` check that returns
+    `null` (skipped, reported in the "X/Y cards" status line) rather than a
+    wrong card. Same guard is why 8 of the original 40 preset names got
+    swapped for equivalents that do resolve — see `data/deckPresets.ts`.
+  - **"Ask the Oracle to build one" is wired correctly and still comes back
+    empty in practice** — same gap as the item above. It's a legitimate use
+    of the existing `/deck add` pipeline; the shortfall is the LLM not
+    reliably emitting matched `/deck add` lines, not the button.
 
 ## Big feature #4 — "Mind Mapper" Mode (General Purpose AI Expansion)
 - **Goal:** The application is no longer strictly MTG; it is a general-purpose AI. "Mind Mapper" is a new core feature reflecting this.

@@ -15,15 +15,21 @@ export function DuelAction() {
   const playCard = useDuelStore((s) => s.playCard);
   const attack = useDuelStore((s) => s.attack);
   const setInspected = useDuelStore((s) => s.setInspected);
+  const pendingMulligan = useDuelStore((s) => s.pendingMulligan);
 
   if (view !== 'duel' || !inspectedUid) return null;
   const dc = cards.find((c) => c.uid === inspectedUid);
   if (!dc) return null;
 
-  const yourTurn = current === 'you' && !winner;
+  const yourTurn = current === 'you' && !winner && !pendingMulligan;
   const isLand = /land/i.test(dc.card.typeLine);
   const canPlay = yourTurn && (phase === 'main1' || phase === 'main2');
   const canAttack = yourTurn && phase === 'combat';
+  const manaCost = dc.card.manaValue ?? 0;
+  const manaAvailable = cards.filter(
+    (c) => c.owner === 'you' && c.zone === 'lands' && !c.tapped
+  ).length;
+  const canAfford = isLand || manaAvailable >= manaCost;
 
   let label: string;
   let run: (() => void) | null = null;
@@ -31,7 +37,9 @@ export function DuelAction() {
 
   if (dc.zone === 'hand') {
     label = isLand ? 'PLAY LAND' : 'PLAY CARD';
-    if (canPlay) run = () => playCard(dc.uid);
+    if (canPlay && canAfford) run = () => playCard(dc.uid);
+    else if (canPlay && !canAfford) hint = `need ${manaCost} mana, have ${manaAvailable}`;
+    else if (pendingMulligan) hint = 'keep or mulligan your hand first';
     else hint = 'wait for your main phase';
   } else if (dc.zone === 'creatures' && dc.owner === 'you') {
     label = 'SEND TO ATTACK';

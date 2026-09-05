@@ -3724,7 +3724,14 @@ const CARD_NAMES = [
     "Good-Fortune Unicorn",
     "Hashaton, Scarab's Fist",
     "Prismatic Omen",
-    "Fervor"];
+    "Fervor",
+    "Atraxa, Grand Unifier",
+    "Fable of the Mirror-Breaker",
+    "Muxus, Goblin Grandee",
+    "Tergrid, God of Fright"
+,
+    "Dockside Extortionist"
+];
 
 const RARITY = new Set(["common", "uncommon", "rare", "mythic"]);
 

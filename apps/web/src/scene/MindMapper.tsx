@@ -5,8 +5,8 @@ import { mergeBufferGeometries } from 'three-stdlib';
 import * as THREE from 'three';
 import { useOracleStore } from '../store/useOracleStore';
 
-const TARGET_RADIUS = 1.8;
-const CENTER_Y = 0.9;
+const TARGET_RADIUS = 8.0;
+const CENTER_Y = -5.0;
 
 const FRESNEL_VERT = /* glsl */ `
   varying vec3 vN; varying vec3 vV;
@@ -37,6 +37,8 @@ export function MindMapper() {
   const rimMat = useRef<THREE.ShaderMaterial | null>(null);
   const { scene } = useGLTF('/assets/brain.glb', '/draco/');
   const memories = useOracleStore((s) => s.memories);
+  const focusedMemoryId = useOracleStore((s) => s.focusedMemoryId);
+  const setFocusedMemoryId = useOracleStore((s) => s.setFocusedMemoryId);
   const [hovered, setHovered] = useState<string | null>(null);
 
   const geometry = useMemo(() => {
@@ -70,10 +72,11 @@ export function MindMapper() {
       memories.map((_, i) => {
         const phi = Math.acos(1 - (2 * (i + 0.5)) / Math.max(memories.length, 1));
         const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-        const r = TARGET_RADIUS * 0.98;
+        const r = 2.4;
+        const offsetY = 5.9;
         return new THREE.Vector3(
           r * Math.sin(phi) * Math.cos(theta),
-          r * Math.cos(phi) * 0.85,
+          offsetY + r * Math.cos(phi) * 0.85,
           r * Math.sin(phi) * Math.sin(theta)
         );
       }),
@@ -103,16 +106,16 @@ export function MindMapper() {
 
       <group ref={groupRef} position={[0, CENTER_Y, 0]}>
         {/* translucent shell */}
-        <mesh geometry={geometry}>
+        <mesh geometry={geometry} onClick={(e) => { e.stopPropagation(); setFocusedMemoryId(null); }}>
           <meshStandardMaterial
             ref={shellMat}
             color="#241a45"
             emissive="#6a52c8"
-            emissiveIntensity={0.4}
-            roughness={0.5}
-            metalness={0.1}
+            emissiveIntensity={0.8}
+            roughness={0.4}
+            metalness={0.2}
             transparent
-            opacity={0.3}
+            opacity={0.6}
             depthWrite={false}
             side={THREE.DoubleSide}
           />
@@ -135,7 +138,7 @@ export function MindMapper() {
         </mesh>
 
         {memories.map((m, i) => {
-          const isHovered = hovered === m.id;
+          const isHovered = hovered === m.id || focusedMemoryId === m.id;
           return (
             <group key={m.id} position={nodePositions[i]}>
               <mesh
@@ -144,6 +147,10 @@ export function MindMapper() {
                   setHovered(m.id);
                 }}
                 onPointerOut={() => setHovered(null)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFocusedMemoryId(m.id);
+                }}
               >
                 <sphereGeometry args={[isHovered ? 0.07 : 0.045, 16, 16]} />
                 <meshBasicMaterial color={m.color} />
@@ -182,23 +189,12 @@ export function MindMapper() {
           );
         })}
 
-        {/* soft aura */}
-        <mesh>
-          <sphereGeometry args={[TARGET_RADIUS * 1.5, 32, 32]} />
-          <meshBasicMaterial
-            color="#5a44b0"
-            transparent
-            opacity={0.04 + learn * 0.06}
-            side={THREE.BackSide}
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
-        </mesh>
+
       </group>
 
       <OrbitControls
         makeDefault
-        target={[0, CENTER_Y, 0]}
+        target={[0, 0.9, 0]}
         enablePan={false}
         enableZoom={false}
         enableDamping

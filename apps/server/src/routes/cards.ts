@@ -34,8 +34,8 @@ export async function registerCardsRoutes(app: FastifyInstance): Promise<void> {
       limit,
     };
 
-    const cards = searchCards(q, filters);
-    return { cards };
+    const { data: cards, total } = searchCards(q, filters);
+    return { cards, total };
   });
 
   // §4.4 — GET /api/cards/:id → a single Card

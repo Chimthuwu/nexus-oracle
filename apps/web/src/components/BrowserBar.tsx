@@ -15,7 +15,7 @@ export function BrowserBar() {
   const setView = useOracleStore((s) => s.setView);
   const loadBrowser = useOracleStore((s) => s.loadBrowser);
   const loading = useOracleStore((s) => s.browserLoading);
-  const count = useOracleStore((s) => s.browserCards.length);
+  const count = useOracleStore((s) => s.browserTotalCards);
   const storedColors = useOracleStore((s) => s.browserColors);
   const inspecting = useOracleStore((s) => s.inspectedCard != null);
 
@@ -74,6 +74,11 @@ export function BrowserBar() {
             ))}
           </div>
         </form>
+        {loading && (
+          <div className="browser-loading-track">
+            <div className="browser-loading-bar" />
+          </div>
+        )}
       </div>
       <div className="browser-hint">scroll to sift · click a card to inspect</div>
     </div>

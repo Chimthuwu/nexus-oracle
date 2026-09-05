@@ -57,7 +57,7 @@ export function MindMapperHUD() {
       <div className="mm-question glass">
         <div className="mm-q-eyebrow">
           <span className="pulse" />
-          THE ORACLE ASKS
+          MINDMAPPER:
         </div>
         <div className="mm-q-text">
           {isThinking && !question ? 'considering what to ask you…' : question || '…'}
@@ -74,7 +74,7 @@ export function MindMapperHUD() {
               submit();
             }
           }}
-          placeholder={isThinking ? 'the Oracle is listening…' : 'your answer…'}
+          placeholder={isThinking ? 'MindMapper is listening…' : 'your answer…'}
           rows={2}
           disabled={isThinking}
         />

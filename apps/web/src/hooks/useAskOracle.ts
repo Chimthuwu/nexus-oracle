@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 
-const API_URL = 'https://nexus-oracle-u6ra.onrender.com/api/oracle/ask';
+const API_URL = '/api/oracle/ask';
 const MEMORY_COLORS = ['#8b6cff', '#d6a84f', '#5b8cff', '#ff5b5b', '#5bff8b'];
 
 interface AskResponse {
@@ -45,17 +45,21 @@ export function useAskOracle() {
     if (!opts?.silent) s.appendTurn({ role: 'user', content: message });
 
     try {
+      const mode = s.view === 'mindmapper' ? 'mindmapper' : 'oracle';
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, history }),
+        body: JSON.stringify({ message, history, mode }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = (await res.json()) as AskResponse;
 
       let text = data.text ?? '';
       
-      const deckAddMatches = [...text.matchAll(/^\/deck add "(.*?)"(?: (\d+))?$/gm)];
+      // Not anchored to the start of a line — models don't always put the
+      // command on its own line despite being asked to; match it wherever it
+      // shows up rather than silently dropping a valid add/remove.
+      const deckAddMatches = [...text.matchAll(/\/deck add "(.*?)"(?: (\d+))?/g)];
       deckAddMatches.forEach((match) => {
         const name = match[1];
         const count = parseInt(match[2] || '1', 10);
@@ -65,8 +69,8 @@ export function useAskOracle() {
           store.getState().addCardToDeck(card, count);
         }
       });
-      
-      const deckRemoveMatches = [...text.matchAll(/^\/deck remove "(.*?)"(?: (\d+))?$/gm)];
+
+      const deckRemoveMatches = [...text.matchAll(/\/deck remove "(.*?)"(?: (\d+))?/g)];
       deckRemoveMatches.forEach((match) => {
         const name = match[1];
         const count = parseInt(match[2] || '1', 10);
@@ -76,8 +80,8 @@ export function useAskOracle() {
           store.getState().removeCardFromDeck(deckCard.card.id, count);
         }
       });
-      
-      text = text.replace(/^\/deck (add|remove) "(.*?)"(?: (\d+))?$/gm, '').trim();
+
+      text = text.replace(/\/deck (add|remove) "(.*?)"(?: (\d+))?/g, '').trim();
 
       const memoryLines = text.match(/^\/memory (.*)$/gm);
       if (memoryLines) {

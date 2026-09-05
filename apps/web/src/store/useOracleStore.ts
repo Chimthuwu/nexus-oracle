@@ -53,9 +53,9 @@ export interface Memory {
   color: string;
 }
 
-export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper' | 'deckbuilder';
+export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper';
 
-const CARDS_API = 'https://nexus-oracle-u6ra.onrender.com/api/cards/search';
+const CARDS_API = '/api/cards/search';
 
 interface OracleState {
   // ── Ephemeral view state (not persisted) ──────────────────────────────
@@ -86,7 +86,9 @@ interface OracleState {
   /** Whether the Oracle speaks its replies aloud (persisted). */
   voiceEnabled: boolean;
   setVoiceEnabled: (on: boolean) => void;
+
   browserCards: CardData[];
+  browserTotalCards: number;
   browserLoading: boolean;
   browserQuery: string;
   browserColors: string[];
@@ -95,6 +97,8 @@ interface OracleState {
   // ── Mind Mapper ──────────────────────────────────────────────────────
   memories: Memory[];
   addMemory: (text: string, position: [number, number, number], color: string) => void;
+  focusedMemoryId: string | null;
+  setFocusedMemoryId: (id: string | null) => void;
 
   // ── Persisted conversation history ────────────────────────────────────
   conversations: Conversation[];
@@ -166,6 +170,7 @@ export const useOracleStore = create<OracleState>()(
       voiceEnabled: false,
       setVoiceEnabled: (on) => set({ voiceEnabled: on }),
       browserCards: [],
+      browserTotalCards: 0,
       browserLoading: false,
       browserQuery: '',
       browserColors: [],
@@ -178,11 +183,14 @@ export const useOracleStore = create<OracleState>()(
           if (query.trim()) params.set('q', query.trim());
           if (colors.length) params.set('colors', colors.join(','));
           const res = await fetch(`${CARDS_API}?${params.toString()}`);
-          const data = (await res.json()) as { cards?: CardData[] };
-          set({ browserCards: Array.isArray(data.cards) ? data.cards : [] });
+          const data = (await res.json()) as { cards?: CardData[], total?: number };
+          set({ 
+            browserCards: Array.isArray(data.cards) ? data.cards : [],
+            browserTotalCards: typeof data.total === 'number' ? data.total : (data.cards?.length || 0)
+          });
         } catch (err) {
           console.error('Card browser load failed:', err);
-          set({ browserCards: [] });
+          set({ browserCards: [], browserTotalCards: 0 });
         } finally {
           set({ browserLoading: false });
         }
@@ -193,6 +201,8 @@ export const useOracleStore = create<OracleState>()(
         set((s) => ({
           memories: [...s.memories, { id: genId(), text, position, color }]
         })),
+      focusedMemoryId: null,
+      setFocusedMemoryId: (id) => set({ focusedMemoryId: id }),
 
       conversations: [],
       activeId: null,

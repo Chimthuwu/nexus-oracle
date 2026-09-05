@@ -9,8 +9,14 @@ const COLOR_NAME: Record<string, string> = {
 };
 
 export function InspectHUD() {
+  const view = useOracleStore((s) => s.view);
   const inspectedCard = useOracleStore((s) => s.inspectedCard);
   const setInspectedCard = useOracleStore((s) => s.setInspectedCard);
+  const deckList = useOracleStore((s) => s.deckList);
+  const addCardToDeck = useOracleStore((s) => s.addCardToDeck);
+  const removeCardFromDeck = useOracleStore((s) => s.removeCardFromDeck);
+
+  const inDeck = inspectedCard ? deckList.find((d) => d.card.id === inspectedCard.id) : undefined;
 
   const colorLabel = inspectedCard
     ? inspectedCard.colors.length
@@ -66,6 +72,24 @@ export function InspectHUD() {
           <div className="hud-oracle" id="hudOracle">
             {inspectedCard.oracleText || 'No oracle text.'}
           </div>
+          {view === 'browser' && (
+            <div className="hud-deck-actions">
+              <button
+                className="hud-deck-add"
+                onClick={() => addCardToDeck(inspectedCard, 1)}
+              >
+                + Add to deck
+              </button>
+              {inDeck && (
+                <button
+                  className="hud-deck-remove"
+                  onClick={() => removeCardFromDeck(inspectedCard.id, 1)}
+                >
+                  − Remove ({inDeck.count})
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -26,6 +26,7 @@ interface HistoryEntry {
 interface AskBody {
   message: string;
   history?: HistoryEntry[];
+  mode?: "oracle" | "mindmapper";
 }
 
 interface SearchCallResult {
@@ -57,7 +58,7 @@ function runSearchCall(rawArguments: string): SearchCallResult {
     max_mana_value: typeof args.max_mana_value === "number" ? args.max_mana_value : undefined,
     limit: clampLimit(args.limit),
   };
-  const cards = searchCards(query, filters);
+  const { data: cards } = searchCards(query, filters);
   return { cards, queryUsed: query };
 }
 
@@ -84,6 +85,7 @@ export async function registerOracleRoutes(app: FastifyInstance): Promise<void> 
           required: ["message"],
           properties: {
             message: { type: "string", minLength: 1, maxLength: 2000 },
+            mode: { type: "string", enum: ["oracle", "mindmapper"] },
             history: {
               type: "array",
               maxItems: 20,
@@ -103,11 +105,11 @@ export async function registerOracleRoutes(app: FastifyInstance): Promise<void> 
     },
     async (request, reply) => {
       try {
-        const { message, history } = request.body;
+        const { message, history, mode } = request.body;
 
         // ── Tool-use round trip ────────────────────────────────────────────
         const messages: ChatMessage[] = [
-          { role: "system", content: getSystemPrompt() },
+          { role: "system", content: getSystemPrompt(mode) },
           ...historyToMessages(history),
           { role: "user", content: message },
         ];
