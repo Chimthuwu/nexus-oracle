@@ -90,19 +90,19 @@ export function MindMapper() {
       groupRef.current.position.y = CENTER_Y + Math.sin(t * 0.4) * 0.03;
     }
     if (shellMat.current) {
-      shellMat.current.emissiveIntensity = 0.35 + learn * 0.9 + Math.sin(t * 1.4) * 0.04;
-      shellMat.current.opacity = 0.28 + learn * 0.25;
+      shellMat.current.emissiveIntensity = 0.16 + learn * 0.55 + Math.sin(t * 1.4) * 0.03;
+      shellMat.current.opacity = 0.2 + learn * 0.18;
     }
     if (rimMat.current) {
-      rimMat.current.uniforms.uOpacity.value = 0.5 + learn * 0.5 + Math.sin(t * 1.6) * 0.05;
+      rimMat.current.uniforms.uOpacity.value = 0.24 + learn * 0.34 + Math.sin(t * 1.6) * 0.04;
     }
   });
 
   return (
     <>
-      <ambientLight intensity={0.45} color="#6a5ad0" />
-      <pointLight position={[4, 5, 5]} intensity={1.6 + learn * 1.4} color="#8b6cff" distance={24} />
-      <pointLight position={[-4, -2, -4]} intensity={0.7} color="#d6a84f" distance={18} />
+      <ambientLight intensity={0.35} color="#6a5ad0" />
+      <pointLight position={[4, 5, 5]} intensity={0.95 + learn * 1.0} color="#8b6cff" distance={24} />
+      <pointLight position={[-4, -2, -4]} intensity={0.5} color="#d6a84f" distance={18} />
 
       <group ref={groupRef} position={[0, CENTER_Y, 0]}>
         {/* translucent shell */}
@@ -110,12 +110,12 @@ export function MindMapper() {
           <meshStandardMaterial
             ref={shellMat}
             color="#241a45"
-            emissive="#6a52c8"
-            emissiveIntensity={0.8}
+            emissive="#5a44a8"
+            emissiveIntensity={0.16}
             roughness={0.4}
             metalness={0.2}
             transparent
-            opacity={0.6}
+            opacity={0.2}
             depthWrite={false}
             side={THREE.DoubleSide}
           />
@@ -127,9 +127,9 @@ export function MindMapper() {
             vertexShader={FRESNEL_VERT}
             fragmentShader={FRESNEL_FRAG}
             uniforms={{
-              uColor: { value: new THREE.Color('#b9a4ff') },
-              uPower: { value: 2.5 },
-              uOpacity: { value: 0.6 },
+              uColor: { value: new THREE.Color('#a48fe6') },
+              uPower: { value: 2.8 },
+              uOpacity: { value: 0.28 },
             }}
             transparent
             blending={THREE.AdditiveBlending}
