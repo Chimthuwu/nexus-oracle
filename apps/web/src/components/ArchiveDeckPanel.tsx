@@ -3,8 +3,9 @@ import { useOracleStore } from '../store/useOracleStore';
 import type { CardData } from '../store/useOracleStore';
 import { DECK_PRESETS } from '../data/deckPresets';
 import { DeckChat } from './DeckChat';
+import { API_BASE } from '../config';
 
-const CARDS_API = '/api/cards/search';
+const CARDS_API = `${API_BASE}/api/cards/search`;
 
 async function findCardByName(name: string): Promise<CardData | null> {
   try {

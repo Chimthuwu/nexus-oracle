@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
+import { API_BASE } from '../config';
 
-const TTS_URL = 'https://nexus-oracle-u6ra.onrender.com/api/oracle/tts';
+const TTS_URL = `${API_BASE}/api/oracle/tts`;
 
 /**
  * Speaks the Oracle's replies aloud (server proxies freetts.org). Renders a

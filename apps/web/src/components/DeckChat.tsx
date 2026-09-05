@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
 import type { CardData } from '../store/useOracleStore';
+import { API_BASE } from '../config';
 
-const API_URL = '/api/oracle/ask';
+const API_URL = `${API_BASE}/api/oracle/ask`;
 
 interface DeckChatTurn {
   role: 'user' | 'oracle';

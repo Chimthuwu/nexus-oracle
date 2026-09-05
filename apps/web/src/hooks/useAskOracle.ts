@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useOracleStore } from '../store/useOracleStore';
+import { API_BASE } from '../config';
 
-const API_URL = '/api/oracle/ask';
+const API_URL = `${API_BASE}/api/oracle/ask`;
 const MEMORY_COLORS = ['#8b6cff', '#d6a84f', '#5b8cff', '#ff5b5b', '#5bff8b'];
 
 interface AskResponse {

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { CardData } from './useOracleStore';
+import { API_BASE } from '../config';
 
 /**
  * Mock duel state — a deliberately shallow slice of Magic so the Duel view is
@@ -34,7 +35,7 @@ export interface LogPart {
 }
 export type LogLine = LogPart[];
 
-const CARDS_API = '/api/cards/search';
+const CARDS_API = `${API_BASE}/api/cards/search`;
 const PHASE_ORDER: DuelPhase[] = ['main1', 'combat', 'main2', 'end'];
 
 const isLand = (c: CardData) => /land/i.test(c.typeLine);

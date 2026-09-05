@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { API_BASE } from '../config';
 
 /**
  * The canonical Nexus `Card` shape — mirrors @nexus/card-data's frozen `Card`
@@ -55,7 +56,7 @@ export interface Memory {
 
 export type View = 'oracle' | 'browser' | 'duel' | 'mindmapper';
 
-const CARDS_API = '/api/cards/search';
+const CARDS_API = `${API_BASE}/api/cards/search`;
 
 interface OracleState {
   // ── Ephemeral view state (not persisted) ──────────────────────────────
