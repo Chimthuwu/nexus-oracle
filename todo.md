@@ -41,6 +41,14 @@
   entry point, swap the Duel mock for it (one file: the store's actions).
 
 ## Recently fixed
+- **Discord / OG link embed** (this agent, 2026-09-06). `index.html` pointed
+  `og:image` at a hotlinked Unsplash stock photo (Discord's proxy often fails
+  on those) and lacked `og:url` / `og:site_name` / image dims. Now: self-hosted
+  `apps/web/public/og.png` (1200×630 shot of the Oracle, ~390 KB), full OG +
+  Twitter tags, plain `<meta description>`, `rel=canonical`, all absolute to
+  `https://nexus-oracle.pages.dev`. `theme-color #d6a84f` still drives the
+  embed accent bar. Regenerate og.png = screenshot the Oracle view, crop
+  1.905:1, resize 1200×630. `9b8997e`.
 - **Archive data pipeline: JSON not a 25 MB TS literal** (this agent,
   2026-09-06). `mockData.ts` was a 705k-line `export const MOCK_CARDS = [...]`
   that tsx re-transformed on every server boot. Now `mockData.ts` does
