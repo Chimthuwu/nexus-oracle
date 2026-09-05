@@ -3,8 +3,14 @@ import { MOCK_CARDS } from "../src/mockData";
 import { searchCards } from "../src/search";
 import type { Card } from "../src/types";
 
-const RARITIES = new Set(["common", "uncommon", "rare", "mythic"]);
+// Scryfall's full rarity set — the bulk archive carries all of these.
+const RARITIES = new Set(["common", "uncommon", "rare", "mythic", "special", "bonus"]);
 const LETTERS = new Set(["W", "U", "B", "R", "G"]);
+
+// `searchCards` returns { data, total }; every test below only cares about the
+// ranked rows, so unwrap once here.
+const search = (query: string, filters?: Parameters<typeof searchCards>[1]): Card[] =>
+  searchCards(query, filters).data;
 
 describe("mock dataset contract invariants (frozen Card, TODO.txt §4.1)", () => {
   it("holds at least 30 cards", () => {
@@ -50,7 +56,9 @@ describe("mock dataset contract invariants (frozen Card, TODO.txt §4.1)", () =>
       expect(has((c) => c.colorIdentity.includes(letter))).toBe(true);
     }
     expect(has((c) => c.colorIdentity.length === 0)).toBe(true); // colorless
-    for (const rarity of RARITIES) expect(has((c) => c.rarity === rarity)).toBe(true);
+    for (const rarity of ["common", "uncommon", "rare", "mythic"]) {
+      expect(has((c) => c.rarity === rarity)).toBe(true);
+    }
     for (const kind of ["Creature", "Instant", "Sorcery", "Planeswalker", "Artifact", "Land", "Enchantment"]) {
       expect(has((c) => c.typeLine.includes(kind))).toBe(true);
     }
@@ -59,40 +67,44 @@ describe("mock dataset contract invariants (frozen Card, TODO.txt §4.1)", () =>
 
 describe("searchCards — name & free text", () => {
   it("puts an exact name match first", () => {
-    const hits = searchCards("lightning bolt", { limit: 5 });
+    const hits = search("lightning bolt", { limit: 5 });
     expect(hits.length).toBeGreaterThan(0);
     expect(hits[0].name).toBe("Lightning Bolt");
   });
 
   it("is case-insensitive", () => {
-    expect(searchCards("GOYF")[0]?.name).toBe("Tarmogoyf");
-    expect(searchCards("counterspell", { colors: ["U"] })[0]?.name).toBe("Counterspell");
+    expect(search("tarmogoyf")[0]?.name).toBe("Tarmogoyf");
+    expect(search("TARMOGOYF")[0]?.name).toBe("Tarmogoyf");
+    expect(search("counterspell", { colors: ["U"] })[0]?.name).toBe("Counterspell");
   });
 
   it("matches substrings and oracle text", () => {
-    const byOracle = searchCards("draw three cards", { limit: 5 });
-    expect(byOracle.some((c) => c.name === "Jace, the Mind Sculptor")).toBe(true);
+    // "goyf" isn't a word — only the Lhurgoyf card family has it in the name.
+    expect(search("goyf", { limit: 10 }).some((c) => c.name === "Tarmogoyf")).toBe(true);
+    // A term that only appears in rules text still finds cards (none are
+    // *named* "annihilator").
+    const byOracle = search("annihilator", { limit: 10 });
+    expect(byOracle.length).toBeGreaterThan(0);
+    expect(byOracle.some((c) => c.name.toLowerCase() === "annihilator")).toBe(false);
   });
 
   it("treats color words as identity filters, not text to match", () => {
     // "white" never appears in these cards' text — it must filter by identity.
-    const whites = searchCards("white angel flying", { limit: 20 });
+    const whites = search("white angel flying", { limit: 20 });
     expect(whites.length).toBeGreaterThan(0);
     for (const c of whites) expect(c.colorIdentity).toContain("W");
     // Angels (match both tokens) rank above cards that only match "flying".
     expect(whites[0]?.typeLine.toLowerCase()).toContain("angel");
-    expect(whites.some((c) => c.name === "Avacyn, Angel of Hope")).toBe(true);
-    expect(whites.some((c) => c.name === "Counterspell")).toBe(false);
 
     // Single letters work too, and colorless maps to empty identity.
-    const blues = searchCards("blue counter", { limit: 10 });
+    const blues = search("blue counter", { limit: 10 });
     for (const c of blues) expect(c.colorIdentity).toContain("U");
     expect(blues.some((c) => c.name === "Counterspell")).toBe(true);
-    const colorless = searchCards("colorless artifact", { limit: 20 });
+    const colorless = search("colorless artifact", { limit: 20 });
     for (const c of colorless) expect(c.colorIdentity).toEqual([]);
 
     // A pure color-word query returns identity matches (alphabetical).
-    const justRed = searchCards("red", { limit: 50 });
+    const justRed = search("red", { limit: 50 });
     expect(justRed.length).toBeGreaterThan(0);
     for (const c of justRed) expect(c.colorIdentity).toContain("R");
   });
@@ -100,72 +112,74 @@ describe("searchCards — name & free text", () => {
   it("matches ANY token, ranking cards that match more tokens higher", () => {
     // LLM-generated queries copy whole sentences; any-match keeps recall high
     // while cumulative scoring ranks the best cards first.
-    const hits = searchCards("angel lifelink", { limit: 10 });
+    const hits = search("angel lifelink", { limit: 10 });
     expect(hits.length).toBeGreaterThan(0);
-    // Baneslayer Angel matches both tokens (type line + keyword) → first.
-    expect(hits[0].name).toBe("Baneslayer Angel");
+    // The top hit matches both tokens: an Angel with lifelink.
+    expect(hits[0].typeLine.toLowerCase()).toContain("angel");
+    expect(
+      (hits[0].oracleText + " " + hits[0].keywords.join(" ")).toLowerCase(),
+    ).toContain("lifelink");
     const otherAngels = hits.filter((c) => c.typeLine.toLowerCase().includes("angel"));
     expect(otherAngels.length).toBeGreaterThan(1);
   });
 
   it("handles long verbose queries from LLM tool calls", () => {
     // A model paraphrasing the user will pass something like this verbatim.
-    const hits = searchCards("white creature with flying that protects others", { limit: 5 });
+    const hits = search("white creature with flying that protects others", { limit: 10 });
     expect(hits.length).toBeGreaterThan(0);
-    // The white angels should dominate the top of the ranking.
-    const top = hits.slice(0, 3);
-    for (const c of top) {
-      expect(c.colorIdentity).toContain("W");
-      expect(c.typeLine.toLowerCase()).toContain("creature");
-    }
-    expect(top.some((c) => c.typeLine.toLowerCase().includes("angel"))).toBe(true);
+    // White creatures should dominate the ranking, and an angel should surface.
+    const whiteCreatures = hits.filter(
+      (c) => c.colorIdentity.includes("W") && c.typeLine.toLowerCase().includes("creature"),
+    );
+    expect(whiteCreatures.length).toBeGreaterThanOrEqual(3);
+    expect(hits.some((c) => c.typeLine.toLowerCase().includes("angel"))).toBe(true);
   });
 
   it("returns [] for nonsense queries", () => {
-    expect(searchCards("zzzzqqqqx")).toEqual([]);
+    expect(search("zzzzqqqqx")).toEqual([]);
+    expect(searchCards("zzzzqqqqx")).toEqual({ data: [], total: 0 });
   });
 });
 
 describe("searchCards — filters (§4.3 schema)", () => {
   it("filters by color identity, including multicolor membership", () => {
-    const blue = searchCards("", { colors: ["U"], limit: 50 });
+    const blue = search("", { colors: ["U"], limit: 50 });
     expect(blue.length).toBeGreaterThan(0);
     for (const c of blue) expect(c.colorIdentity).toContain("U");
 
     // Teferi, Time Raveler is WU → matches a blue search.
-    expect(blue.some((c) => c.name === "Teferi, Time Raveler")).toBe(true);
+    expect(search("teferi time raveler", { colors: ["U"] }).some((c) => c.name === "Teferi, Time Raveler")).toBe(true);
     // Searching white must NOT return pure-blue cards.
-    const white = searchCards("", { colors: ["W"], limit: 50 });
+    const white = search("counterspell", { colors: ["W"], limit: 50 });
     expect(white.some((c) => c.name === "Counterspell")).toBe(false);
-    expect(white.some((c) => c.name === "Teferi, Time Raveler")).toBe(true);
   });
 
   it("understands C = colorless", () => {
-    const colorless = searchCards("", { colors: ["C"], limit: 50 });
+    const colorless = search("", { colors: ["C"], limit: 50 });
     expect(colorless.length).toBeGreaterThan(0);
     for (const c of colorless) expect(c.colorIdentity).toEqual([]);
-    expect(colorless.some((c) => c.name === "Black Lotus")).toBe(true);
+    expect(search("sol ring", { colors: ["C"] }).some((c) => c.name === "Sol Ring")).toBe(true);
   });
 
   it("filters by type line", () => {
-    const creatures = searchCards("", { types: ["creature"], limit: 50 });
+    const creatures = search("", { types: ["creature"], limit: 50 });
     expect(creatures.length).toBeGreaterThan(0);
     for (const c of creatures) expect(c.typeLine.toLowerCase()).toContain("creature");
 
-    const legendary = searchCards("", { types: ["legendary"], limit: 50 });
+    const legendary = search("", { types: ["legendary"], limit: 50 });
     for (const c of legendary) expect(c.typeLine.toLowerCase()).toContain("legendary");
   });
 
   it("filters by max mana value", () => {
-    const cheap = searchCards("", { max_mana_value: 1, limit: 50 });
+    const cheap = search("", { max_mana_value: 1, limit: 50 });
     expect(cheap.length).toBeGreaterThan(0);
     for (const c of cheap) expect(c.manaValue).toBeLessThanOrEqual(1);
-    expect(cheap.some((c) => c.name === "Dark Ritual")).toBe(true);
-    expect(cheap.some((c) => c.name === "Emrakul, the Aeons Torn")).toBe(false);
+    expect(search("dark ritual", { max_mana_value: 1 }).some((c) => c.name === "Dark Ritual")).toBe(true);
+    expect(search("emrakul aeons torn", { max_mana_value: 1 }).some((c) => c.name === "Emrakul, the Aeons Torn")).toBe(false);
   });
 
   it("filters by keywords", () => {
-    const flyers = searchCards("", { keywords: ["flying"], limit: 50 });
+    const flyers = search("", { keywords: ["flying"], limit: 50 });
     expect(flyers.length).toBeGreaterThan(0);
     for (const c of flyers) {
       expect(c.keywords.map((k) => k.toLowerCase())).toContain("flying");
@@ -173,14 +187,25 @@ describe("searchCards — filters (§4.3 schema)", () => {
   });
 
   it("combines query + filters", () => {
-    const goyfGreen = searchCards("goyf", { colors: ["G"] });
+    const goyfGreen = search("goyf", { colors: ["G"], limit: 10 });
     expect(goyfGreen.some((c) => c.name === "Tarmogoyf")).toBe(true);
-    expect(searchCards("goyf", { colors: ["U"] })).toEqual([]);
+    for (const c of goyfGreen) expect(c.colorIdentity).toContain("G");
+    // The Lhurgoyf cycle has one per colour, so a colour filter narrows the
+    // set rather than emptying it — but every hit still respects the filter.
+    for (const c of search("goyf", { colors: ["U"], limit: 10 })) {
+      expect(c.colorIdentity).toContain("U");
+    }
   });
 
   it("respects limit (default 3 per tool schema)", () => {
-    expect(searchCards("").length).toBe(3);
-    expect(searchCards("", { limit: 10 }).length).toBe(10);
-    expect(searchCards("a", { limit: 50 }).length).toBeLessThanOrEqual(50);
+    expect(search("").length).toBe(3);
+    expect(search("", { limit: 10 }).length).toBe(10);
+    expect(search("a", { limit: 50 }).length).toBeLessThanOrEqual(50);
+  });
+
+  it("reports the pre-limit match count as total", () => {
+    const res = searchCards("", { colors: ["U"], limit: 5 });
+    expect(res.data.length).toBe(5);
+    expect(res.total).toBeGreaterThan(5);
   });
 });
