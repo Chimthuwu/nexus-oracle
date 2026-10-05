@@ -8,6 +8,16 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
+  build: {
+    // The 3D stack is most of the bundle and rarely changes: give it its own chunk so app edits do not re-download it.
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [{ name: 'three-vendor', test: /node_modules[\/](three|@react-three|three-stdlib)[\/]/ }],
+        },
+      },
+    },
+  },
   server: {
     proxy: {
       '/api': {

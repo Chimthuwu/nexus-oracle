@@ -1,5 +1,20 @@
 # Project Nexus — Handoff & TODO
 
+## OPEN TASKS (checklist index, 2026-10-06)
+Details are in the sections below. `[!]` = needs a decision or a credential from Stooge.
+
+- [ ] Oracle suggestion chips and "Ask the Oracle to build one" show no example cards (LLM tool use or prompt; `apps/server/src/llm`, see "Requested — not started")
+- [ ] Finish `@nexus/engine` (stable GameState serialisation + `applyAction`), then swap the Duel mock store for it (one file: the store's actions)
+- [ ] Fix the 21 remaining lint warnings in the 3D scene (`BlackHole.tsx` `Math.random` in render, immutability, one set-state-in-effect)
+- [ ] Lazy-load the heavy views (Duel, Mind Mapper) so first paint does not need the whole 3D bundle (the `three-vendor` chunk is still 1.37 MB)
+- [ ] Polish: card browser first scroll lands mid-grid; `Card3D` texture cache never evicts (add an LRU); downsample `cloud_180.ply` (4.5 MB, ~8 s first paint); conversation transcript view
+- [ ] Move the root one-off scripts (`add_more_cards*.js`, `append_cards.js`, `rewrite*.js`, `expand.js`, `cmd_fix.js`, `fetch_bulk.js`, Mind Mapper generators) into `scripts/` after checking their relative paths
+- [ ] Verify live: the Cloudflare Pages build picks up the `API_BASE` fix and FreeTTS CORS works
+- [!] TTS is silent: create a freetts.org account and set `FREETTS_API_KEY` on Render (credential)
+- [!] Duel scope: 1-player vs Oracle AI only, or hot-seat too? How much rules depth for a first playable (suggested: creatures, lands, combat, basic targeted removal, no stack)?
+
+Done 2026-10-06: added README, CI workflow (`.github/workflows/ci.yml`), lint now ignores `public/` and `dist/`, web bundle split so the 3D stack is its own cacheable chunk, removed the empty `New Text Document.txt`. Baseline: card-data tests 20/20, server and card-data typecheck clean, engine and web build clean.
+
 ## Current State
 - **Backend**: Fastify on Render (`https://nexus-oracle-u6ra.onrender.com`).
   `/api/oracle/ask`, `/api/oracle/tts`, `/api/cards/search`, `/api/cards/:id`

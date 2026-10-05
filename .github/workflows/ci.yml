@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Card data tests
+        run: npm test -w @nexus/card-data
+      - name: Typecheck (card-data, server)
+        run: |
+          npm run typecheck -w @nexus/card-data
+          npm run typecheck -w @nexus/server
+      - name: Engine build
+        run: npm run build -w @nexus/engine
+      - name: Web lint and build
+        run: |
+          npm run lint -w web
+          npm run build -w web
