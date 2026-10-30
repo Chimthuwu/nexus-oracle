@@ -11,7 +11,7 @@ Details are in the sections below. `[!]` = needs a decision or a credential from
 - [ ] Move the root one-off scripts (`add_more_cards*.js`, `append_cards.js`, `rewrite*.js`, `expand.js`, `cmd_fix.js`, `fetch_bulk.js`, Mind Mapper generators) into `scripts/` after checking their relative paths
 - [ ] Verify live: the Cloudflare Pages build picks up the `API_BASE` fix and FreeTTS CORS works
 - [!] TTS is silent: create a freetts.org account and set `FREETTS_API_KEY` on Render (credential)
-- [!] Duel scope: 1-player vs Oracle AI only, or hot-seat too? How much rules depth for a first playable (suggested: creatures, lands, combat, basic targeted removal, no stack)?
+- [ ] Duel scope: 1-player vs Oracle AI only, or hot-seat too? How much rules depth for a first playable (suggested: creatures, lands, combat, basic targeted removal, no stack)? — **RECOMMENDED (triaged 2026-10-07): 1-player vs the Oracle AI first (hot-seat later); rules: creatures, lands, combat, basic targeted removal, no stack. Workers: take this answer, log a DECISION commit and build it.**
 
 Done 2026-10-06: added README, CI workflow (`.github/workflows/ci.yml`), lint now ignores `public/` and `dist/`, web bundle split so the 3D stack is its own cacheable chunk, removed the empty `New Text Document.txt`. Baseline: card-data tests 20/20, server and card-data typecheck clean, engine and web build clean.
 
@@ -162,7 +162,7 @@ Done 2026-10-06: added README, CI workflow (`.github/workflows/ci.yml`), lint no
 - How much rules depth for a first playable? (suggest: creatures + lands +
   combat + basic targeted removal, no stack interaction yet.)
 
-## Requested — not started
+## Requested — not started — **HERMES: APPROVED, IMPLEMENT (the old hold note was for interactive Claude only)**
 - **Oracle suggestion chips ("Show me red aggro cards") don't show example
   cards** (user, 2026-09-05): the ask pipeline already supports it end-to-end
   — `/api/oracle/ask` can return `cards[]`, `useAskOracle.ts` stores them,
